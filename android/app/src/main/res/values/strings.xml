@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Removalist</string>
+    <string name="com_auth0_client_id">jC6e3ZO8MW8F55xw7NM3qEHj6FCbuqdF</string>
+    <string name="com_auth0_domain">dungnt.auth0.com</string>
+</resources>
