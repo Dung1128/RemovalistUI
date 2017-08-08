@@ -8,6 +8,8 @@ import {
 
 import Menu from './containers/Home/Menu';
 import JobToday from './containers/Home/JobToday';
+import General from './containers/Home/General';
+import Delivery from './containers/Home/Delivery';
 import Enquiry from './containers/Home/Menu/Enquiry'
 
 import material from '~/theme/variables/material';
@@ -16,11 +18,14 @@ export const initialRouteName = 'jobtoday'
 export const AppNavigator = DrawerNavigator(
     {
         jobtoday: {
-            screen: JobToday
+            screen: JobToday,
         },
         enquiry: {
             screen: Enquiry
         },
+        general_screen: {
+            screen: General,
+        },  
         // promotion: {
         //     screen: Promotion
         // },

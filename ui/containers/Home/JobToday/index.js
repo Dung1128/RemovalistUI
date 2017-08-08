@@ -11,9 +11,13 @@ import {
 import TabBar from '~/ui/components/TabBar';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 // import { Agenda } from 'react-native-calendars';
 
-import { Container, Header, Title, Content, Footer, FooterTab, Button, Left, Right, Body, Icon, Text, List, ListItem } from 'native-base';
+import { Container, 
+  Header, Title, 
+  Content, Footer, FooterTab,
+   Button, Left, Right, Body, Icon, Text, List, ListItem, Fab } from 'native-base';
 
 const datas = [
   'Simon Mignolet',
@@ -96,7 +100,15 @@ export default class AnatomyExample extends Component {
             rightOpenValue={-75}
           />
         </View>
+        <Fab
+            onPress={()=> this.props.navigation.navigate('general_screen')}
+            style={{ backgroundColor: '#ed502b' }}
+            position="bottomRight">
+            <IconIonicons name="md-add" style={{ color: "white", fontSize: 30}}/>
+
+          </Fab>
       </Container>
     );
   }
 }
+// this.props.navigation.navigate('createnewjob')
