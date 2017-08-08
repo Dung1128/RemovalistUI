@@ -8,7 +8,10 @@ import {
 
 import Menu from './containers/Home/Menu';
 import JobToday from './containers/Home/JobToday';
+import General from './containers/Home/General';
+import Delivery from './containers/Home/Delivery';
 import Enquiry from './containers/Home/Menu/Enquiry'
+import TallyService from './containers/Home/TallyService'
 
 import material from '~/theme/variables/material';
 
@@ -16,29 +19,29 @@ export const initialRouteName = 'jobtoday'
 export const AppNavigator = DrawerNavigator(
     {
         jobtoday: {
-            screen: JobToday
+            screen: JobToday,
         },
         enquiry: {
             screen: Enquiry
         },
-        // promotion: {
-        //     screen: Promotion
-        // },
-        // history: {
-        //     screen: StackNavigator(
-        //         {
-        //             listHistory: {
-        //                 screen: Historys
-        //             },
-        //             detailHistory: {
-        //                 screen: DetailTransaction
-        //             }
-        //         },
-        //         {
-        //             headerMode: 'none'
-        //         }
-        //     )
-        // },
+        createnewjob: {
+            screen: StackNavigator(
+                {
+                    general_screen: {
+                        screen: General,
+                    },  
+                    delivery_screen: {
+                        screen: Delivery
+                    },
+                    tally_screen: {
+                        screen: TallyService
+                    },
+                },
+                {
+                    headerMode: 'none'
+                }
+            )
+        },
         // notification: {
         //     screen: StackNavigator(
         //         {

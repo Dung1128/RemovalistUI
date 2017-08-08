@@ -99,6 +99,7 @@ export default class extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.itemList}
+                    onPress={() => navigation.navigate('general_screen')}
                 >
                     <View style={{ ...styles.viewColor, backgroundColor: 'gray' }} />
 

@@ -14,6 +14,10 @@ export default {
   androidRippleColor: 'rgba(256, 256, 256, 0.3)',
   androidRippleColorDark: 'rgba(0, 0, 0, 0.15)',
 
+  //status title
+  grayTitle: '#e9edf0',
+  bgColor: '#ed502b',
+
   // Badge
   badgeBg: '#ED1727',
   get badgeColor() {
