@@ -30,6 +30,17 @@ const datas = [
   'Phil Coutinho',
 ];
 
+const dataCustomer = [];
+dataCustomer.push({
+    hintuser:'Username',
+    iconUser:'user',
+    hintphone:'Phone 1',
+    iconPhone:'phone',
+    hintemail:'Email',
+    iconEmail:'phone',
+    add:'true',
+})
+
 export default class extends Component {
     
     constructor(props){
@@ -60,6 +71,34 @@ setModalVisible_truck() {
     }
   }
 
+  addCustomer() {
+      dataCustomer.push({
+    hintuser:'Username',
+    iconUser:'user',
+    hintphone:'Phone 1',
+    iconPhone:'phone',
+    hintemail:'Email',
+    iconEmail:'phone',
+    add:'true',
+    })
+  }
+
+  renderRow(data, index) {
+    return(
+      <View key={index} style={{ marginBottom: 10}}>
+        <CustomerInfo 
+            hintuser={data.hintuser}
+            iconUser={data.iconUser}
+            hintphone={data.hintphone}
+            iconPhone={data.iconPhone}
+            hintemail={data.hintemail}
+            iconEmail={data.iconEmail}
+            add={data.add}
+          />
+      </View>
+    )
+  }
+
   render() {
       var items = ['Simon Mignolet','Nathaniel Clyne','Dejan Lovren','Mama Sakho','Emre Can','Simon Mignolet','Nathaniel Clyne','Dejan Lovren','Mama Sakho','Emre Can'];
       var itemsStatus = ['Enquery','To be comfirmed','Booked',];
@@ -68,18 +107,16 @@ setModalVisible_truck() {
           <Header
           noShadow={true}
           style={styles.container}>
-            <Left>
-                <Button onPress={() => this.props.navigation.goBack()} transparent>
-                <IconEvilIcons name='close' style={{ color: '#fff', fontSize: 30}} />
+            <Left style={{ flexDirection: 'row', alignItems: 'center'}}>
+                <Button onPress={() => this.props.navigation.navigate('jobtoday')} transparent>
+                    <IconEvilIcons name='close' style={{ color: '#fff', fontSize: 30}} />
                 </Button>
-            </Left>  
-            <Left>
                 <Text style={styles.textHeader}>General Information</Text>
-            </Left>
+            </Left>  
           </Header>
           <Content style={styles.content}>
               <View style={styles.titGeneral}>
-                  <Text>Status</Text>
+                  <Text style={styles.titBold}>Status</Text>
               </View>
               <TouchableOpacity onPress={()=> this.setModalVisible_status()}>
                 <View style={{ flexDirection: 'row'}}>
@@ -92,25 +129,23 @@ setModalVisible_truck() {
             </TouchableOpacity>
 
               <View style={styles.titGeneral}>
-                  <Text>Customer Info</Text>
-                  <IconMaterialIcons name='add-box' style={styles.iconsAdd} />   
+                  <Text style={styles.titBold}>Customer Info</Text>
+                  <Button transparent style={styles.buttonAdd} onPress={() => this.addCustomer()}>
+                    <IconMaterialIcons style={styles.iconAdd}
+                      name='add-box'/>  
+                  </Button> 
               </View>
-              <CustomerInfo 
-                hintuser='Username'
-                iconUser='user'
-                hintphone='Phone 1'
-                iconPhone='phone'
-                hintemail='Email'
-                iconEmail='phone'
-              />
+              {
+                dataCustomer.map((item, index) => this.renderRow(item, index))
+              }
 
               <View style={styles.titGeneral}>
-                  <Text>Start time</Text>
+                  <Text style={styles.titBold}>Start time</Text>
               </View>
               <CheckDate />
 
               <View style={styles.titGeneral}>
-                  <Text>Truck</Text>
+                  <Text style={styles.titBold}>Truck</Text>
               </View>
               <TouchableOpacity onPress={()=> this.setModalVisible_truck()}>
               <View 
@@ -124,7 +159,7 @@ setModalVisible_truck() {
           </Content>
           <Footer style={styles.footer}>
             <FooterTab>
-                <Button full>
+                <Button full onPress={()=> this.props.navigation.navigate('delivery_screen')}>
                 <Text style={styles.txtFooter}>DELIVERY INFO</Text>
                 </Button>
                 <IconMaterialIcons name='navigate-next' style={styles.iconFooter}/>

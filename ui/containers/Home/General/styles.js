@@ -17,14 +17,6 @@ export default {
         backgroundColor: material.grayTitle,
         flexDirection: 'row',
     },
-    iconsAdd: {
-        color: material.bgColor,
-        fontSize: 22,
-        position: 'absolute',
-        right: 10,
-        top: 10
-
-    },
     footer: {
         backgroundColor: material.bgColor,
         justifyContent: 'center',
@@ -89,5 +81,17 @@ export default {
     },
     date: {
         fontSize: 15,
-    }
+    },
+    titBold: {
+        fontWeight: 'bold'
+    },
+    iconAdd: {
+        color: material.bgColor,
+        fontSize: 25
+    },
+    buttonAdd: {
+        position: 'absolute',
+        right: 10,
+        top: -2
+    },
 };

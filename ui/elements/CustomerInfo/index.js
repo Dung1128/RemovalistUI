@@ -7,11 +7,11 @@ export default class extends Component {
 
 
     render() {
-        const { hintuser, hintphone, hintemail, iconUser, iconPhone, iconEmail, ...props } = this.props;
+        const { hintuser, hintphone, hintemail, iconUser, iconPhone, iconEmail, add, ...props } = this.props;
         return (
             <View collapsable={false} {...props}>
                 <InputRow hint={hintuser} nameIcon={iconUser} />
-                <InputRow hint={hintphone} nameIcon={iconPhone}/>
+                <InputRow hint={hintphone} nameIcon={iconPhone} add={add}/>
                 <InputRow hint={hintemail} nameIcon={iconEmail}/>
             </View>
         );

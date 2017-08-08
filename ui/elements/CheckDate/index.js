@@ -11,7 +11,12 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 export default class extends Component {
     state = {
     isDateTimePickerVisible: false,
-    _date: 'Mon, Jun 01'
+    isDateTimePickerVisibleFromTime: false,
+    isDateTimePickerVisibleToTime: false,
+    _date: 'Mon, Jun 01',
+    _fromTime: '9:00',
+    _toTime: '10:00',
+    Duration: '0'
   };
 
   _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
@@ -26,6 +31,28 @@ export default class extends Component {
     this._hideDateTimePicker();
   };
 
+  _showDateTimePickerFromTime = () => this.setState({ isDateTimePickerVisibleFromTime: true });
+
+  _hideDateTimePickerFromTime = () => this.setState({ isDateTimePickerVisibleFromTime: false });
+
+  _handleDatePickedFromTime = (time) => {
+        var hours = new Date(time).getHours();
+        var mimutes = new Date(time).getMinutes();
+       this.setState({ _fromTime: hours + ':' + mimutes })
+    this._hideDateTimePickerFromTime();
+  };
+
+  _showDateTimePickerToTime = () => this.setState({ isDateTimePickerVisibleToTime: true });
+
+  _hideDateTimePickerToTime = () => this.setState({ isDateTimePickerVisibleToTime: false });
+
+  _handleDatePickedToTime = (time) => {
+        var hours = new Date(time).getHours();
+        var mimutes = new Date(time).getMinutes();
+       this.setState({ _toTime: hours + ':' + mimutes })
+    this._hideDateTimePickerToTime();
+  };
+
 
     render() {
         const { ...props } = this.props;
@@ -37,6 +64,20 @@ export default class extends Component {
                     onConfirm={this._handleDatePicked}
                     onCancel={this._hideDateTimePicker}
                     />
+                <DateTimePicker
+                    isVisible={this.state.isDateTimePickerVisibleFromTime}
+                    onConfirm={this._handleDatePickedFromTime}
+                    onCancel={this._hideDateTimePickerFromTime}
+                    mode={'time'}
+                    />
+
+                <DateTimePicker
+                    isVisible={this.state.isDateTimePickerVisibleToTime}
+                    onConfirm={this._handleDatePickedToTime}
+                    onCancel={this._hideDateTimePickerToTime}
+                    mode={'time'}
+                    />
+                    
                 <Text style={styles.txttitledate}>Date</Text>
                 <TouchableOpacity onPress={this._showDateTimePicker}>
                     <Text style={styles.date}>{this.state._date}</Text>
@@ -46,8 +87,15 @@ export default class extends Component {
             <View style={{ borderWidth: 0.5, borderColor: material.grayTitle}}/>
             <View style={styles.itemTime}>
                 <Text style={styles.txttitledate}>Time</Text>
-                <Text style={styles.date}>9:00 - 10:00</Text>
-                <Text style={styles.txttitledate}>Duration: 3 hours</Text>
+                <View style={{ flexDirection: 'row'}}>
+                    <TouchableOpacity onPress={this._showDateTimePickerFromTime}>
+                        <Text style={styles.date}>{this.state._fromTime} -</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this._showDateTimePickerToTime}>
+                        <Text style={styles.date}>{' '}{this.state._toTime}</Text>
+                    </TouchableOpacity>
+                </View>
+                <Text style={styles.txttitledate}>Duration: {this.state.Duration} h</Text>
             </View>
         </View>
         );
