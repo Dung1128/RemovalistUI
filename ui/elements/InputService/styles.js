@@ -5,15 +5,17 @@ export default {
         flex: 1,
         borderRightWidth: 1,
         borderRightColor: material.grayTitle,
-        padding: 10,
+        padding: 5,
         flexDirection: 'row',
-        alignItems: 'center'
-    },
-    down: {
-        fontSize: 25,
+        alignItems: 'center',
+        paddingLeft: 10
     },
     content: {
         paddingLeft: 10, 
-        paddingRight: 10
+        paddingRight: 10,
+        fontWeight: 'bold'
+    },
+    colorIcon: {
+        color: 'gray'
     }
 };

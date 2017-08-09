@@ -12,13 +12,12 @@ import {
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Header, Icon, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem } from 'native-base';
-import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
+import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem } from 'native-base';
 import InputRow from '~/ui/elements/InputRow';
 import CustomerInfo from '~/ui/elements/CustomerInfo';
-import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import CheckDate from '~/ui/elements/CheckDate';
+import Icon from '~/ui/components/Icon';
+
 const datas = [
   'Simon Mignolet',
   'Nathaniel Clyne',
@@ -35,9 +34,9 @@ dataCustomer.push({
     hintuser:'Username',
     iconUser:'user',
     hintphone:'Phone 1',
-    iconPhone:'phone',
+    iconPhone:'call',
     hintemail:'Email',
-    iconEmail:'phone',
+    iconEmail:'email',
     add:'true',
 })
 
@@ -51,7 +50,8 @@ export default class extends Component {
       modalVisible_Status: false,
       listViewData: datas,
       truck: 'Truck 1',
-      status: 'Enquery'
+      status: 'Enquery',
+      listCustomer: dataCustomer
     });
 
   }
@@ -72,14 +72,19 @@ setModalVisible_truck() {
   }
 
   addCustomer() {
-      dataCustomer.push({
-    hintuser:'Username',
-    iconUser:'user',
-    hintphone:'Phone 1',
-    iconPhone:'phone',
-    hintemail:'Email',
-    iconEmail:'phone',
-    add:'true',
+    let newList = this.state.listCustomer
+    newList.push({
+        hintuser:'Username',
+        iconUser:'user',
+        hintphone:'Phone 1',
+        iconPhone:'call',
+        hintemail:'Email',
+        iconEmail:'email',
+        add:'true',
+    })
+
+    this.setState({
+        listCustomer: newList
     })
   }
 
@@ -109,7 +114,7 @@ setModalVisible_truck() {
           style={styles.container}>
             <Left style={{ flexDirection: 'row', alignItems: 'center'}}>
                 <Button onPress={() => this.props.navigation.navigate('jobtoday')} transparent>
-                    <IconEvilIcons name='close' style={{ color: '#fff', fontSize: 30}} />
+                    <Icon name='close' size={20} style={{ color: '#fff' }}/>
                 </Button>
                 <Text style={styles.textHeader}>General Information</Text>
             </Left>  
@@ -121,9 +126,9 @@ setModalVisible_truck() {
               <TouchableOpacity onPress={()=> this.setModalVisible_status()}>
                 <View style={{ flexDirection: 'row'}}>
                     <View style={styles.statusColor}/>
-                    <View style={{...styles.Items, padding: 10}}>
+                    <View style={{...styles.Items}}>
                             <Text style={styles.txtForm}>{this.state.status}</Text>
-                            <IconMaterialIcons name='arrow-drop-down' style={styles.down}/>   
+                            <Icon name='arrown-drop' size={15} style={styles.down}/>  
                     </View>
                 </View>
             </TouchableOpacity>
@@ -131,12 +136,12 @@ setModalVisible_truck() {
               <View style={styles.titGeneral}>
                   <Text style={styles.titBold}>Customer Info</Text>
                   <Button transparent style={styles.buttonAdd} onPress={() => this.addCustomer()}>
-                    <IconMaterialIcons style={styles.iconAdd}
-                      name='add-box'/>  
+                    <Icon size={20} style={styles.iconAdd}
+                      name='add'/>  
                   </Button> 
               </View>
               {
-                dataCustomer.map((item, index) => this.renderRow(item, index))
+                this.state.listCustomer.map((item, index) => this.renderRow(item, index))
               }
 
               <View style={styles.titGeneral}>
@@ -150,19 +155,19 @@ setModalVisible_truck() {
               <TouchableOpacity onPress={()=> this.setModalVisible_truck()}>
               <View 
                 style={{...styles.Items, padding: 10}}>
-                  <IconMaterialCommunityIcons name='truck' style={styles.iconsTruck} />
+                  <Icon name='truck' size={25} style={styles.iconsTruck} />
                   <Text style={styles.txtForm}>{this.state.truck}</Text>
-                  <IconMaterialIcons name='arrow-drop-down' style={styles.down}/>
+                  <Icon name='arrown-drop' size={15} style={styles.down}/>
               </View>
               </TouchableOpacity>
 
           </Content>
           <Footer style={styles.footer}>
-            <FooterTab>
+            <FooterTab style={{ alignItems: 'center'}}>
                 <Button full onPress={()=> this.props.navigation.navigate('delivery_screen')}>
                 <Text style={styles.txtFooter}>DELIVERY INFO</Text>
                 </Button>
-                <IconMaterialIcons name='navigate-next' style={styles.iconFooter}/>
+                <Icon name='arrow-right' size={20} style={styles.iconFooter}/>
             </FooterTab>
         </Footer>
 
