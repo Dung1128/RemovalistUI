@@ -8,14 +8,9 @@ import {
 
 import Menu from './containers/Home/Menu';
 import JobToday from './containers/Home/JobToday';
-<<<<<<< HEAD
 import Detail from './containers/Home/JobToday/List/Detail';
-import General from './containers/Home/General';
-import Delivery from './containers/Home/Delivery';
-=======
 import General from '~/ui/containers/Home/CreateNewJob/General';
 import Delivery from '~/ui/containers/Home/CreateNewJob/Delivery';
->>>>>>> 7474e3fa02b58255e252fd2757dda8cea1cf25a2
 import Enquiry from './containers/Home/Menu/Enquiry'
 import TallyService from '~/ui/containers/Home/CreateNewJob/TallyService'
 
