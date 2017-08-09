@@ -8,6 +8,7 @@ import {
 
 import Menu from './containers/Home/Menu';
 import JobToday from './containers/Home/JobToday';
+import Detail from './containers/Home/JobToday/List/Detail';
 import General from './containers/Home/General';
 import Delivery from './containers/Home/Delivery';
 import Enquiry from './containers/Home/Menu/Enquiry'
@@ -19,7 +20,19 @@ export const initialRouteName = 'jobtoday'
 export const AppNavigator = DrawerNavigator(
     {
         jobtoday: {
-            screen: JobToday,
+            screen: StackNavigator(
+                {
+                    jobtoday_screen: {
+                        screen: JobToday,
+                    },
+                    detail_screen: {
+                        screen: Detail
+                    },
+                },
+                {
+                    headerMode: 'none'
+                }
+            )
         },
         enquiry: {
             screen: Enquiry
@@ -29,7 +42,7 @@ export const AppNavigator = DrawerNavigator(
                 {
                     general_screen: {
                         screen: General,
-                    },  
+                    },
                     delivery_screen: {
                         screen: Delivery
                     },
@@ -42,21 +55,6 @@ export const AppNavigator = DrawerNavigator(
                 }
             )
         },
-        // notification: {
-        //     screen: StackNavigator(
-        //         {
-        //             Notifications_Screen: {
-        //                 screen: Notifications
-        //             },
-        //             Detail_Noti: {
-        //                 screen: DetailNoti
-        //             }
-        //         },
-        //         {
-        //             headerMode: 'none'
-        //         }
-        //     )
-        // }
     },
     {
         initialRouteName,

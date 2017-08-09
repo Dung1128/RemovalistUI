@@ -356,5 +356,5 @@ export default {
   yellowColor: '#FEDA31',
   blueColor: '#4E92DF',
   backgroundColor: '#FAFDFE',
-  grayHideColor: '#ECF0F2'
+  grayHideColor: '#ECF0F2',
 };

@@ -5,7 +5,6 @@ import {
     WebView,
     TouchableOpacity,
     Alert,
-    ListView,
     InteractionManager
 } from 'react-native';
 import TabBar from '~/ui/components/TabBar';
@@ -17,52 +16,58 @@ import { List, ListItem, Spinner, Button, Icon, Text, View } from 'native-base';
 import styles from './styles';
 import material from '~/theme/variables/material'
 import TitleItem from '~/ui/components/TitleItem';
+import ListView from './components/ListView';
 
-const data = [
-    {
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 1
-    },
-    {
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 2
-    },
-    {
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 3
-    },
-    {
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 4
-    },
-    {
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 5
-    },
-    {
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 6
-    },
-];
+const data = {
+    '2017-08-09': [{
+        listArray: [{
+            address: '59 Rakauroad, Hataitai',
+            name: 'Johnson',
+            phone: '022-365-9900',
+            status: 1
+        }, {
+            address: '58 Rakauroad, Hataitai',
+            name: 'Johnson',
+            phone: '022-365-9900',
+            status: 2
+        }
+        ]
+    }],
+    '2017-08-10': [{
+        listArray: [{
+            address: '59 Rakauroad, Hataitai',
+            name: 'Johnson',
+            phone: '022-365-9900',
+            status: 3
+        }, {
+            address: '58 Rakauroad, Hataitai',
+            name: 'Johnson',
+            phone: '022-365-9900',
+            status: 4
+        }
+        ]
+    }],
+    '2017-08-11': [{
+        listArray: [{
+            address: '59 Rakauroad, Hataitai',
+            name: 'Johnson',
+            phone: '022-365-9900',
+            status: 5
+        }, {
+            address: '58 Rakauroad, Hataitai',
+            name: 'Johnson',
+            phone: '022-365-9900',
+            status: 6
+        }
+        ]
+    }],
+}
+
 export default class extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            ds: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
-            calenderr: true,
             ready: false,
             basic: true,
         };
@@ -91,86 +96,9 @@ export default class extends Component {
         return dayNow
     }
 
-    renderColorStatus(key){
-        switch(key){
-            case 1:
-                return material.redColor; 
-                break;
-            case 2:
-                return material.yellowColor; 
-                break;
-            case 3:
-                return material.blueColor; 
-                break;
-            case 4:
-                return material.greenColor; 
-                break;
-            case 5:
-                return material.violetColor; 
-                break;
-            case 6:
-                return material.grayColor; 
-                break;
-            default: 
-                break;
-        }
-    }
-
-    renderRow(data) {
-        return (
-            <View style={styles.wrapItems} >
-                <StatusItem color={this.renderColorStatus(data.status)} />
-                <View centerVertical style={styles.item}>
-                    <Text primary >{data.address}</Text>
-                    <View full style={{ flexDirection: 'row' }}>
-                        <Text>{data.name}</Text>
-                        <Text>{data.phone}</Text>
-                    </View>
-                    
-                </View>
-            </View>
-        )
-    }
-
-    renderRightRow(data, secId, rowId, rowMap) {
-        return (
-
-            <TouchableOpacity style={{ ...styles.hiddenButton, backgroundColor: material.grayHideColor }} onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
-                <View style={{ position: 'absolute', right: 10 }}>
-                    <Text>Archived</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-    renderLeftRow(data, secId, rowId, rowMap) {
-        return (
-
-            <TouchableOpacity style={{ ...styles.hiddenButton, backgroundColor: material.blueColor }} onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
-                <View style={{ position: 'absolute', left: 10 }}>
-                    <Text white >Booked</Text>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-
     renderDay(day, item) {
         return (
-
-            <View style={{  width: '100%' }}>           
-                <TitleItem title='Today' />
-                <List
-                    enableEmptySections
-                    contentContainerStyle={{ backgroundColor: '#fff', width: '100%', justifyContent:'space-between' }}
-                    dataSource={this.state.ds.cloneWithRows(data)}
-                    renderRow={data => this.renderRow(data)}
-                    renderLeftHiddenRow={(data, secId, rowId, rowMap) => this.renderLeftRow(data, secId, rowId, rowMap)}
-                    renderRightHiddenRow={(data, secId, rowId, rowMap) => this.renderRightRow(data, secId, rowId, rowMap)}
-                    rightOpenValue={-95}
-                    leftOpenValue={95}
-                />
-             </View>
+            <ListView navigation={this.props.navigation} day={day} item={item} />
         )
     }
     render() {
@@ -182,33 +110,7 @@ export default class extends Component {
                     // the list of items that have to be displayed in agenda. If you want to render item as empty date
                     // the value of date key kas to be an empty array []. If there exists no value for date key it is
                     // considered that the date in question is not yet loaded
-                    items={
-                        {
-                            '2017-08-05': [{
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 1
-    }],
-                            '2017-08-08': [{
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 1
-    }],
-                            '2017-08-07': [],
-                            '2017-08-08': [{
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 1
-    }, {
-        address: '59 Rakauroad, Hataitai',
-        name: 'Johnson',
-        phone: '022-365-9900',
-        status: 1
-    }],
-                        }}
+                    items={data}
                     // callback that gets called when items for a certain month should be loaded (month became visible)
                     loadItemsForMonth={(month) => { console.log('trigger items loading') }}
                     // callback that gets called on day press
@@ -220,7 +122,7 @@ export default class extends Component {
                     // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
                     minDate={'2012-05-10'}
                     // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-                    maxDate={'2012-05-30'}
+                    maxDate={'2018-05-30'}
                     // specify how each item should be rendered in agenda
                     renderItem={(item, firstItemInDay) => { return (<Text> {firstItemInDay} </Text>); }}
                     // specify how each date should be rendered. day can be undefined if the item is not first in that day.
@@ -238,10 +140,10 @@ export default class extends Component {
                         agendaTodayColor: 'red'
                     }}
                     // agenda container style
-                    style={{ flex: 1, height: 100 }}
+                    style={{ flex: 1, }}
                 />
                 :
-                <Spinner color='#0C95EA' style={{ marginTop: '50%' }} />
+                <Spinner color={material.redColor} style={{ marginTop: '50%' }} />
         );
     }
 }

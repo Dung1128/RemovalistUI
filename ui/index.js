@@ -22,8 +22,7 @@ export default class extends Component {
   }
 
   render() {
-    if (!this.store) return <Preload message="Đang tải dữ liệu..." />;
-    //const firstRoute = this.store.getState().auth.loggedIn ? 'signup' : 'login';
+    if (!this.store) return <Preload />;
     return (
       <Provider store={this.store}>
         <App />
