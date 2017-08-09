@@ -5,16 +5,12 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Linking,
-  Modal,
-  Alert,
-  ListView
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Header, Icon, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem } from 'native-base';
-import IconIonicons from 'react-native-vector-icons/Ionicons';
+import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem } from 'native-base';
 import InputService from '~/ui/elements/InputService';
+import Icon from '~/ui/components/Icon';
 
 export default class extends Component {
     
@@ -27,7 +23,7 @@ export default class extends Component {
           style={styles.container}>
             <Left style={{ flexDirection: 'row', alignItems: 'center'}}>
                 <Button onPress={() => this.props.navigation.goBack()} transparent>
-                    <IconIonicons name='ios-arrow-back-outline' style={{ color: '#fff', fontSize: 30}} />
+                    <Icon name='back' size={20} style={{ color: '#fff'}} />
                 </Button>
                 <Text style={styles.textHeader}>Tally service infomation</Text>
             </Left>  
@@ -39,28 +35,28 @@ export default class extends Component {
                   <Text style={styles.titPrice}>$120</Text>   
               </View>
 
-              <InputService />
+              <InputService nameIcon='time' measure='hr'/>
 
               <View style={styles.titGeneral}>
                   <Text style={styles.titTitBold}>Travel Time</Text>
                   <Text style={styles.titPrice}>$120</Text>  
               </View>
 
-              <InputService />
+              <InputService nameIcon='time' measure='hr'/>
 
               <View style={styles.titGeneral}>
                   <Text style={styles.titTitBold}>Fuel/RUCS</Text>
                   <Text style={styles.titPrice}>$120</Text>  
               </View>
 
-              <InputService />
+              <InputService nameIcon='gas' measure='km'/>
 
               <View style={styles.titGeneral}>
                   <Text style={styles.titTitBold}>Material</Text>
                   <Text style={styles.titPrice}>$120</Text>
               </View>
-              <InputService />
-              <InputService />
+              <InputService nameIcon='material'/>
+              <InputService nameIcon='material'/>
 
               <View style={styles.titGeneral}>
                   <Text style={styles.titTitBold}>GST</Text>
@@ -75,8 +71,8 @@ export default class extends Component {
           </Content>
           <Footer style={styles.footer}>
             <FooterTab>
-                <Button full>
-                    <Text style={styles.txtFooter}>DONE</Text>
+                <Button full onPress={()=> this.props.navigation.navigate('jobtoday')}>
+                    <Text style={styles.txtFooter}>SAVE</Text>
                 </Button>
             </FooterTab>
         </Footer>
