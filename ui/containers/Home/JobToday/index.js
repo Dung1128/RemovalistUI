@@ -12,12 +12,13 @@ import TabBar from '~/ui/components/TabBar';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
-// import { Agenda } from 'react-native-calendars';
-
-import { Container, 
-  Header, Title, 
+import List from './List'
+import {
+  Container,
+  Header, Title,
   Content, Footer, FooterTab,
-   Button, Left, Right, Body, Icon, Text, List, ListItem, Fab } from 'native-base';
+  Button, Left, Right, Body, Icon, Text, ListItem, Fab
+} from 'native-base';
 
 const datas = [
   'Simon Mignolet',
@@ -83,30 +84,14 @@ export default class AnatomyExample extends Component {
           />
 
         </View>
-        <View style={{ paddingTop: 20 }}>
-          <List
-            dataSource={this.ds.cloneWithRows(this.state.listViewData)}
-            renderRow={data =>
-              <ListItem style={{ backgroundColor: '#fff', width: '100%' }}>
-                <Text> {data} </Text>
-              </ListItem>}
-            renderLeftHiddenRow={data => console.log('data')}
-            renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-              <Button style={{ alignItems: 'center', width: '100%' }} danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
-                <View style={{ position: 'absolute', right: 10 }}>
-                  <Icon active name="remove-circle" style={{ color: '#fff' }} />
-                </View>
-              </Button>}
-            rightOpenValue={-75}
-          />
-        </View>
+        <List />
         <Fab
-            onPress={()=> this.props.navigation.navigate('general_screen')}
-            style={{ backgroundColor: '#ed502b' }}
-            position="bottomRight">
-            <IconIonicons name="md-add" style={{ color: "white", fontSize: 30}}/>
+          onPress={() => this.props.navigation.navigate('general_screen')}
+          style={{ backgroundColor: '#ed502b' }}
+          position="bottomRight">
+          <IconIonicons name="md-add" style={{ color: "white", fontSize: 30 }} />
 
-          </Fab>
+        </Fab>
       </Container>
     );
   }

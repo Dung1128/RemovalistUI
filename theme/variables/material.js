@@ -348,12 +348,13 @@ export default {
   boldTextInputColor: '#7e7e7e',
   // color theme
   whiteColor: '#FFFFFF',
-  grayColor: '#959595',
-  redColor: '#F55123',
-  greenColor: '#44B68F',
-  violetColor: '#875BD6',
+  grayColor: '#BDC4CC',
+  redColor: '#EB5134',
+  greenColor: '#52D549',
+  violetColor: '#BB27DD',
   blackColor: '#4A4A4A',
-  yellowColor: '#FCBA4D',
-  blueColor: '#0C95EA',
-  backgroundColor: '#FAFDFE'
+  yellowColor: '#FEDA31',
+  blueColor: '#4E92DF',
+  backgroundColor: '#FAFDFE',
+  grayHideColor: '#ECF0F2'
 };

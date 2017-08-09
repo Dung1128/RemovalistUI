@@ -47,6 +47,13 @@ export default (variables = variable) => {
         backgroundColor:'#fff',
         borderRadius: 10,                                  
       },
+      '.center':{
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      '.centerVertical':{
+        justifyContent: 'center',
+      },
   };
 
 
