@@ -4,7 +4,7 @@ import { fontMaker } from '~/ui/utils';
 export default {
     hdMenu: {
         width: platform.fullWidth - 50,
-        height: 25,
+        height: 30,
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 5,
@@ -18,8 +18,6 @@ export default {
         justifyContent: 'center',
         height: '100%',
         alignItems: 'center',
-        paddingBottom: 3,
-        paddingHorizontal: 5,
     },
     get itemMenuActive() {
         return {
@@ -28,18 +26,14 @@ export default {
         }
     },
     textMenuActive: {
-        ...fontMaker({
-            weight: 'Bold',
-        }),
-        fontSize: 12,
-        color: 'red'
+        fontSize: 14,
+        color: 'red',
+        paddingTop: 0
     },
     textMenu: {
-        fontSize: 12,
+        fontSize: 14,
         color: 'white',
-        ...fontMaker({
-            weight: 'Bold',
-        }),
+        paddingTop: 0
     },
     txtTitBold: {
         color: platform.titleFontColor,

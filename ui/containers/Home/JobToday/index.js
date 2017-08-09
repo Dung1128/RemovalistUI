@@ -9,6 +9,7 @@ import {
   ListView
 } from 'react-native';
 import TabBar from '~/ui/components/TabBar';
+import Icon from '~/ui/components/Icon';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
@@ -17,7 +18,7 @@ import {
   Container,
   Header, Title,
   Content, Footer, FooterTab,
-  Button, Left, Right, Body, Icon, Text, ListItem, Fab
+  Button, Left, Right, Body, Text, ListItem, Fab
 } from 'native-base';
 
 const datas = [
@@ -58,19 +59,19 @@ export default class AnatomyExample extends Component {
         <Header
           noShadow={true}
           style={{ backgroundColor: '#ed502b', borderBottomColor: '#ed502b' }}>
-          <Left>
+          <Left style={{ flexDirection: 'row', alignItems: 'center' }}>
             <Button onPress={() => this.props.navigation.navigate('DrawerOpen')} transparent>
-              <Icon name='menu' />
+              <Icon name='hamburger' color='#fff' size={24} />
             </Button>
+            <Title style={{ fontSize: 18, marginLeft: 10 }}>Job - Today</Title>
           </Left>
-          <Body>
-            <Title style={{ fontSize: 18 }}>Job - Today</Title>
-          </Body>
-          <Right />
           <Right>
-            <IconFontAwesome name="bell" style={{ color: "white", fontSize: 22, paddingLeft: 20 }}></IconFontAwesome>
-            <IconFontAwesome name="filter" style={{ color: "white", fontSize: 22, paddingLeft: 20 }}></IconFontAwesome>
-            <IconFontAwesome name="search" style={{ color: "white", fontSize: 22, paddingLeft: 20 }}></IconFontAwesome>
+            <View  style={{ justifyContent: 'space-between', width: '60%', flexDirection: 'row' }}>
+            <Icon name='chat' color='#fff' size={22}/>
+            <Icon name='notify' color='#fff' size={22}/>
+            <Icon name='filter' color='#fff' size={22}/>
+            <Icon name='search' color='#fff' size={22}/>
+            </View>
           </Right>
 
         </Header>
