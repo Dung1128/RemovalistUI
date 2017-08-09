@@ -12,29 +12,29 @@ import Icon from '~/ui/components/Icon';
 export default class extends Component {
 
     render() {
-        const { text, nameIcon, add, measure,  ...props } = this.props;
+        const { text, nameIcon, add, measure, ...props } = this.props;
         return (
-            <View 
-                style={{ 
-                    flexDirection: 'row', 
+            <View
+                style={{
+                    flexDirection: 'row',
                     justifyContent: 'center',
                     backgroundColor: '#fff',
                     borderBottomWidth: 1,
                     borderBottomColor: material.grayTitle
-                    }} 
+                }}
                 collapsable={false} {...props}>
                 <View style={styles.Item}>
-                    <Icon name = {nameIcon} size={20} style={styles.colorIcon}/>
+                    <Icon name={nameIcon} size={20} style={styles.colorIcon} />
                     <Text style={styles.content}> Type 1</Text>
-                    <Icon name='arrown-drop' size={12}/>
+                    <Icon name='arrown-drop' size={12} />
                 </View>
 
                 <View style={styles.Item}>
                     <Icon name='quantity' size={20} style={styles.colorIcon} />
-                    <TextInput 
+                    <TextInput
                         placeholder='0'
                         underlineColorAndroid="transparent"
-                        style={{width: '60%'}}
+                        style={{ width: '60%' }}
                     />
                     <Text>{measure}</Text>
                 </View>
@@ -42,7 +42,7 @@ export default class extends Component {
                 <View style={styles.Item}>
                     <Text style={styles.content}> $50</Text>
                 </View>
-                 
+
             </View>
         );
     }
