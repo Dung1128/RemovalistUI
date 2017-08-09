@@ -2,8 +2,8 @@ import material from '~/theme/variables/material';
 
 export default {
     container: {
-        backgroundColor: '#ed502b', 
-        borderBottomColor: '#ed502b'
+        backgroundColor: material.redColor, 
+        borderBottomColor: material.redColor
     },
     textHeader: {
         color: '#fff',

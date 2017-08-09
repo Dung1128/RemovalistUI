@@ -2,8 +2,8 @@ import material from '~/theme/variables/material';
 
 export default {
     container: {
-        backgroundColor: '#ed502b', 
-        borderBottomColor: '#ed502b'
+        backgroundColor: material.redColor, 
+        borderBottomColor: material.redColor
     },
     textHeader: {
         color: '#fff',
@@ -23,7 +23,6 @@ export default {
     buttonAdd: {
         position: 'absolute',
         right: 10,
-        top: -2
     },
     footer: {
         backgroundColor: material.bgColor,
@@ -34,10 +33,8 @@ export default {
         color: '#fff'
     },
     iconFooter: {
-        fontSize: 30, 
         color: '#fff',
         position: 'absolute',
-        top: 10,
         right: 10
     },
     Items: {
@@ -92,6 +89,5 @@ export default {
     },
     iconAdd: {
         color: material.bgColor,
-        fontSize: 25
     } 
 };

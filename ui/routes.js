@@ -8,10 +8,10 @@ import {
 
 import Menu from './containers/Home/Menu';
 import JobToday from './containers/Home/JobToday';
-import General from './containers/Home/General';
-import Delivery from './containers/Home/Delivery';
+import General from '~/ui/containers/Home/CreateNewJob/General';
+import Delivery from '~/ui/containers/Home/CreateNewJob/Delivery';
 import Enquiry from './containers/Home/Menu/Enquiry'
-import TallyService from './containers/Home/TallyService'
+import TallyService from '~/ui/containers/Home/CreateNewJob/TallyService'
 
 import material from '~/theme/variables/material';
 
