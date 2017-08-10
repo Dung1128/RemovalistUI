@@ -24,20 +24,6 @@ const data = {
             address: '59 Rakauroad, Hataitai',
             name: 'Johnson',
             phone: '022-365-9900',
-            status: 1
-        }, {
-            address: '58 Rakauroad, Hataitai',
-            name: 'Johnson',
-            phone: '022-365-9900',
-            status: 2
-        }
-        ]
-    }],
-    '2017-08-10': [{
-        listArray: [{
-            address: '59 Rakauroad, Hataitai',
-            name: 'Johnson',
-            phone: '022-365-9900',
             status: 3
         }, {
             address: '58 Rakauroad, Hataitai',
