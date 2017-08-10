@@ -16,13 +16,10 @@ export default {
         padding: 10,
         backgroundColor: material.grayTitle,
         flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     titBold: {
         fontWeight: 'bold'
-    },
-    buttonAdd: {
-        position: 'absolute',
-        right: 10,
     },
     footer: {
         backgroundColor: material.bgColor,
@@ -88,6 +85,14 @@ export default {
         fontSize: 15,
     },
     iconAdd: {
-        color: material.bgColor,
-    } 
+        color: '#fff',
+    },
+    buttonAdd: {
+        width: 23,
+        height: 23,
+        backgroundColor: material.redColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 3
+    },
 };

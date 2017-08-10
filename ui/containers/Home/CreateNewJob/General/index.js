@@ -135,10 +135,11 @@ setModalVisible_truck() {
 
               <View style={styles.titGeneral}>
                   <Text style={styles.titBold}>Customer Info</Text>
-                  <Button transparent style={styles.buttonAdd} onPress={() => this.addCustomer()}>
-                    <Icon size={20} style={styles.iconAdd}
+                  <TouchableOpacity style={styles.buttonAdd} 
+                    onPress={() => this.addCustomer()}>
+                    <Icon size={18} style={styles.iconAdd}
                       name='add'/>  
-                  </Button> 
+                  </TouchableOpacity> 
               </View>
               {
                 this.state.listCustomer.map((item, index) => this.renderRow(item, index))

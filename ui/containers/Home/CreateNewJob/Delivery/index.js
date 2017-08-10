@@ -138,10 +138,11 @@ export default class extends Component {
 
               <View style={styles.titGeneral}>
                   <Text style={styles.titBold}>Pick Up</Text>
-                  <Button transparent style={styles.buttonAdd} onPress={() => this.addPickUp()}>
-                    <Icon size={22} style={styles.iconAdd}
+                  <TouchableOpacity style={styles.buttonAdd} 
+                    onPress={() => this.addPickUp()}>
+                    <Icon size={18} style={styles.iconAdd}
                       name='add'/>  
-                  </Button> 
+                  </TouchableOpacity> 
                    
               </View>
               {
@@ -150,10 +151,11 @@ export default class extends Component {
 
               <View style={styles.titGeneral}>
                   <Text style={styles.titBold}>Drop Off</Text>
-                  <Button transparent style={styles.buttonAdd} onPress={() => this.addDropOff()}>
-                    <Icon size={20} style={styles.iconAdd}
+                  <TouchableOpacity style={styles.buttonAdd} 
+                    onPress={() => this.addDropOff()}>
+                    <Icon size={18} style={styles.iconAdd}
                       name='add'/>  
-                  </Button> 
+                  </TouchableOpacity> 
               </View>
               {
                 this.state.listDropOff.map((item, index) => this.renderRow(item, index))
