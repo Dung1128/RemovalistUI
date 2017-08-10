@@ -349,6 +349,7 @@ export default {
   // color theme
   whiteColor: '#FFFFFF',
   grayColor: '#BDC4CC',
+  grayIconColor: '#9B9B9B',
   redColor: '#EB5134',
   greenColor: '#52D549',
   violetColor: '#BB27DD',
@@ -357,4 +358,5 @@ export default {
   blueColor: '#4E92DF',
   backgroundColor: '#FAFDFE',
   grayHideColor: '#ECF0F2',
+  grayBackgroundColor: '#E9EDF0'
 };

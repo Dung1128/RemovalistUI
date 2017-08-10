@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Linking
-} from 'react-native';
 import Auth0 from 'react-native-auth0';
-const auth0 = new Auth0({ domain: 'minhchien.au.auth0.com', clientId: 'cTe6Mpoq1EaALcgKbKtUREYjPzuDubqh' });
+import { Container, Spinner } from 'native-base';
+import material from '~/theme/variables/material';
+const auth0 = new Auth0({ domain: 'minhchien.au.auth0.com', clientId: 'vRqusogqgiUNDCoINhoy7cQBuNpJHiif' });
 import { connect } from 'react-redux';
 import * as authActions from '~/store/actions/auth';
 import * as commonActions from '~/store/actions/common';
@@ -21,7 +15,7 @@ import * as authSelectors from '~/store/selectors/auth';
   }),
   { ...commonActions, ...authActions })
 export default class Removalist extends Component {
-  onLogin() {
+  componentWillMount() {
     auth0
       .webAuth
       .authorize({ scope: 'openid email', audience: 'https://minhchien.au.auth0.com/userinfo' })
@@ -34,42 +28,11 @@ export default class Removalist extends Component {
       )
       .catch(error => console.log(error));
   }
-  onLogout() {
-    Linking.openURL('https://minhchien.au.auth0.com/v2/logout').catch(err => console.error('An error occurred', err));
-  }
   render() {
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.onLogin()} >
-          <Text style={styles.welcome}>
-            LOGIN
-                    </Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.onLogout()} >
-          <Text style={styles.welcome}>
-            LOGOUT
-                    </Text>
-        </TouchableOpacity>
-      </View>
+      <Container>
+        <Spinner color={material.redColor} style={{ marginTop: '50%' }} />
+      </Container>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

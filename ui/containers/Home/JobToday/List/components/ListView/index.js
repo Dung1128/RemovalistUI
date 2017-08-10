@@ -63,7 +63,7 @@ export default class extends Component {
 
     renderRow(data) {
         return (
-            <TouchableOpacity onPress={() => this.showDetail()} activeOpacity={0.8} style={styles.wrapItems} >
+            <TouchableOpacity onPress={() => this.showDetail()} activeOpacity={1} style={styles.wrapItems} >
                 <StatusItem color={this.renderColorStatus(data.status)} />
                 <View centerVertical style={styles.item}>
                     <Text primary >{data.address}</Text>

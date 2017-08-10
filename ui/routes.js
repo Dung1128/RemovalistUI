@@ -8,7 +8,13 @@ import {
 
 import Menu from './containers/Home/Menu';
 import JobToday from './containers/Home/JobToday';
-import Detail from './containers/Home/JobToday/List/Detail';
+
+import Detail from '~/ui/containers/Home/JobToday/List/Detail';
+import Time from '~/ui/containers/Home/JobToday/List/Detail/Time';
+import Call from '~/ui/containers/Home/JobToday/List/Detail/Call';
+import Chat from '~/ui/containers/Home/JobToday/List/Detail/Chat';
+import Tally from '~/ui/containers/Home/JobToday/List/Detail/Tally';
+
 import General from '~/ui/containers/Home/CreateNewJob/General';
 import Delivery from '~/ui/containers/Home/CreateNewJob/Delivery';
 import Enquiry from './containers/Home/Menu/Enquiry'
@@ -27,6 +33,18 @@ export const AppNavigator = DrawerNavigator(
                     },
                     detail_screen: {
                         screen: Detail
+                    },
+                    time_screen: {
+                        screen: Time
+                    },
+                    call_screen: {
+                        screen: Call
+                    },
+                    chat_screen: {
+                        screen: Chat
+                    },
+                    tally_screen: {
+                        screen: Tally
                     },
                 },
                 {

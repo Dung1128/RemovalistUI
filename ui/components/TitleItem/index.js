@@ -3,12 +3,15 @@ import { View, Text } from 'native-base';
 import styles from './styles'
 export default class extends Component {
     render() {
-        const { title, ...props } = this.props;
+        const { title, right, padding = 10, ...props } = this.props;
         return (
-            
-              <View {...props} style={styles.titGeneral}>
-                  <Text bold>{title}</Text>
-              </View>
+
+            <View full style={{ ...styles.titGeneral, padding }} {...props} >
+                <Text bold>{title}</Text>
+                {
+                    right && right
+                }
+            </View>
         )
     }
 }

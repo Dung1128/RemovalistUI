@@ -3,13 +3,16 @@ import { Container, Spinner, Text, View } from 'native-base'
 import material from '~/theme/variables/material'
 import styles from './styles'
 
+import Header from '~/ui/components/Header';
+
 export default class extends Component {
 
     render() {
         return (
-            <View center style={{ flex: 1 }}>
+            <Container>
+                <Header title='Tally' size={20} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
                 <Text style={{ color: material.redColor }}>Building</Text>
-            </View>
+            </Container>
         )
     }
 }
