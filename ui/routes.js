@@ -15,6 +15,9 @@ import Enquiry from './containers/Home/Menu/Enquiry'
 import TallyService from '~/ui/containers/Home/CreateNewJob/TallyService'
 
 import material from '~/theme/variables/material';
+import Notifications from './containers/Home/Notification';
+import Chat from './containers/Home/Chat';
+import Filter from './containers/Home/Filter';
 
 export const initialRouteName = 'jobtoday'
 export const AppNavigator = DrawerNavigator(
@@ -54,6 +57,15 @@ export const AppNavigator = DrawerNavigator(
                     headerMode: 'none'
                 }
             )
+        },
+        notification_screen: {
+            screen: Notifications
+        },
+        listchat_screen: {
+            screen: Chat
+        },
+        filter_screen: {
+            screen: Filter
         },
     },
     {

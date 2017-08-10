@@ -54,6 +54,11 @@ export default class extends Component {
               <View style={styles.titGeneral}>
                   <Text style={styles.titTitBold}>Material</Text>
                   <Text style={styles.titPrice}>$120</Text>
+                  <TouchableOpacity style={styles.buttonAdd} 
+                    onPress={() => console.log('ok')}>
+                    <Icon size={18} style={styles.iconAdd}
+                      name='add'/>  
+                  </TouchableOpacity> 
               </View>
               <InputService nameIcon='material'/>
               <InputService nameIcon='material'/>

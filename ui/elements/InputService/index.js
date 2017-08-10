@@ -20,7 +20,7 @@ export default class extends Component {
                     justifyContent: 'center',
                     backgroundColor: '#fff',
                     borderBottomWidth: 1,
-                    borderBottomColor: material.grayTitle
+                    borderBottomColor: material.grayTitle,             
                 }}
                 collapsable={false} {...props}>
                 <View style={styles.Item}>
@@ -34,7 +34,7 @@ export default class extends Component {
                     <TextInput
                         placeholder='0'
                         underlineColorAndroid="transparent"
-                        style={{ width: '60%' }}
+                        style={{ width: '60%', padding: 0 }}
                     />
                     <Text>{measure}</Text>
                 </View>
