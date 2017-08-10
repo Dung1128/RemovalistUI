@@ -16,6 +16,7 @@ export default {
         padding: 10,
         backgroundColor: material.grayTitle,
         flexDirection: 'row',
+        alignItems: 'center'
     },
     titTitBold: {
         fontWeight: 'bold',
@@ -61,5 +62,18 @@ export default {
         flex: 1,
         fontSize: 20,
         color: material.bgColor
-    }
+    },
+    iconAdd: {
+        color: '#fff',
+    },
+    buttonAdd: {
+        width: 23,
+        height: 23,
+        backgroundColor: material.redColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 3,
+        position:'absolute',
+        right: 10
+    },
 };

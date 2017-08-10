@@ -33,7 +33,7 @@ export default class extends Component {
                 <TitleItem title={title} right={
                         <View row style={{ justifyContent: 'space-between', width: '35%' }}>
                             <ButtonIcon onPress={onPress} icon='direction' size={18} color='#fff' />
-                            <Text style={styles.textUp}>DIRECTION</Text>
+                            <Text style={{color: material.redColor}}>DIRECTION</Text>
                         </View>
                     } />
                     <View white style={{ paddingHorizontal: 5 }}>

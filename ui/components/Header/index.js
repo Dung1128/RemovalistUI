@@ -12,12 +12,13 @@ import material from '~/theme/variables/material'
 import Icon from '~/ui/components/Icon';
 export default class extends Component {
     render() {
-        const { title, onPress, iconLeft, right, size = 24, ...props } = this.props;
+        const { title, onPress, iconLeft, right, size = 24, textright, ...props } = this.props;
         return (
             <Header
                 noShadow={true}
-                style={{ backgroundColor: material.redColor, borderBottomColor: material.redColor }}>
+                style={{ backgroundColor: material.redColor, borderBottomColor: material.redColor, alignItems:'center' }}>
                 <Left style={{ flexDirection: 'row', alignItems: 'center', width: '100%' }}>
+
                     <Button onPress={onPress} transparent>
                         <Icon name={iconLeft} color='#fff' size={size} />
                     </Button>
@@ -28,6 +29,7 @@ export default class extends Component {
                         right ? right : <View></View>
                     }
                 </Right>
+                <Text style={{ color: '#fff'}}>{textright}</Text>
 
             </Header>
         )
