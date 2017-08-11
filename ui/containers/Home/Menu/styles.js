@@ -63,6 +63,7 @@ export default {
     itemList: {
         flexDirection: 'row',
         alignItems: 'center',
+        paddingVertical: 5
     },
     itemText: {
         color: '#000',
@@ -73,5 +74,10 @@ export default {
         marginLeft: 10,
         width: 10,
         height: 25,
+    },
+    statusItem: { 
+        marginLeft: 20, 
+        marginRight: 10, 
+        height: '70%' 
     }
 };

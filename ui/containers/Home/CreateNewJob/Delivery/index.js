@@ -11,35 +11,37 @@ import {
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
+import { Container, Left, Body, Right, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
 import InputRow from '~/ui/elements/InputRow';
 import DeliverInfo from '~/ui/elements/DeliverInfo';
 import CheckDate from '~/ui/elements/CheckDate';
 import Icon from '~/ui/components/Icon';
+import Button from '~/ui/components/Button';
+import Header from '~/ui/components/Header';
 
 const dataPick = [];
 const dataDrop = [];
 dataPick.push({
-    hintTime: '9:00',
-      hintAddress:'CT5',
-      hintPick:'Address 1',
-      hintNote:'Note',
-      iconTime:'time',
-      iconAddress:'building',
-      iconPick:'map',
-      iconNote:'note',
+  hintTime: '9:00',
+  hintAddress: 'CT5',
+  hintPick: 'Address 1',
+  hintNote: 'Note',
+  iconTime: 'time',
+  iconAddress: 'building',
+  iconPick: 'map',
+  iconNote: 'note',
 })
 
 dataDrop.push({
-    hintTime: '9:00',
-      hintAddress:'CT5',
-      hintPick:'Address 1',
-      hintNote:'Note',
-      iconTime:'time',
-      iconAddress:'building',
-      iconPick:'map',
-      iconNote:'note',
+  hintTime: '9:00',
+  hintAddress: 'CT5',
+  hintPick: 'Address 1',
+  hintNote: 'Note',
+  iconTime: 'time',
+  iconAddress: 'building',
+  iconPick: 'map',
+  iconNote: 'note',
 })
 // for(let i = 0; i < 5; i++) {
 //   data.push({
@@ -56,7 +58,7 @@ dataDrop.push({
 
 export default class extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = ({
       listPickUp: dataPick,
@@ -66,18 +68,18 @@ export default class extends Component {
   }
 
   renderRow(data, index) {
-    return(
-      <View key={index} style={{ marginBottom: 10}}>
-        <DeliverInfo 
-            hintTime={data.hintTime}
-            hintAddress={data.hintAddress}
-            hintPick={data.hintPick}
-            hintNote={data.hintNote}
-            iconTime={data.iconTime}
-            iconAddress={data.iconAddress}
-            iconPick={data.iconPick}
-            iconNote={data.iconNote}
-          />
+    return (
+      <View key={index} style={{ marginBottom: 10 }}>
+        <DeliverInfo
+          hintTime={data.hintTime}
+          hintAddress={data.hintAddress}
+          hintPick={data.hintPick}
+          hintNote={data.hintNote}
+          iconTime={data.iconTime}
+          iconAddress={data.iconAddress}
+          iconPick={data.iconPick}
+          iconNote={data.iconNote}
+        />
       </View>
     )
   }
@@ -85,15 +87,15 @@ export default class extends Component {
   addPickUp() {
     let newListPick = this.state.listPickUp
 
-      newListPick.push({
+    newListPick.push({
       hintTime: '9:00',
-      hintAddress:'CT5',
-      hintPick:'Address 1',
-      hintNote:'Note',
-      iconTime:'time',
-      iconAddress:'building',
-      iconPick:'map',
-      iconNote:'note',
+      hintAddress: 'CT5',
+      hintPick: 'Address 1',
+      hintNote: 'Note',
+      iconTime: 'time',
+      iconAddress: 'building',
+      iconPick: 'map',
+      iconNote: 'note',
     })
 
     this.setState({
@@ -106,16 +108,16 @@ export default class extends Component {
 
     newListDrop.push({
       hintTime: '9:00',
-      hintAddress:'CT5',
-      hintPick:'Address 1',
-      hintNote:'Note',
-      iconTime:'time',
-      iconAddress:'building',
-      iconPick:'map',
-      iconNote:'note',
+      hintAddress: 'CT5',
+      hintPick: 'Address 1',
+      hintNote: 'Note',
+      iconTime: 'time',
+      iconAddress: 'building',
+      iconPick: 'map',
+      iconNote: 'note',
     })
 
-     this.setState({
+    this.setState({
       listDropOff: newListDrop
     })
   }
@@ -123,51 +125,35 @@ export default class extends Component {
   render() {
     return (
       <Container>
-          <Header
-          noShadow={true}
-          style={styles.container}>
-            <Left style={{ flexDirection: 'row', alignItems: 'center'}}>
-                <Button onPress={() => this.props.navigation.goBack()} transparent>
-                    <Icon name='back' size={20} style={{ color: '#fff'}} />
-                </Button>
-                <Text style={styles.textHeader}>Delivery Information</Text>
-            </Left>  
-          </Header>
-          <Content style={styles.content}>
+        <Header title='Delivery Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
+        <Content style={styles.content}>
 
-              <View style={styles.titGeneral}>
-                  <Text bold>Pick Up</Text>
-                  <TouchableOpacity style={styles.buttonAdd} 
-                    onPress={() => this.addPickUp()}>
-                    <Icon size={18} style={styles.iconAdd}
-                      name='add'/>  
-                  </TouchableOpacity> 
-                   
-              </View>
-              {
-                this.state.listPickUp.map((item, index) => this.renderRow(item, index))
-              }
+          <View style={styles.titGeneral}>
+            <Text bold>Pick Up</Text>
+            <TouchableOpacity style={styles.buttonAdd}
+              onPress={() => this.addPickUp()}>
+              <Icon size={18} style={styles.iconAdd}
+                name='add' />
+            </TouchableOpacity>
 
-              <View style={styles.titGeneral}>
-                  <Text bold>Drop Off</Text>
-                  <TouchableOpacity style={styles.buttonAdd} 
-                    onPress={() => this.addDropOff()}>
-                    <Icon size={18} style={styles.iconAdd}
-                      name='add'/>  
-                  </TouchableOpacity> 
-              </View>
-              {
-                this.state.listDropOff.map((item, index) => this.renderRow(item, index))
-              }
-          </Content>
-          <Footer style={styles.footer}>
-            <FooterTab style={{ alignItems: 'center'}}>
-                <Button full onPress={()=> this.props.navigation.navigate('tally_screen')}>
-                <Text style={styles.txtFooter}>TALLY SERVICE INFO</Text>
-                </Button>
-                <Icon name='arrow-right' size={20} style={styles.iconFooter}/>
-            </FooterTab>
-        </Footer>
+          </View>
+          {
+            this.state.listPickUp.map((item, index) => this.renderRow(item, index))
+          }
+
+          <View style={styles.titGeneral}>
+            <Text bold>Drop Off</Text>
+            <TouchableOpacity style={styles.buttonAdd}
+              onPress={() => this.addDropOff()}>
+              <Icon size={18} style={styles.iconAdd}
+                name='add' />
+            </TouchableOpacity>
+          </View>
+          {
+            this.state.listDropOff.map((item, index) => this.renderRow(item, index))
+          }
+        </Content>
+        <Button onPress={() => this.props.navigation.navigate('tally_screen')} full iconRight='arrow-right' text='TALLY SERVICE INFO' />
       </Container>
     );
   }

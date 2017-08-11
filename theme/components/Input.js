@@ -11,6 +11,10 @@ export default (variables = variable) => {
     flex: 1,
     fontSize: variables.inputFontSize,
     lineHeight: variables.inputLineHeight,
+    '.left': {
+      marginLeft: 10,
+      height: 25
+    },
   };
 
 

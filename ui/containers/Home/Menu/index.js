@@ -31,7 +31,8 @@ import * as commonActions from '~/store/actions/common';
 import * as authSelectors from '~/store/selectors/auth';
 import Preload from '~/ui/components/Preload';
 import * as accountSelectors from '~/store/selectors/account';
-
+import StatusItem from '~/ui/components/StatusItem';
+import material from '~/theme/variables/material'
 // import Icon from '~/ui/elements/Icon';
 
 // @firebaseConnect()
@@ -70,30 +71,35 @@ export default class extends Component {
                 </ListItem>
                 <TouchableOpacity
                     style={styles.itemList}
-                    onPress={() => navigation.navigate('enquiry')}
                 >
-                    <View style={{ ...styles.viewColor, backgroundColor: 'red' }} />
-
+                    <StatusItem width={10} style={styles.statusItem} color={material.redColor} />
                     <Text style={styles.itemText}>Enquiry</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.itemList}
                 >
-                    <View style={{ ...styles.viewColor, backgroundColor: 'yellow' }} />
+                    <StatusItem width={10} style={styles.statusItem} color={material.yellowColor} />
 
                     <Text style={styles.itemText}>To be comfirmed</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.itemList}
                 >
-                    <View style={{ ...styles.viewColor, backgroundColor: 'blue' }} />
+                    <StatusItem width={10} style={styles.statusItem} color={material.blueColor} />
 
                     <Text style={styles.itemText}>Booked</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.itemList}
                 >
-                    <View style={{ ...styles.viewColor, backgroundColor: 'green' }} />
+                    <StatusItem width={10} style={styles.statusItem} color={material.greenColor} />
+
+                    <Text style={styles.itemText}>On-going</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.itemList}
+                >
+                    <StatusItem width={10} style={styles.statusItem} color={material.violetColor} />
 
                     <Text style={styles.itemText}>Completed</Text>
                 </TouchableOpacity>
@@ -101,7 +107,7 @@ export default class extends Component {
                     style={styles.itemList}
                     onPress={() => navigation.navigate('general_screen')}
                 >
-                    <View style={{ ...styles.viewColor, backgroundColor: 'gray' }} />
+                    <StatusItem width={10} style={styles.statusItem} color={material.grayColor} />
 
                     <Text style={styles.itemText}>Archived</Text>
                 </TouchableOpacity>
