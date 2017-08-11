@@ -66,7 +66,7 @@ export default class extends Component {
                     </View>
 
                 </Content>
-                <Button onPress={() => this.props.navigation.navigate('jobtoday')} full text='SAVE' />
+                <Button onPress={() => this.props.navigation.navigate('jobtoday_screen')} full text='SAVE' />
             </Container>
         );
     }

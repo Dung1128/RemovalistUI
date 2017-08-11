@@ -5,6 +5,13 @@ export default {
     getListJob(data, accessToken) {
         return apiGetNoKey(`/api/jobdetails/JobDetailList/`, data, accessToken)
     },
+    createJob(data, accessToken) {
+
+    return apiPost(`/api/jobdetails`, {      
+      data,
+      accessToken
+    });
+  },
 
     getStatusJobList(accessToken) {
         return apiGetNoData(`/api/jobdetails/JobStatusList`, accessToken)

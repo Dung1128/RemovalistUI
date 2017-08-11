@@ -55,7 +55,7 @@ export const AppNavigator = DrawerNavigator(
                     delivery_screen: {
                         screen: Delivery
                     },
-                    tally_screen: {
+                    tallyservice_screen: {
                         screen: TallyService
                     },
                 },
