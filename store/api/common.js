@@ -20,7 +20,6 @@ export const rejectErrors = (res) => {
 
 // try invoke callback for refresh token here
 export const fetchJson = (url, options = {}, base = API_BASE) => {
-  console.log(options)
   // in the same server, API_BASE is emtpy
   /// check convenient way of passing base directly
   return fetch(/^(?:https?)?:\/\//.test(url) ? url : base + url, {

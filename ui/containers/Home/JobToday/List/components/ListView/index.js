@@ -57,13 +57,13 @@ export default class extends Component {
         }
     }
 
-    showDetail() {
-        this.props.navigation.navigate('detail_screen');
+    showDetail(data) {
+        this.props.navigation.navigate('detail_screen', data);
     }
 
     renderRow(data) {
         return (
-            <TouchableOpacity onPress={() => this.showDetail()} activeOpacity={1} style={styles.wrapItems} >
+            <TouchableOpacity onPress={() => this.showDetail(data)} activeOpacity={1} style={styles.wrapItems} >
                 <StatusItem color={this.renderColorStatus(data.status)} />
                 <View centerVertical style={styles.item}>
                     <Text primary >{data.address}</Text>

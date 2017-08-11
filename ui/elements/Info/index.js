@@ -27,22 +27,24 @@ export default class extends Component {
         }
     }
     render() {
-        const { title, onPress, time, map, note, } = this.props;
+        const { title, onPress, time, address1, address2, note, } = this.props;
         return (
             <View>
                 <TitleItem title={title} right={
-                        <View row style={{ justifyContent: 'space-between', width: '35%' }}>
-                            <ButtonIcon onPress={onPress} icon='direction' size={18} color='#fff' />
-                            <Text style={{color: material.redColor}}>DIRECTION</Text>
-                        </View>
-                    } />
-                    <View white style={{ paddingHorizontal: 5 }}>
-                        <RowItem icon='time' title={time} />
-                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                        <RowItem icon='map' title={map} />
-                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                        <RowItem icon='note' title={note} />
+                    <View row style={{ justifyContent: 'space-between', width: '35%' }}>
+                        <ButtonIcon onPress={onPress} icon='direction' size={18} color='#fff' />
+                        <Text style={{ color: material.redColor }}>DIRECTION</Text>
                     </View>
+                } />
+                <View white style={{ paddingHorizontal: 5 }}>
+                    <RowItem icon='time' title={time} />
+                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                    <RowItem icon='building' title={address1} />
+                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                    <RowItem icon='map' title={address2} />
+                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                    <RowItem icon='note' title={note} />
+                </View>
             </View>
         )
     }
