@@ -17,7 +17,7 @@ export default class extends Component {
         return (
             <View rowpadding full style={{ backgroundColor: '#fff', }}>
                 <Icon name='note' size={20} color={material.grayIconColor} />
-                <Input placeholder='Tasks description' style={{ marginLeft: 10, height: 25 }} />
+                <Input placeholder='Tasks description' left />
                 <ButtonIcon icon='add' size={18} color='#fff' />
             </View>
         )

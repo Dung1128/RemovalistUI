@@ -106,7 +106,7 @@ export default class extends Component {
                 <List
                     enableEmptySections
                     contentContainerStyle={{ backgroundColor: '#fff', width: '100%', justifyContent: 'space-between' }}
-                    dataSource={this.state.ds.cloneWithRows(item.listArray)}
+                    dataSource={this.state.ds.cloneWithRows(item.ListArray)}
                     renderRow={data => this.renderRow(data)}
                     renderLeftHiddenRow={(data, secId, rowId, rowMap) => this.renderLeftRow(data, secId, rowId, rowMap)}
                     renderRightHiddenRow={(data, secId, rowId, rowMap) => this.renderRightRow(data, secId, rowId, rowMap)}

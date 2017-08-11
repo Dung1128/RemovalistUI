@@ -49,18 +49,6 @@ export const AppNavigator = DrawerNavigator(
                     tally_screen: {
                         screen: Tally
                     },
-                },
-                {
-                    headerMode: 'none'
-                }
-            )
-        },
-        enquiry: {
-            screen: Enquiry
-        },
-        createnewjob: {
-            screen: StackNavigator(
-                {
                     general_screen: {
                         screen: General,
                     },
@@ -75,6 +63,9 @@ export const AppNavigator = DrawerNavigator(
                     headerMode: 'none'
                 }
             )
+        },
+        enquiry: {
+            screen: Enquiry
         },
         notification_screen: {
             screen: Notifications
