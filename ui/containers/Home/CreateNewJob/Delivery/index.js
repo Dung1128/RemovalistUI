@@ -153,7 +153,7 @@ export default class extends Component {
             this.state.listDropOff.map((item, index) => this.renderRow(item, index))
           }
         </Content>
-        <Button onPress={() => this.props.navigation.navigate('tally_screen')} full iconRight='arrow-right' text='TALLY SERVICE INFO' />
+        <Button onPress={() => this.props.navigation.navigate('tallyservice_screen')} full iconRight='arrow-right' text='TALLY SERVICE INFO' />
       </Container>
     );
   }

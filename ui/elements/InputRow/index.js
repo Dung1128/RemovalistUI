@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, TouchableOpacity } from 'react-native';
+import { Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { View, Input } from 'native-base';
 
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
@@ -27,12 +27,11 @@ export default class extends Component {
                 collapsable={false} {...props}>
                 <Icon name={nameIcon} size={20} style={{ color: 'gray', paddingHorizontal: 0 }} />
                 <Input
-                    left
                     placeholderTextColor={material.grayColor}
                     underlineColorAndroid="transparent"
                     placeholder={hint}
                     onChangeText={onChangeText}
-                    style={{ height: 50, width: '100%' }} />
+                    style={{ height: 50, width: '100%', marginHorizontal: 10 }} />
                 {add && <TouchableOpacity style={styles.buttonAdd}
                     onPress={onPress} {...props}>
                     <Icon size={18} style={styles.iconAdd}
