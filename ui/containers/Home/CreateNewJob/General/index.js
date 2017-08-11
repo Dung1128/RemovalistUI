@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   Linking,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
 import InputRow from '~/ui/elements/InputRow';
 import CustomerInfo from '~/ui/elements/CustomerInfo';
 import CheckDate from '~/ui/elements/CheckDate';
@@ -37,6 +36,9 @@ dataCustomer.push({
     iconPhone:'call',
     hintemail:'Email',
     iconEmail:'email',
+    hintAddress:'Address',
+    iconAddress1:'building',
+    iconAddress2:'map',
     add:'true',
 })
 
@@ -80,6 +82,9 @@ setModalVisible_truck() {
         iconPhone:'call',
         hintemail:'Email',
         iconEmail:'email',
+        hintAddress:'Address',
+        iconAddress1:'building',
+        iconAddress2:'map',
         add:'true',
     })
 
@@ -98,6 +103,12 @@ setModalVisible_truck() {
             iconPhone={data.iconPhone}
             hintemail={data.hintemail}
             iconEmail={data.iconEmail}
+            hintemail={data.hintemail}
+            iconEmail={data.iconEmail}
+            hintemail={data.hintemail}
+            hintAddress={data.hintAddress}
+            iconAddress1={data.iconAddress1}
+            iconAddress2={data.iconAddress2}
             add={data.add}
           />
       </View>
@@ -121,7 +132,7 @@ setModalVisible_truck() {
           </Header>
           <Content style={styles.content}>
               <View style={styles.titGeneral}>
-                  <Text style={styles.titBold}>Status</Text>
+                  <Text bold>Status</Text>
               </View>
               <TouchableOpacity onPress={()=> this.setModalVisible_status()}>
                 <View style={{ flexDirection: 'row'}}>
@@ -146,12 +157,12 @@ setModalVisible_truck() {
               }
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titBold}>Start time</Text>
+                  <Text bold>Start time</Text>
               </View>
               <CheckDate />
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titBold}>Truck</Text>
+                  <Text bold>Truck</Text>
               </View>
               <TouchableOpacity onPress={()=> this.setModalVisible_truck()}>
               <View 

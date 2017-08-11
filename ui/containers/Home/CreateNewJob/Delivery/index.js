@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
   Linking,
@@ -12,7 +11,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
 import InputRow from '~/ui/elements/InputRow';
 import DeliverInfo from '~/ui/elements/DeliverInfo';
@@ -137,7 +136,7 @@ export default class extends Component {
           <Content style={styles.content}>
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titBold}>Pick Up</Text>
+                  <Text bold>Pick Up</Text>
                   <TouchableOpacity style={styles.buttonAdd} 
                     onPress={() => this.addPickUp()}>
                     <Icon size={18} style={styles.iconAdd}
@@ -150,7 +149,7 @@ export default class extends Component {
               }
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titBold}>Drop Off</Text>
+                  <Text bold>Drop Off</Text>
                   <TouchableOpacity style={styles.buttonAdd} 
                     onPress={() => this.addDropOff()}>
                     <Icon size={18} style={styles.iconAdd}

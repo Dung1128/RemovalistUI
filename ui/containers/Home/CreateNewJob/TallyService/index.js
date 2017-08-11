@@ -2,13 +2,12 @@ import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  Text,
   View,
   TouchableOpacity,
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem } from 'native-base';
+import { Container, Header, Left, Body, Right, Button, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
 import InputService from '~/ui/elements/InputService';
 import Icon from '~/ui/components/Icon';
 
@@ -31,28 +30,28 @@ export default class extends Component {
           <Content style={styles.content}>
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titTitBold}>Service Time</Text>
+                  <Text bold>Service Time</Text>
                   <Text style={styles.titPrice}>$120</Text>   
               </View>
 
               <InputService nameIcon='time' measure='hr'/>
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titTitBold}>Travel Time</Text>
+                  <Text bold>Travel Time</Text>
                   <Text style={styles.titPrice}>$120</Text>  
               </View>
 
               <InputService nameIcon='time' measure='hr'/>
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titTitBold}>Fuel/RUCS</Text>
+                  <Text bold>Fuel/RUCS</Text>
                   <Text style={styles.titPrice}>$120</Text>  
               </View>
 
               <InputService nameIcon='gas' measure='km'/>
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titTitBold}>Material</Text>
+                  <Text bold>Material</Text>
                   <Text style={styles.titPrice}>$120</Text>
                   <TouchableOpacity style={styles.buttonAdd} 
                     onPress={() => console.log('ok')}>
@@ -64,7 +63,7 @@ export default class extends Component {
               <InputService nameIcon='material'/>
 
               <View style={styles.titGeneral}>
-                  <Text style={styles.titTitBold}>GST</Text>
+                  <Text bold>GST</Text>
                   <Text style={styles.titPrice}>$120</Text>  
               </View>
 

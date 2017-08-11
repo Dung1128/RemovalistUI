@@ -9,7 +9,7 @@ import Icon from '~/ui/components/Icon';
 export default class extends Component {
 
     render() {
-        const { hint, nameIcon, add,  ...props } = this.props;
+        const { hint, nameIcon, add, onPress, onChangeText,   ...props } = this.props;
         return (
             <View 
                 style={{ 
@@ -28,9 +28,10 @@ export default class extends Component {
                 <TextInput
                     underlineColorAndroid="transparent"
                     placeholder={hint}
+                    onChangeText={onChangeText}
                  style={{ height: 50, width: '100%'}}/>
                  { add && <TouchableOpacity style={styles.buttonAdd} 
-                    onPress={() => this.addCustomer()}>
+                    onPress={onPress} {...props}>
                     <Icon size={18} style={styles.iconAdd}
                       name='add'/>  
                   </TouchableOpacity>  }
