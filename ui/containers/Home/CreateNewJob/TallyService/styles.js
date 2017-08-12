@@ -16,7 +16,8 @@ export default {
         padding: 10,
         backgroundColor: material.grayTitle,
         flexDirection: 'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
     },
     titTitBold: {
         fontWeight: 'bold',

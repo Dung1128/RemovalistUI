@@ -13,8 +13,41 @@ import Icon from '~/ui/components/Icon';
 import Button from '~/ui/components/Button';
 import Header from '~/ui/components/Header';
 
+const dataMaterial = [];
+dataMaterial.push({
+    nameIcon:'material'
+})
+
 export default class extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = ({
+            listMaterial: dataMaterial
+        });
+
+    }
+
+    addMaterial() {
+        let newList = this.state.listMaterial
+        newList.push({
+            nameIcon:'material'
+        })
+
+        this.setState({
+            listMaterial: newList
+        })
+    }
+
+    renderRow(data, index) {
+        return (
+            <View key={index} style={{ marginBottom: 10 }}>
+                <InputService
+                    nameIcon={data.nameIcon}
+                />
+            </View>
+        )
+    }
 
     render() {
         return (
@@ -47,13 +80,14 @@ export default class extends Component {
                         <Text bold>Material</Text>
                         <Text style={styles.titPrice}>$120</Text>
                         <TouchableOpacity style={styles.buttonAdd}
-                            onPress={() => console.log('ok')}>
+                            onPress={() => this.addMaterial()}>
                             <Icon size={18} style={styles.iconAdd}
                                 name='add' />
                         </TouchableOpacity>
                     </View>
-                    <InputService nameIcon='material' />
-                    <InputService nameIcon='material' />
+                    {
+                        this.state.listMaterial.map((item, index) => this.renderRow(item, index))
+                    }
 
                     <View style={styles.titGeneral}>
                         <Text bold>GST</Text>
