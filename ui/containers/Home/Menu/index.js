@@ -6,7 +6,8 @@ import {
     Animated,
     TouchableWithoutFeedback,
     Keyboard,
-    Linking
+    Linking,
+    Alert
 } from 'react-native';
 import {
     Container,
@@ -18,14 +19,13 @@ import {
     Text,
     Thumbnail,
     Label,
-    ListItem,
+    ListItem
 } from 'native-base';
 import styles from './styles';
 import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
-// import { firebaseConnect, pathToJS, isLoaded } from 'react-redux-firebase'
 import { Field, reduxForm } from 'redux-form';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from '~/ui/components/Icon';
 import * as authActions from '~/store/actions/auth';
 import * as commonActions from '~/store/actions/common';
 import * as authSelectors from '~/store/selectors/auth';
@@ -33,7 +33,7 @@ import Preload from '~/ui/components/Preload';
 import * as accountSelectors from '~/store/selectors/account';
 import StatusItem from '~/ui/components/StatusItem';
 import material from '~/theme/variables/material'
-// import Icon from '~/ui/elements/Icon';
+import { logo } from '~/assets';
 
 // @firebaseConnect()
 @connect(
@@ -44,18 +44,36 @@ import material from '~/theme/variables/material'
 )
 export default class extends Component {
     onLogout() {
-        Linking.openURL('https://minhchien.au.auth0.com/v2/logout').catch(err => console.error('An error occurred', err));
-        this.props.setAuthState(false);
+        Alert.alert('Notify', 'Are you sure to log out?',
+            [
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                {
+                    text: 'OK', onPress: () => {
+                        Linking.openURL('https://minhchien.au.auth0.com/v2/logout').catch(err => console.error('An error occurred', err));
+                        this.props.setAuthState(false);
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
     }
+
+    openWeb() {
+        Linking.openURL('https://www.removalist.com').catch(err => console.error('An error occurred', err));
+    }
+
     render() {
         const { navigation, profile, chooseAddress } = this.props;
         return (
             <View style={{ flex: 1 }}>
-                <ListItem style={{ flexDirection: 'column' }}>
-                    <Text>Jeremy Baldwin</Text>
-                    <TouchableOpacity onPress={() => this.onLogout()}>
-                        <Text style={{ color: '#ed502b' }}>LOGOUT</Text>
-                    </TouchableOpacity>
+                <ListItem style={{ flexDirection: 'row' }}>
+                    <Image style={{ width: 30, height: 30, marginRight: 10 }} source={logo} />
+                    <View style={{ flexDirection: 'column' }}>
+                        <Text primary>Jeremy Baldwin</Text>
+                        <TouchableOpacity onPress={() => this.onLogout()}>
+                            <Text style={{ color: '#ed502b' }}>LOGOUT</Text>
+                        </TouchableOpacity>
+                    </View>
                 </ListItem>
                 <ListItem>
                     <TouchableOpacity
@@ -63,7 +81,7 @@ export default class extends Component {
                         onPress={() => navigation.navigate('jobtoday')}
                     >
                         <View style={styles.iconForm}>
-                            <Icon name="truck" size={30} color="#8796A0" />
+                            <Icon name="truck" size={30} color={material.blackColor} />
                         </View>
 
                         <Text style={styles.itemText}>Jobs - Today</Text>
@@ -109,7 +127,15 @@ export default class extends Component {
                 >
                     <StatusItem width={10} style={styles.statusItem} color={material.grayColor} />
 
-                    <Text style={styles.itemText}>Archived</Text>
+                    <Text style={styles.itemText}>Cancelled</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.website}
+                    onPress={() => this.openWeb()}
+                >
+
+                    <Text style={{ ...styles.itemText, padding: 0, marginLeft: 20 }}>Visit</Text>
+                    <Text style={{ ...styles.itemText, color: material.redColor, padding: 0 }} > www.removalist.com</Text>
                 </TouchableOpacity>
             </View>
         );

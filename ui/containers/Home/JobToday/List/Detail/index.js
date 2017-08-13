@@ -27,7 +27,7 @@ import styles from './styles'
 
 import * as jobActions from '~/store/actions/job'
 import * as jobSelectors from '~/store/selectors/job'
-const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6ImVvc29UR3FCMHZwNWlsS1dWMGcxclZmaVBFMGRaWnVGQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTAyNTA2MTM1LCJpYXQiOjE1MDI0MTk3MzUsInNjb3BlIjoiIn0.ReSNkSK_qln2Ose80tBJL11Y8A_-v4tlgHE3SUgqOUAdwh_9zcnO-YvYCSGlmy7MSUp7EbbmAAec6se5Rq6hl_sdC2oTaHod9qlR_pNy4Ht6AUcYGkBj2LUYNEADlynFEfqRAaPj0QOu23fKsm-keqxG-EGkzkGuLm2_6tXk5ILUzKLLsTXeN44z_pimmrbsmi3mlkAusDHBy7PcUeAHo6dhPHpkqM7u1bIbkh0JgMqkdUeNV0D6OdM_XMhCApWhJBBa8aqVUHPlDDSich9vMq7WUFHydpC30JwtT7ajVq0490Y8TvJjWksW-9CuL32n84frMr5M-lOggA9kNNEhLw'
+const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6ImVvc29UR3FCMHZwNWlsS1dWMGcxclZmaVBFMGRaWnVGQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTExMDg3NDQ0LCJpYXQiOjE1MDI0NDc0NDQsInNjb3BlIjoiIn0.U3xQQLeGTFuzr-37PXefhZnynHWYUx7Ow_SuBfb8FM2S3cxAQdk6WN14bPKqSKaAsbMU7Sd6VsvTFDtlSRrkDmghfNNIQ7eTD8qECZ6N94XePH-oggOM7PDUVsWzTT5t5279w-8PFc5NjByPiptu-hvAV2JAR0tJd_UDJHF-tArnYeq99v_bftkdhngd_JblRJBC6oDqaAGPaAQa4SCL0aG3WxUXVz1CeLywyKUBYVE88RWC-GWlnwozBcegqku5BRP4zzlJmY3Xw73Bdj8zEt5aQtl_rc3EaG2mwFtUMokBNxUAqzHtG3WCFgCxb2463EvyCqJQHlwAFnzGYFwqDg'
 
 @connect(state => ({
     listStatus: jobSelectors.getStatusJobList(state)
@@ -115,73 +115,73 @@ export default class extends Component {
                 <Header title='Job details' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
                 {
                     this.state.ready ?
-                    <Container>
-                        <Content style={{ backgroundColor: material.grayBackgroundColor }}>
-                            <TitleItem title='Status' />
-                            <View onPress={() => this.showDetail()} activeOpacity={1} style={styles.wrapItems} >
-                                <StatusItem color={`#${JobStatusColor}`} />
-                                <View centerVertical style={styles.item}>
-                                    <Text>{StatusName}</Text>
+                        <Container>
+                            <Content style={{ backgroundColor: material.grayBackgroundColor }}>
+                                <TitleItem title='Status' />
+                                <View onPress={() => this.showDetail()} activeOpacity={1} style={styles.wrapItems} >
+                                    <StatusItem color={`#${JobStatusColor}`} />
+                                    <View centerVertical style={styles.item}>
+                                        <Text>{StatusName}</Text>
+                                    </View>
                                 </View>
-                            </View>
-                            <TitleItem title='Customer Info' />
-                            <View white style={{ paddingHorizontal: 5 }}>
-                                <RowItem icon='user' title={JobDetails.Contact[0].CompanyName} />
-                                <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                                <TitleItem title='Customer Info' />
+                                <View white style={{ paddingHorizontal: 5 }}>
+                                    <RowItem icon='user' title={JobDetails.Contact[0].CompanyName} />
+                                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                                    {
+                                        JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
+                                    }
+                                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                                    <RowItem icon='email' title={JobDetails.Contact[0].Email} />
+                                </View>
+                                <TitleItem title='Start Time'
+                                    right={
+                                        <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                            <ButtonIcon icon='direction' size={18} color='#fff' />
+                                            <Text style={styles.textUp}>START</Text>
+                                        </View>
+                                    }
+                                />
+                                <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
+                                    <View style={styles.itemTime}>
+                                        <Text style={styles.txttitledate}>Date</Text>
+                                        <Text style={styles.date}>{date}</Text>
+                                        <Text style={styles.txttitledate}>Today</Text>
+                                    </View>
+                                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                                    <View style={styles.itemTime}>
+                                        <Text style={styles.txttitledate}>Time</Text>
+                                        <View style={{ flexDirection: 'row' }}>
+                                            <Text style={styles.date}>{time}</Text>
+                                        </View>
+                                        <Text style={styles.txttitledate}>Duration: 6 h</Text>
+                                    </View>
+                                </View>
+                                <TitleItem title='Truck' />
+                                <View white style={{ paddingHorizontal: 5 }}>
+                                    <RowItem icon='truck' title='Truck 1' />
+                                </View>
                                 {
-                                    JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
+                                    JobDetails.JobLocations.map((item, index) => this.renderJobLocation(item, index))
                                 }
-                                <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                                <RowItem icon='email' title={JobDetails.Contact[0].Email} />
-                            </View>
-                            <TitleItem title='Start Time'
-                                right={
-                                    <View row style={{ justifyContent: 'space-between', width: '25%' }}>
-                                        <ButtonIcon icon='direction' size={18} color='#fff' />
-                                        <Text style={styles.textUp}>START</Text>
-                                    </View>
-                                }
-                            />
-                            <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
-                                <View style={styles.itemTime}>
-                                    <Text style={styles.txttitledate}>Date</Text>
-                                    <Text style={styles.date}>{date}</Text>
-                                    <Text style={styles.txttitledate}>Today</Text>
-                                </View>
-                                <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                                <View style={styles.itemTime}>
-                                    <Text style={styles.txttitledate}>Time</Text>
-                                    <View style={{ flexDirection: 'row' }}>
-                                        <Text style={styles.date}>{time}</Text>
-                                    </View>
-                                    <Text style={styles.txttitledate}>Duration: 6 h</Text>
-                                </View>
-                            </View>
-                            <TitleItem title='Truck' />
-                            <View white style={{ paddingHorizontal: 5 }}>
-                                <RowItem icon='truck' title='Truck 1' />
-                            </View>
-                            {
-                                JobDetails.JobLocations.map((item, index) => this.renderJobLocation(item, index))
-                            }
-                        </Content>
+                            </Content>
 
-                <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen')}>
-                        <Icon name='time' size={22} color={material.grayIconColor} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen')}>
-                        <Icon name='call' size={22} color={material.grayIconColor} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('chat_screen')}>
-                        <Icon name='chat' size={22} color={material.grayIconColor} />
-                        <View style={{ backgroundColor: 'red', width: 4, height: 4, borderRadius: 4 / 2, position: 'absolute', top: -5, right: -8 }} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('tally_screen')}>
-                        <Icon name='tally' size={22} color={material.grayIconColor} />
-                    </TouchableOpacity>
-                </View>
-</Container>
+                            <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen')}>
+                                    <Icon name='time' size={22} color={material.grayIconColor} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen')}>
+                                    <Icon name='call' size={22} color={material.grayIconColor} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('chat_screen')}>
+                                    <Icon name='chat' size={22} color={material.grayIconColor} />
+                                    <View style={{ backgroundColor: 'red', width: 4, height: 4, borderRadius: 4 / 2, position: 'absolute', top: -5, right: -8 }} />
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('tally_screen')}>
+                                    <Icon name='tally' size={22} color={material.grayIconColor} />
+                                </TouchableOpacity>
+                            </View>
+                        </Container>
                         :
                         <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
             </Container>

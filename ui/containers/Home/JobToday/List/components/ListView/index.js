@@ -81,7 +81,7 @@ export default class extends Component {
 
             <TouchableOpacity style={{ ...styles.hiddenButton, backgroundColor: material.grayHideColor }} onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
                 <View style={{ position: 'absolute', right: 10 }}>
-                    <Text>Archived</Text>
+                    <Text>Cancel</Text>
                 </View>
             </TouchableOpacity>
         )

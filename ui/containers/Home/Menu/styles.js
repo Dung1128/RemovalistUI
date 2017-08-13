@@ -52,7 +52,6 @@ export default {
         textAlign: 'center'
     },
     iconForm: {
-        marginRight: 7,
         marginTop: 2,
         width: material.deviceWidth * 0.1
     },
@@ -75,9 +74,14 @@ export default {
         width: 10,
         height: 25,
     },
-    statusItem: { 
-        marginLeft: 20, 
-        marginRight: 10, 
-        height: '70%' 
+    statusItem: {
+        marginLeft: 20,
+        marginRight: 10,
+        height: '70%'
+    },
+    website: {
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 20
     }
 };

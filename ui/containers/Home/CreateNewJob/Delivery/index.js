@@ -125,7 +125,7 @@ export default class extends Component {
   render() {
     return (
       <Container>
-        <Header title='Delivery Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
+        <Header title='Delivery Information' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
         <Content style={styles.content}>
 
           <View style={styles.titGeneral}>
