@@ -61,41 +61,12 @@ export default class extends Component {
     render() {
         const dayNow = this.renderDate();
         return (
-
-            this.state.ready ?
-                // <Agenda
-                //     // the list of items that have to be displayed in agenda. If you want to render item as empty date
-                //     // the value of date key kas to be an empty array []. If there exists no value for date key it is
-                //     // considered that the date in question is not yet loaded
-                //     items={this.props.dataSource}
-                //     // callback that gets called on day press
-                //     onDayPress={(day) => { console.log('day pressed') }}
-                //     // callback that gets called when day changes while scrolling agenda list
-                //     onDayChange={(day) => { console.log('day changed') }}
-                //     // initially selected day
-                //     selected={dayNow}
-                //     // specify how each item should be rendered in agenda
-                //     renderItem={(item, firstItemInDay) => { return (<Text style={{ color: 'red' }}> {firstItemInDay} </Text>); }}
-                //     // specify how each date should be rendered. day can be undefined if the item is not first in that day.
-                //     renderDay={(day, item) => this.renderDay(day, item)}
-                //     // specify how empty date content with no items should be rendered
-                //     renderEmptyDate={() => { return (<View />); }}
-                //     // specify your item comparison function for increased performance
-                //     rowHasChanged={(r1, r2) => { return r1.text !== r2.text }}
-                //     // Hide knob button. Default = false
-                //     hideKnob={false}
-                //     // agenda theme
-                //     theme={{
-                //         agendaDayTextColor: 'yellow',
-                //         agendaDayNumColor: 'green',
-                //         agendaTodayColor: 'red'
-                //     }}
-                //     // agenda container style
-                //     style={{ flex: 1, }}
-                // />
+            <View style={{ flex: 1 }}>
                 <Calendar style={{ width: '100%', marginHorizontal: 10 }} />
-                :
-                <Spinner color={material.redColor} style={{ marginTop: '50%' }} />
+                {!this.state.ready && <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
+
+
+            </View>
         );
     }
 }
