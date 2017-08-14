@@ -7,7 +7,8 @@ import {
     Linking,
     Modal,
     Alert,
-    ListView
+    ListView,
+    ScrollView
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
@@ -18,17 +19,15 @@ import CheckDate from '~/ui/elements/CheckDate';
 import Icon from '~/ui/components/Icon';
 import Button from '~/ui/components/Button';
 import Header from '~/ui/components/Header';
+import {
+    Field,
+    FieldArray,
+    reduxForm,
+} from 'redux-form'
+import {
+    CustomerField
+} from './components/Form'
 
-const datas = [
-    'Simon Mignolet',
-    'Nathaniel Clyne',
-    'Dejan Lovren',
-    'Mama Sakho',
-    'Alberto Moreno',
-    'Emre Can',
-    'Joe Allen',
-    'Phil Coutinho',
-];
 
 const dataCustomer = [];
 dataCustomer.push({
@@ -50,7 +49,7 @@ const INIT_FORM = {
 };
 
 const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6ImVvc29UR3FCMHZwNWlsS1dWMGcxclZmaVBFMGRaWnVGQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTAyNTA2MTM1LCJpYXQiOjE1MDI0MTk3MzUsInNjb3BlIjoiIn0.ReSNkSK_qln2Ose80tBJL11Y8A_-v4tlgHE3SUgqOUAdwh_9zcnO-YvYCSGlmy7MSUp7EbbmAAec6se5Rq6hl_sdC2oTaHod9qlR_pNy4Ht6AUcYGkBj2LUYNEADlynFEfqRAaPj0QOu23fKsm-keqxG-EGkzkGuLm2_6tXk5ILUzKLLsTXeN44z_pimmrbsmi3mlkAusDHBy7PcUeAHo6dhPHpkqM7u1bIbkh0JgMqkdUeNV0D6OdM_XMhCApWhJBBa8aqVUHPlDDSich9vMq7WUFHydpC30JwtT7ajVq0490Y8TvJjWksW-9CuL32n84frMr5M-lOggA9kNNEhLw'
-
+@reduxForm({ form: 'CustomerInfo', enableReinitialize: true, destroyOnUnmount: !module.hot })
 export default class extends Component {
 
     constructor(props) {
@@ -59,7 +58,6 @@ export default class extends Component {
         this.state = ({
             modalVisible_Truck: false,
             modalVisible_Status: false,
-            listViewData: datas,
             truck: 'Truck 1',
             status: 'Enquery',
             listCustomer: dataCustomer
@@ -82,60 +80,19 @@ export default class extends Component {
         }
     }
 
-    addCustomer() {
-        let newList = this.state.listCustomer
-        newList.push({
-            hintuser: 'Username',
-            iconUser: 'user',
-            hintphone: 'Phone 1',
-            iconPhone: 'call',
-            hintemail: 'Email',
-            iconEmail: 'email',
-            hintAddress: 'Address',
-            iconAddress1: 'building',
-            iconAddress2: 'map',
-            add: 'true',
-        })
 
-        this.setState({
-            listCustomer: newList
-        })
-    }
-
-    renderRow(data, index) {
-        return (
-            <View key={index} style={{ marginBottom: 10 }}>
-                <CustomerInfo
-                    customerInfo={data}
-                    hintuser={data.hintuser}
-                    iconUser={data.iconUser}
-                    hintphone={data.hintphone}
-                    iconPhone={data.iconPhone}
-                    hintemail={data.hintemail}
-                    iconEmail={data.iconEmail}
-                    hintemail={data.hintemail}
-                    iconEmail={data.iconEmail}
-                    hintemail={data.hintemail}
-                    hintAddress={data.hintAddress}
-                    iconAddress1={data.iconAddress1}
-                    iconAddress2={data.iconAddress2}
-                    add={data.add}
-                    onChangeTextUser={(val) => this.setState({ username: val })}
-                    onChangeTextEmail={(val) => this.setState({ email: val })}
-                    onChangeTextAddress1={(val) => this.setState({ Address1: val })}
-                    onChangeTextAddress2={(val) => this.setState({ Address2: val })}
-                />
-            </View>
-        )
+    submitForm(values) {
+        console.log(values)
     }
 
     render() {
         var items = ['Simon Mignolet', 'Nathaniel Clyne', 'Dejan Lovren', 'Mama Sakho', 'Emre Can', 'Simon Mignolet', 'Nathaniel Clyne', 'Dejan Lovren', 'Mama Sakho', 'Emre Can'];
         var itemsStatus = ['Enquery', 'To be comfirmed', 'Booked',];
+        const { handleSubmit, submitting } = this.props
         return (
             <Container>
                 <Header title='General Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
-                <Content style={styles.content}>
+                <ScrollView style={styles.content}>
                     <View style={styles.titGeneral}>
                         <Text bold>Status</Text>
                     </View>
@@ -148,18 +105,7 @@ export default class extends Component {
                             </View>
                         </View>
                     </TouchableOpacity>
-
-                    <View style={styles.titGeneral}>
-                        <Text style={styles.titBold}>Customer Info</Text>
-                        <TouchableOpacity style={styles.buttonAdd}
-                            onPress={() => this.addCustomer()}>
-                            <Icon size={18} style={styles.iconAdd}
-                                name='add' />
-                        </TouchableOpacity>
-                    </View>
-                    {
-                        this.state.listCustomer.map((item, index) => this.renderRow(item, index))
-                    }
+                    <FieldArray name="customer" component={CustomerField} />
 
                     <View style={styles.titGeneral}>
                         <Text bold>Start time</Text>
@@ -178,10 +124,11 @@ export default class extends Component {
                         </View>
                     </TouchableOpacity>
 
-                </Content>
-                <Button 
-                onPress={() => this.props.navigation.navigate('delivery_screen')} 
-                full iconRight='arrow-right' text='DELIVERY INFO' />
+                </ScrollView>
+                <Button
+                    onPress={() => this.props.navigation.navigate('delivery_screen')}
+                    //onPress={handleSubmit(this.submitForm.bind(this))}
+                    full iconRight='arrow-right' text='DELIVERY INFO' />
 
                 <Modal
                     animationType="fade"

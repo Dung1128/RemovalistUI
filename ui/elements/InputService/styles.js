@@ -11,9 +11,8 @@ export default {
         paddingLeft: 10
     },
     content: {
-        paddingLeft: 10, 
+        paddingLeft: 10,
         paddingRight: 10,
-        fontWeight: 'bold'
     },
     colorIcon: {
         color: 'gray'

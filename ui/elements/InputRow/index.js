@@ -10,7 +10,7 @@ import material from '~/theme/variables/material'
 export default class extends Component {
 
     render() {
-        const { hint, nameIcon, add, onPress, onChangeText, ...props } = this.props;
+        const { hint, nameIcon, add, addIcon, onPress, onChangeText, ...props } = this.props;
         return (
             <View
                 style={{
@@ -27,6 +27,7 @@ export default class extends Component {
                 collapsable={false} {...props}>
                 <Icon name={nameIcon} size={20} style={{ color: 'gray', paddingHorizontal: 0 }} />
                 <Input
+                    autoCapitalize='none'
                     placeholderTextColor={material.grayColor}
                     underlineColorAndroid="transparent"
                     placeholder={hint}
@@ -35,7 +36,7 @@ export default class extends Component {
                 {add && <TouchableOpacity style={styles.buttonAdd}
                     onPress={onPress} {...props}>
                     <Icon size={18} style={styles.iconAdd}
-                        name='add' />
+                        name={addIcon} />
                 </TouchableOpacity>}
 
             </View>

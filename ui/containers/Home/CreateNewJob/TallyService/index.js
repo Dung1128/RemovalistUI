@@ -12,95 +12,90 @@ import InputService from '~/ui/elements/InputService';
 import Icon from '~/ui/components/Icon';
 import Button from '~/ui/components/Button';
 import Header from '~/ui/components/Header';
+import TitleItem from '~/ui/components/TitleItem';
+import ButtonIcon from '~/ui/components/ButtonIcon';
+import {
+    Field,
+    FieldArray,
+    reduxForm,
+} from 'redux-form'
+import {
+    InputServiceField
+} from './components/Form'
 
-const dataMaterial = [];
-dataMaterial.push({
-    nameIcon:'material'
-})
-
+@reduxForm({ form: 'TallyService', enableReinitialize: true, destroyOnUnmount: !module.hot })
 export default class extends Component {
 
     constructor(props) {
         super(props);
         this.state = ({
-            listMaterial: dataMaterial
         });
 
     }
 
-    addMaterial() {
-        let newList = this.state.listMaterial
-        newList.push({
-            nameIcon:'material'
-        })
-
-        this.setState({
-            listMaterial: newList
-        })
-    }
-
-    renderRow(data, index) {
-        return (
-            <View key={index} style={{ marginBottom: 10 }}>
-                <InputService
-                    nameIcon={data.nameIcon}
-                />
-            </View>
-        )
+    submitForm(values) {
+        console.log(values)
     }
 
     render() {
+        const { handleSubmit, submitting } = this.props
         return (
             <Container>
                 <Header title='Tally service infomation' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
                 <Content style={styles.content}>
-
-                    <View style={styles.titGeneral}>
-                        <Text bold>Service Time</Text>
-                        <Text style={styles.titPrice}>$120</Text>
-                    </View>
-
+                    <TitleItem
+                        title='Service Time'
+                        right={
+                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                <Text style={styles.titPrice}>$120</Text>
+                            </View>
+                        }
+                    />
+                    <Field name='time' component={InputServiceField} nameIcon='time' measure='hr' />
+                    <TitleItem
+                        title='Travel Time'
+                        right={
+                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                <Text style={styles.titPrice}>$120</Text>
+                            </View>
+                        }
+                    />
                     <InputService nameIcon='time' measure='hr' />
-
-                    <View style={styles.titGeneral}>
-                        <Text bold>Travel Time</Text>
-                        <Text style={styles.titPrice}>$120</Text>
-                    </View>
-
-                    <InputService nameIcon='time' measure='hr' />
-
-                    <View style={styles.titGeneral}>
-                        <Text bold>Fuel/RUCS</Text>
-                        <Text style={styles.titPrice}>$120</Text>
-                    </View>
-
+                    <TitleItem
+                        title='Fuel/RUCS'
+                        right={
+                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                <Text style={styles.titPrice}>$120</Text>
+                            </View>
+                        }
+                    />
                     <InputService nameIcon='gas' measure='km' />
-
-                    <View style={styles.titGeneral}>
-                        <Text bold>Material</Text>
-                        <Text style={styles.titPrice}>$120</Text>
-                        <TouchableOpacity style={styles.buttonAdd}
-                            onPress={() => this.addMaterial()}>
-                            <Icon size={18} style={styles.iconAdd}
-                                name='add' />
-                        </TouchableOpacity>
-                    </View>
-                    {
-                        this.state.listMaterial.map((item, index) => this.renderRow(item, index))
-                    }
-
-                    <View style={styles.titGeneral}>
-                        <Text bold>GST</Text>
-                        <Text style={styles.titPrice}>$120</Text>
-                    </View>
-
+                    <TitleItem
+                        title='Material'
+                        right={
+                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                <Text style={styles.titPrice}>$120</Text>
+                            </View>
+                        }
+                    />
+                    <TitleItem title='GST'
+                        right={
+                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                <Text style={styles.titPrice}>$120</Text>
+                            </View>
+                        } />
                     <View style={styles.totalPrice}>
                         <Text style={styles.txtTotal}>Total</Text>
                         <Text style={styles.txtPriceTotal}>$610</Text>
                     </View>
 
                 </Content>
-                <Button onPress={() => this.props.navigation.navigate('jobtoday_screen')} full text='SAVE' />
+                <Button
+                    onPress={handleSubmit(this.submitForm.bind(this))}
+                    //onPress={() => this.props.navigation.navigate('jobtoday_screen')} 
+                    full
+                    text='SAVE'
+                />
             </Container>
         );
     }
