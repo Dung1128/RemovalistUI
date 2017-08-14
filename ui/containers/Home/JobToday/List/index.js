@@ -19,6 +19,34 @@ import TitleItem from '~/ui/components/TitleItem';
 import ListView from './components/ListView';
 import Calendar from '~/ui/components/Calendar';
 
+const dataNoti = [
+    {
+        content: 'notification',
+        status: 'Jhonson',
+        time: '0901-212-121'
+    },
+    {
+        content: 'notification',
+        status: 'Alex',
+        time: '0901-212-121'
+    },
+    {
+        content: 'notification',
+        status: 'Jhonson',
+        time: '0901-212-121'
+    },
+    {
+        content: 'notification',
+        status: 'Jhonson',
+        time: '0901-212-121'
+    },
+    {
+        content: 'notification',
+        status: 'Jhonson',
+        time: '0901-212-121'
+    }
+]
+
 export default class extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +54,7 @@ export default class extends Component {
         this.state = {
             ready: false,
             basic: true,
+            dataSource: dataNoti,
         };
     }
 
@@ -40,6 +69,21 @@ export default class extends Component {
         const newData = [...this.state.listViewData];
         newData.splice(rowId, 1);
         this.setState({ listViewData: newData });
+    }
+
+    renderRow(data) {
+        return (
+            <TouchableOpacity style={styles.itemList}>
+                <View style={styles.statusColor}/>
+                <View style={styles.itemsJob}>
+                    <Text bold style={styles.address}>{data.content}</Text>
+                    <View style={styles.bottom}>
+                        <Text style={styles.textbottom}>{data.status}</Text>
+                        <Text style={styles.textbottom}>{data.time}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        ); 
     }
 
 
@@ -64,7 +108,14 @@ export default class extends Component {
             <View style={{ flex: 1 }}>
                 <Calendar style={{ width: '100%', marginHorizontal: 10 }} />
                 {!this.state.ready && <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
-
+                <TitleItem title='To day'/>
+                <List
+                    enableEmptySections
+                    removeClippedSubviews={false}
+                    style={{ flex: 1 }}
+                    dataArray={dataNoti}
+                    renderRow={this.renderRow.bind(this)}
+                />
 
             </View>
         );

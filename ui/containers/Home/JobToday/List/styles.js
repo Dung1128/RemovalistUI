@@ -22,5 +22,31 @@ export default {
         borderRadius: 0,
         justifyContent: 'center',
         height: 70
+    },
+    itemList: {
+        flexDirection: 'row',
+    },
+    statusColor: {
+        width: 5,
+        backgroundColor: 'red',
+        borderRadius: 5
+    },
+    address: {
+        
+    },
+    itemsJob: {
+        paddingHorizontal: 10,
+        paddingVertical: 5
+    },
+    bottom: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingTop: 10,
+        width: '80%',
+        alignItems: 'center'
+    },
+    textbottom: {
+        fontSize: 14,
+        flex: 1
     }
 }

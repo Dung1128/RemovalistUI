@@ -40,7 +40,7 @@ export default class extends Component {
             JobStatusColor: 'fff',
             JobDetails: '',
             ready: false,
-            id: this.props.navigation.state.params.id
+            id: '11'
         }
     }
 
@@ -58,6 +58,7 @@ export default class extends Component {
 
     componentDidMount() {
         this.props.getJobById(this.state.id, accessToken, (error, data) => {
+            console.log(data)
             this.renderStatus(data.JobDetails.StatusId);
             this.setState({
                 JobDetails: data.JobDetails,
