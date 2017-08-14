@@ -13,7 +13,7 @@ import Icon from '~/ui/components/Icon';
 var items = ['Type1', 'Type2', 'Type3',];
 export default class extends Component {
 
-     constructor(props) {
+    constructor(props) {
         super(props);
         this.state = ({
             modalVisible: false,
@@ -39,7 +39,7 @@ export default class extends Component {
                     justifyContent: 'center',
                     backgroundColor: '#fff',
                     borderBottomWidth: 1,
-                    borderBottomColor: material.grayTitle,             
+                    borderBottomColor: material.grayTitle,
                 }}
                 collapsable={false} {...props}>
                 <TouchableOpacity onPress={() => this.setModalVisible()}>
