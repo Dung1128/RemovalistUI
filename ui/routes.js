@@ -58,6 +58,15 @@ export const AppNavigator = DrawerNavigator(
                     tallyservice_screen: {
                         screen: TallyService
                     },
+                    notification_screen: {
+                        screen: Notifications
+                    },
+                    listchat_screen: {
+                        screen: ChatAdmin
+                    },
+                    filter_screen: {
+                        screen: Filter
+                    },
                 },
                 {
                     headerMode: 'none'
@@ -66,15 +75,6 @@ export const AppNavigator = DrawerNavigator(
         },
         enquiry: {
             screen: Enquiry
-        },
-        notification_screen: {
-            screen: Notifications
-        },
-        listchat_screen: {
-            screen: ChatAdmin
-        },
-        filter_screen: {
-            screen: Filter
         },
     },
     {
