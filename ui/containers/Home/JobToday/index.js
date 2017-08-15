@@ -77,7 +77,7 @@ export default class extends Component {
   componentDidMount() {
     this.props.getStatusJobList(accessToken, (error, data) => {
       console.log(error)
-      console.log(data)
+      // console.log(data)
     })
   }
 

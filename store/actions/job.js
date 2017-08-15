@@ -8,6 +8,11 @@ export const getJobById = (...args) => ({
     args
 })
 
+export const getJobByDate = (...args) => ({
+    type: 'job/getJobByDate',
+    args
+})
+
 
 // actions called by sagas
 

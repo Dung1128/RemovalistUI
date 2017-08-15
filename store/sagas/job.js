@@ -25,6 +25,15 @@ const requestGetJobById = createRequestSaga({
     failure: [(error) => setToast('Couldn\'t get job', 'error')]
 });
 
+const requestGetJobByDate = createRequestSaga({
+    request: api.job.getJobByDate,
+    key: 'getJobByDate',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t get job', 'error')]
+});
+
 // root saga reducer
 export default [
     // like case return, this is take => call
@@ -35,6 +44,7 @@ export default [
         yield [
             takeLatest('job/getStatusJobList', requestGetStatusJobList),
             takeLatest('job/getJobById', requestGetJobById),
+             takeLatest('job/getJobByDate', requestGetJobByDate),
         ];
     }
 ];
