@@ -18,6 +18,7 @@
     "eslint-config-rallycoding": "^3.2.0",
     "moment": "^2.18.1",
     "native-base": "2.2.0",
+    "paths-js": "^0.4.5",
     "prop-types": "^15.5.10",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
