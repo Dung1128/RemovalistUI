@@ -1,0 +1,27 @@
+# You Podfile should look similar to this file. React Native currently does not support use_frameworks!
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '8.0'
+
+# Change 'Removalist' to match the target in your Xcode project.
+target 'Removalist' do
+    
+    pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+    pod 'React', path: '../node_modules/react-native', :subspecs => [
+    'jschelpers',
+    'Core',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket'
+    ]
+    
+    pod 'Fabric'
+    pod 'Crashlytics'
+end
