@@ -84,7 +84,15 @@ export const CustomerField = ({ fields, meta: { error, submitFailed }, ...custom
     <View>
         <TitleItem title='Customer Info'
             right={
-                <ButtonIcon onPress={() => fields.push({})} icon='add' size={18} color='#fff' />
+                <ButtonIcon onPress={() => fields.push({
+                    username: '',
+                    phone: [{
+
+                    }],
+                    email: '',
+                    addressline1: '',
+                    addressline2: ''
+                })} icon='add' size={18} color='#fff' />
             }
         />
         {fields.map((member, index) => renderCustomer(member, index, fields))}

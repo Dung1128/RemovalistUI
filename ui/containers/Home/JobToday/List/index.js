@@ -80,13 +80,13 @@ export default class extends Component {
         })
     }
 
-//     componentWillUpdate(nextProps, nextState) {
-//     this.props.getJobByDate(this.state.listByDate, accessToken, (error, data) => {
-//             this.setState({
-//                 dataSource: data.JobListItemObjects,
-//             })
-//         })
-//   }  
+    //     componentWillUpdate(nextProps, nextState) {
+    //     this.props.getJobByDate(this.state.listByDate, accessToken, (error, data) => {
+    //             this.setState({
+    //                 dataSource: data.JobListItemObjects,
+    //             })
+    //         })
+    //   }  
 
     deleteRow(secId, rowId, rowMap) {
         rowMap[`${secId}${rowId}`].props.closeRow();
@@ -94,32 +94,34 @@ export default class extends Component {
         newData.splice(rowId, 1);
         this.setState({ listViewData: newData });
     }
-    renderColorStatus(key)  {
-    switch (key)   {
-      case 1:
-        return '#EB4E34';
-      case 2:
-        return '#FEDB31';
-      case 3:
-        return '#4E91DF';
-      case 4:
-        return '#D74A';
-      case 5:
-        return '#BB0DDD';
-      case 6:
-        return '#BDC4CB';
-      default:
-        break;
+    renderColorStatus(key) {
+        switch (key) {
+            case 1:
+                return '#EB4E34';
+            case 2:
+                return '#FEDB31';
+            case 3:
+                return '#4E91DF';
+            case 4:
+                return '#D74A';
+            case 5:
+                return '#BB0DDD';
+            case 6:
+                return '#BDC4CB';
+            default:
+                break;
+        }
     }
-  }
 
     renderRow(data) {
         // this.renderStatus(data.StatusId);
         return (
-            <TouchableOpacity style={styles.itemList} onPress={()=>  this.props.navigation.navigate('detail_screen', {id: data.JobDetailsId})}>
-                <View style={{ width: 5,
+            <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })}>
+                <View style={{
+                    width: 5,
                     backgroundColor: this.renderColorStatus(data.StatusId),
-                    borderRadius: 5}}/>
+                    borderRadius: 5
+                }} />
                 <View style={styles.itemsJob}>
                     <Text bold style={styles.address}>{data.Address}</Text>
                     <View style={styles.bottom}>
@@ -128,7 +130,7 @@ export default class extends Component {
                     </View>
                 </View>
             </TouchableOpacity>
-        ); 
+        );
     }
 
     renderDate(d) {
@@ -156,38 +158,39 @@ export default class extends Component {
         )
     }
 
-    componentWillUpdate() {
-        this.prop
+    onDateSelect(date) {
+        setTimeout(() => {
+            this.setState({
+                listByDate: this.renderDate(date),
+                dateTitle: this.renderDateTit(date)
+            })
+            this.updateList(this.renderDate(date));
+        }, 10000)
+
     }
- 
+
     render() {
         // const dayNow = this.renderDate();
         return (
             <View style={{ flex: 1 }}>
-                <Calendar style={{ width: '100%', marginHorizontal: 10 }} onDateSelect={date=>{
-                    this.setState({
-                        listByDate: this.renderDate(date),
-                        dateTitle: this.renderDateTit(date)
-                    })
-                    this.updateList(this.renderDate(date));
-                    }}/>
+                <Calendar style={{ width: '100%', marginHorizontal: 10 }} onDateSelect={date => this.onDateSelect()} />
                 {
-                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='To day'/> : <TitleItem title={this.state.dateTitle}/>
+                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='To day' /> : <TitleItem title={this.state.dateTitle} />
                 }
                 {!this.state.ready && <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
                 {
-                    this.state.dataSource.length == 0 ? 
-                    <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
-                        <Text>Data not found</Text>
-                    </View>
-                    :
-                    <List
-                        enableEmptySections
-                        removeClippedSubviews={false}
-                        style={{ flex: 1 }}
-                        dataArray={this.state.dataSource}
-                        renderRow={this.renderRow.bind(this)}
-                    />
+                    this.state.dataSource.length == 0 ?
+                        <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
+                            <Text>Data not found</Text>
+                        </View>
+                        :
+                        <List
+                            enableEmptySections
+                            removeClippedSubviews={false}
+                            style={{ flex: 1 }}
+                            dataArray={this.state.dataSource}
+                            renderRow={this.renderRow.bind(this)}
+                        />
                 }
             </View>
         );
