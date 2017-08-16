@@ -40,7 +40,7 @@ const renderPickUp = (member, index, fields) => {
             {
                 index != 0 && <TitleItem title='Pick Up'
                     right={
-                        <ButtonIcon onPress={() => fields.remove(index)} icon='delete' size={18} color='#fff' />
+                        <ButtonIcon onPress={() => fields.remove(index)} iconRemove size={18} color='#fff' />
                     }
                 />
             }
@@ -52,7 +52,7 @@ const renderPickUp = (member, index, fields) => {
     )
 }
 
-export const PickUpField = ({ fields, meta: { error, submitFailed }, ...custom }) => (
+export const PickUpField = ({ fields, meta: { error, submitFailed }, ...custom }) => console.log(fields)||(
     <View>
         <TitleItem title='Pick Up'
             right={
@@ -69,7 +69,7 @@ const renderDropOff = (member, index, fields) => {
             {
                 index != 0 && <TitleItem title='Drop Off'
                     right={
-                        <ButtonIcon onPress={() => fields.remove(index)} icon='delete' size={18} color='#fff' />
+                        <ButtonIcon onPress={() => fields.remove(index)} iconRemove size={18} color='#fff' />
                     }
                 />
             }

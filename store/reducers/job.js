@@ -8,8 +8,15 @@
 export const job = (state = {}, { type, payload }) => {
     switch (type) {
         case 'job/saveListStatus':
-            // payload is access token
             return { ...state, listStatus: payload };
+        case 'job/saveListMaterial':
+            return { ...state, listMaterial: payload };
+        case 'job/saveMaterialCategoryList':
+            return { ...state, listMaterialCategory: payload };
+        case 'job/saveTruckList':
+            return { ...state, listTruck: payload };
+        case 'job/saveReferenceContactList':
+            return { ...state, listReferenceContact: payload };
         default:
             return state;
     }

@@ -14,15 +14,38 @@ import Button from '~/ui/components/Button';
 import Header from '~/ui/components/Header';
 import TitleItem from '~/ui/components/TitleItem';
 import ButtonIcon from '~/ui/components/ButtonIcon';
+import { connect } from 'react-redux'
 import {
     Field,
     FieldArray,
     reduxForm,
 } from 'redux-form'
 import {
-    InputServiceField
+    InputServiceField,
+    MaterialArray
 } from './components/Form'
 
+@connect(
+    state => ({
+        initialValues: {
+            servicetime: {
+                status: '00:00',
+                input: '',
+            },
+            traveltime: {
+                status: '00:00',
+                input: '',
+            },
+            fuel: {
+                status: 'Type 1',
+                input: '',
+            },
+            material: [{
+                status: 'Type 1',
+                input: '',
+            }]
+        }
+    }), )
 @reduxForm({ form: 'TallyService', enableReinitialize: true, destroyOnUnmount: !module.hot })
 export default class extends Component {
 
@@ -46,41 +69,42 @@ export default class extends Component {
                     <TitleItem
                         title='Service Time'
                         right={
-                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                            <View row style={styles.money}>
                                 <Text style={styles.titPrice}>$120</Text>
                             </View>
                         }
                     />
-                    <Field name='time' component={InputServiceField} nameIcon='time' measure='hr' />
+                    <InputServiceField name='servicetime' nameIcon='time' measure='hr' />
                     <TitleItem
                         title='Travel Time'
                         right={
-                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                            <View row style={styles.money}>
                                 <Text style={styles.titPrice}>$120</Text>
                             </View>
                         }
                     />
-                    <InputService nameIcon='time' measure='hr' />
+                    <InputServiceField name='traveltime' nameIcon='time' measure='hr' />
                     <TitleItem
                         title='Fuel/RUCS'
                         right={
-                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                            <View row style={styles.money}>
                                 <Text style={styles.titPrice}>$120</Text>
                             </View>
                         }
                     />
-                    <InputService nameIcon='gas' measure='km' />
+                    <InputServiceField name='fuel' nameIcon='gas' measure='hr' />
                     <TitleItem
                         title='Material'
                         right={
-                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                            <View row style={styles.money}>
                                 <Text style={styles.titPrice}>$120</Text>
                             </View>
                         }
                     />
+                    <FieldArray name='material' component={MaterialArray} nameIcon='time' measure='hr' />
                     <TitleItem title='GST'
                         right={
-                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                            <View row style={styles.money}>
                                 <Text style={styles.titPrice}>$120</Text>
                             </View>
                         } />
@@ -91,6 +115,7 @@ export default class extends Component {
 
                 </Content>
                 <Button
+                    //disable
                     onPress={handleSubmit(this.submitForm.bind(this))}
                     //onPress={() => this.props.navigation.navigate('jobtoday_screen')} 
                     full

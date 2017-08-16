@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, TextInput, TouchableOpacity, Platform } from 'react-native';
 import { View, Input } from 'native-base';
-
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome'
 import IconMaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import styles from './styles';
@@ -10,7 +10,7 @@ import material from '~/theme/variables/material'
 export default class extends Component {
 
     render() {
-        const { hint, nameIcon, add, addIcon, onPress, onChangeText, ...props } = this.props;
+        const { hint, nameIcon, add, iconRemove, size=18, addIcon, onPress, onChangeText, ...props } = this.props;
         return (
             <View
                 style={{
@@ -35,8 +35,10 @@ export default class extends Component {
                     style={{ height: 50, width: '100%', marginHorizontal: 10 }} />
                 {add && <TouchableOpacity style={styles.buttonAdd}
                     onPress={onPress} {...props}>
-                    <Icon size={18} style={styles.iconAdd}
-                        name={addIcon} />
+                        {addIcon == 'delete'
+                        ? <IconIonicons name='md-remove' style={{ paddingHorizontal: 4, height: 20 }} size={size} color='#fff' />
+                        : <Icon size={16} style={styles.iconAdd} name={addIcon} />
+                    }
                 </TouchableOpacity>}
 
             </View>

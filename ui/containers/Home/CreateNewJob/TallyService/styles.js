@@ -2,7 +2,7 @@ import material from '~/theme/variables/material';
 
 export default {
     container: {
-        backgroundColor: material.redColor, 
+        backgroundColor: material.redColor,
         borderBottomColor: material.redColor
     },
     textHeader: {
@@ -10,7 +10,7 @@ export default {
         fontSize: 18,
     },
     content: {
-         backgroundColor: material.grayTitle,
+        backgroundColor: material.grayTitle,
     },
     titGeneral: {
         padding: 10,
@@ -44,7 +44,7 @@ export default {
         color: '#fff'
     },
     iconFooter: {
-        fontSize: 30, 
+        fontSize: 30,
         color: '#fff',
         position: 'absolute',
         top: 10,
@@ -74,7 +74,11 @@ export default {
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 3,
-        position:'absolute',
+        position: 'absolute',
         right: 10
     },
+    money: {
+        justifyContent: 'space-between',
+        width: '20%'
+    }
 };

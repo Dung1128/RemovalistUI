@@ -4,7 +4,18 @@ import api from '~/store/api';
 import { createRequestSaga } from '~/store/sagas/common';
 import { setToast, noop, forwardTo } from '~/store/actions/common';
 
-import { saveListStatus, getJobById } from '~/store/actions/job';
+import {
+    saveListStatus,
+    saveListMaterial,
+    saveMaterialCategoryList,
+    saveTruckList,
+    saveReferenceContactList,
+    getJobById,
+    getMaterialList,
+    getMaterialCategoryList,
+    getTruckList,
+    getReferenceContactList
+} from '~/store/actions/job';
 
 const requestGetStatusJobList = createRequestSaga({
     request: api.job.getStatusJobList,
@@ -12,7 +23,7 @@ const requestGetStatusJobList = createRequestSaga({
     success: [
         data => saveListStatus(data.JobStatuses)
     ],
-    failure: [(error) => setToast('Couldn\'t get job', 'error')]
+    failure: [(error) => setToast('Couldn\'t get job list', 'error')]
 });
 
 
@@ -25,6 +36,41 @@ const requestGetJobById = createRequestSaga({
     failure: [(error) => setToast('Couldn\'t get job', 'error')]
 });
 
+const requestGetMaterialList = createRequestSaga({
+    request: api.job.getMaterialList,
+    key: 'getMaterialList',
+    success: [
+        data => saveListMaterial(data.Material)
+    ],
+    failure: [(error) => setToast('Couldn\'t get job material list', 'error')]
+});
+
+const requestGetMaterialCategoryList = createRequestSaga({
+    request: api.job.getMaterialCategoryList,
+    key: 'getMaterialCategoryList',
+    success: [
+        data => saveMaterialCategoryList(data.MaterialCategories)
+    ],
+    failure: [(error) => setToast('Couldn\'t get job material list category', 'error')]
+});
+
+const requestGetTruckList = createRequestSaga({
+    request: api.job.getTruckList,
+    key: 'getTruckList',
+    success: [
+        data => saveTruckList(data.Trucks)
+    ],
+    failure: [(error) => setToast('Couldn\'t get job material list truck', 'error')]
+});
+
+const requestGetReferenceContactList = createRequestSaga({
+    request: api.job.getReferenceContactList,
+    key: 'getReferenceContactList',
+    success: [
+        data => saveReferenceContactList(data.ReferContacts)
+    ],
+    failure: [(error) => setToast('Couldn\'t get Refer Contacts', 'error')]
+});
 const requestGetJobByDate = createRequestSaga({
     request: api.job.getJobByDate,
     key: 'getJobByDate',
@@ -44,7 +90,11 @@ export default [
         yield [
             takeLatest('job/getStatusJobList', requestGetStatusJobList),
             takeLatest('job/getJobById', requestGetJobById),
-             takeLatest('job/getJobByDate', requestGetJobByDate),
+            takeLatest('job/getMaterialList', requestGetMaterialList),
+            takeLatest('job/getMaterialCategoryList', requestGetMaterialCategoryList),
+            takeLatest('job/getTruckList', requestGetTruckList),
+            takeLatest('job/getReferenceContactList', requestGetReferenceContactList),
+            takeLatest('job/getJobByDate', requestGetJobByDate),
         ];
     }
 ];

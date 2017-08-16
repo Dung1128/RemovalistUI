@@ -1,10 +1,6 @@
 import material from '~/theme/variables/material';
-export default {
 
-    border: {
-        borderWidth: 0.5,
-        borderColor: material.grayTitle
-    },
+export default {
     Item: {
         flex: 1,
         borderRightWidth: 1,
@@ -12,11 +8,13 @@ export default {
         padding: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 10,
-        justifyContent: 'center',
+        paddingLeft: 10
     },
-    button: {
-        position: 'absolute',
-        right: 10,
+    content: {
+        paddingLeft: 10,
+        paddingRight: 10,
+    },
+    colorIcon: {
+        color: 'gray'
     }
 };

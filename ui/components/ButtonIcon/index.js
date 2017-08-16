@@ -9,18 +9,22 @@ import {
     Text,
     View,
     Title,
-    Button
+    Button,
 } from 'native-base';
+import IconIonicons from 'react-native-vector-icons/Ionicons';
 import material from '~/theme/variables/material'
 import Icon from '~/ui/components/Icon';
 import styles from './styles'
 export default class extends Component {
     render() {
-        const { title, icon, size = 22, right, color = material.grayIconColor, onPress, ...props } = this.props;
+        const { title, icon, iconRemove, size = 22, right, color = material.grayIconColor, onPress, ...props } = this.props;
         return (
             <View {...props}>
                 <TouchableOpacity onPress={onPress} style={styles.button} >
-                    <Icon name={icon} size={size} color={color} />
+                    {iconRemove
+                        ? <IconIonicons name='md-remove' style={{ paddingHorizontal: 2, height: 16 }} size={size} color={color} />
+                        : <Icon name={icon} size={size} color={color} />
+                    }
                 </TouchableOpacity>
             </View>
         )

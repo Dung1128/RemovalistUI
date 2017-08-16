@@ -37,7 +37,6 @@ const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4Ump
 export default class extends Component {
   constructor(props) {
     super(props);
-    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       calendar: true,
       basic: true,
@@ -45,7 +44,7 @@ export default class extends Component {
     };
     this.dataSource = {};
 
-    this.items={}
+    this.items = {}
   }
 
   componentWillMount() {
@@ -56,15 +55,11 @@ export default class extends Component {
     try {
       const res = await api.job.getListJob(11, accessToken)
       this.dataSource = res;
-
-      console.log(this.dataSource);
-      // const dataSource = this.page != 1 ? [...this.state.dataSource, ...res.results] : res.results;
       if (res != null) {
         this.setState({
           status: false,
           loading: false,
           dataSource: JSON.stringify(res),
-          hasMore: res.results.length,
           offline: false,
         });
       }
@@ -74,104 +69,118 @@ export default class extends Component {
         loading: false,
         offline: true,
       });
-      // console.log(error);
     }
   }
 
   componentDidMount() {
     this.props.getStatusJobList(accessToken, (error, data) => {
       console.log(error)
-      // console.log(data)
+      console.log(data)
+    });
+    this.props.getMaterialList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
+    })
+    this.props.getMaterialCategoryList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
+    })
+    this.props.getTruckList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
+    })
+    this.props.getReferenceContactList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
     })
   }
 
 
-drawBar(i, {nativeEvent}){
-  const {locationX:x, locationY:y} = nativeEvent
-  let top = 40 * i + y
-  let left = x
-  console.log(i, y)
-  const offset = (y - 20)
-  const plusMinute = Math.round(30*offset/40) 
-  const realMinute = i * 30 + plusMinute
-  let hours = Math.floor(realMinute / 60)
-  let minutes = realMinute - hours * 60
-  this.items[x+':'+y] = (
-    <View key={x+':'+y} style={{
-      backgroundColor: 'red',
-      height: 50,
-      width: 40,
-      top,
-      left,
-      position: 'absolute',
-      zIndex: 1,
-    }}>
-      <Text>{hours}:{minutes}</Text>
-    </View>
-  )
-
-  this.forceUpdate()
-  
-}
-
-renderChart(){
-  const timeline = []
-  const labels = []
-  for(let i=0;i<=48;i++){
-    let hours = Math.floor(i / 2);      
-    // if(hours > 12) hours = hours - 12    
-    var minutes = (i % 2) === 0 ? '00' : '30';
-
-    labels.push(
-      <Text key={i} style={{          
-        textAlign: 'right',           
-        lineHeight: 40,
-        paddingRight: 10,                   
-      }}>{hours}:{minutes}</Text>
+  drawBar(i, { nativeEvent }) {
+    const { locationX: x, locationY: y } = nativeEvent
+    let top = 40 * i + y
+    let left = x
+    console.log(i, y)
+    const offset = (y - 20)
+    const plusMinute = Math.round(30 * offset / 40)
+    const realMinute = i * 30 + plusMinute
+    let hours = Math.floor(realMinute / 60)
+    let minutes = realMinute - hours * 60
+    this.items[x + ':' + y] = (
+      <View key={x + ':' + y} style={{
+        backgroundColor: 'red',
+        height: 50,
+        width: 40,
+        top,
+        left,
+        position: 'absolute',
+        zIndex: 1,
+      }}>
+        <Text>{hours}:{minutes}</Text>
+      </View>
     )
 
-    timeline.push(      
-      <ListItem onPress={e=>this.drawBar(i, e)} style={{        
-        marginLeft:0,        
-        borderBottomWidth:0,
-        paddingLeft:0,
-        height: 40,           
-        width: '100%',     
-      }} key={i}>        
-        <View style={{
-          height:1,
+    this.forceUpdate()
+
+  }
+
+  renderChart() {
+    const timeline = []
+    const labels = []
+    for (let i = 0; i <= 48; i++) {
+      let hours = Math.floor(i / 2);
+      // if(hours > 12) hours = hours - 12    
+      var minutes = (i % 2) === 0 ? '00' : '30';
+
+      labels.push(
+        <Text key={i} style={{
+          textAlign: 'right',
+          lineHeight: 40,
+          paddingRight: 10,
+        }}>{hours}:{minutes}</Text>
+      )
+
+      timeline.push(
+        <ListItem onPress={e => this.drawBar(i, e)} style={{
+          marginLeft: 0,
+          borderBottomWidth: 0,
+          paddingLeft: 0,
+          height: 40,
           width: '100%',
-          backgroundColor: 'black'
-        }}/>
-      </ListItem>
+        }} key={i}>
+          <View style={{
+            height: 1,
+            width: '100%',
+            backgroundColor: 'black'
+          }} />
+        </ListItem>
+      )
+    }
+
+
+    return (
+      <ScrollView contentContainerStyle={{
+        flexDirection: 'row',
+      }}>
+        <View style={{
+          width: 60,
+        }}>
+          {labels}
+        </View>
+        <ScrollView horizontal contentContainerStyle={{
+          flexDirection: 'column',
+          width: Math.max(1000, 60 * 100),
+        }}>
+          {timeline}
+          {Object.values(this.items)}
+        </ScrollView>
+      </ScrollView>
     )
   }
 
 
-  return (
-    <ScrollView contentContainerStyle={{
-      flexDirection: 'row',      
-    }}>
-      <View style={{
-        width: 60,                        
-      }}>
-        {labels}
-      </View>
-      <ScrollView horizontal contentContainerStyle={{                
-        flexDirection: 'column',        
-        width: Math.max(1000, 60 * 100),
-      }}>
-        {timeline}    
-        {Object.values(this.items)}
-      </ScrollView>
-    </ScrollView>
-  )
-}
-
-
 
   render() {
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
       <Container>
         <Header

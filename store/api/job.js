@@ -24,5 +24,21 @@ getJobById(data, accessToken) {
     return apiGetNoKey(`/api/jobdetails/`, data, accessToken)
 },
 
+    getMaterialList(accessToken) {
+        return apiGetNoData(`/api/jobdetails/MaterialList`, accessToken)
+    },
+
+    getMaterialCategoryList(accessToken) {
+        return apiGetNoData(`/api/jobdetails/MaterialCategoryList`, accessToken)
+    },
+
+    getTruckList(accessToken) {
+        return apiGetNoData(`/api/jobdetails/TruckList`, accessToken)
+    },
+
+    getReferenceContactList(accessToken) {
+        return apiGetNoData(`/api/jobdetails/ReferenceContactList`, accessToken)
+    },
+
 
 }

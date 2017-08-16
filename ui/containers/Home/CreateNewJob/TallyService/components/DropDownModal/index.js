@@ -10,7 +10,6 @@ import styles from './styles';
 import material from '~/theme/variables/material';
 import Icon from '~/ui/components/Icon';
 
-var items = ['Type1', 'Type2', 'Type3',];
 export default class extends Component {
 
     constructor(props) {
@@ -30,16 +29,23 @@ export default class extends Component {
     }
 
     render() {
-        const { text, nameIcon, add, measure, onChange, value, ...props } = this.props;
+        const { text, listItems = [
+            {
+                id: 1,
+                name: 'Type1'
+            },
+            {
+                id: 2,
+                name: 'Type2'
+            },
+            {
+                id: 3,
+                name: 'Type3'
+            },
+        ], nameItem = 'name', nameIcon, onChange, value, ...props } = this.props;
         return (
             <View
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    backgroundColor: '#fff',
-                    borderBottomWidth: 1,
-                    borderBottomColor: material.grayTitle,
-                }}
+                style={styles.container}
                 collapsable={false} {...props}>
                 <TouchableOpacity onPress={() => this.setModalVisible()}>
                     <View style={styles.Item}>
@@ -48,20 +54,6 @@ export default class extends Component {
                         <Icon name='arrown-drop' size={12} />
                     </View>
                 </TouchableOpacity>
-                <View style={styles.Item}>
-                    <Icon name='quantity' size={20} style={styles.colorIcon} />
-                    <TextInput
-                        placeholder='0'
-                        underlineColorAndroid="transparent"
-                        style={{ width: '60%', padding: 0 }}
-                    />
-                    <Text>{measure}</Text>
-                </View>
-
-                <View style={styles.Item}>
-                    <Text style={styles.content}> $50</Text>
-                </View>
-
                 <Modal
                     animationType="fade"
                     transparent={true}
@@ -77,11 +69,11 @@ export default class extends Component {
                             backgroundColor: 'white',
                         }}>
 
-                            <List dataArray={items}
+                            <List dataArray={listItems}
                                 renderRow={(item) =>
                                     <ListItem>
                                         <TouchableOpacity onPress={() => { this.setModalVisible(), onChange(item) }}>
-                                            <Text>{item}</Text>
+                                            <Text>{item[`${nameItem}`]}</Text>
                                         </TouchableOpacity>
                                     </ListItem>
                                 }>
