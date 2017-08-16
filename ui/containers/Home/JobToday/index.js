@@ -35,7 +35,6 @@ const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4Ump
 export default class extends Component {
   constructor(props) {
     super(props);
-    this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
       calendar: true,
       basic: true,
@@ -52,15 +51,11 @@ export default class extends Component {
     try {
       const res = await api.job.getListJob(11, accessToken)
       this.dataSource = res;
-
-      console.log(this.dataSource);
-      // const dataSource = this.page != 1 ? [...this.state.dataSource, ...res.results] : res.results;
       if (res != null) {
         this.setState({
           status: false,
           loading: false,
           dataSource: JSON.stringify(res),
-          hasMore: res.results.length,
           offline: false,
         });
       }
@@ -70,7 +65,6 @@ export default class extends Component {
         loading: false,
         offline: true,
       });
-      // console.log(error);
     }
   }
 
@@ -78,12 +72,27 @@ export default class extends Component {
     this.props.getStatusJobList(accessToken, (error, data) => {
       console.log(error)
       console.log(data)
+    });
+    this.props.getMaterialList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
+    })
+    this.props.getMaterialCategoryList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
+    })
+    this.props.getTruckList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
+    })
+    this.props.getReferenceContactList(accessToken, (error, data) => {
+      console.log(error)
+      console.log(data)
     })
   }
 
 
   render() {
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     return (
       <Container>
         <Header

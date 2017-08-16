@@ -12,7 +12,7 @@ import CheckDate from '~/ui/elements/CheckDate';
 import Icon from '~/ui/components/Icon';
 import Button from '~/ui/components/Button';
 import Header from '~/ui/components/Header';
-
+import { connect } from 'react-redux'
 import {
   Field,
   FieldArray,
@@ -23,7 +23,25 @@ import {
   DropOffField,
 } from './components/Form'
 
+@connect(
+  state => ({
+    initialValues: {
+      pickup: [{
+        time: '',
+        addressline1: '',
+        addressline2: '',
+        note: ''
+      }],
+      dropoff: [{
+        time: '',
+        addressline1: '',
+        addressline2: '',
+        note: ''
+      }],
+    }
+  }),)
 @reduxForm({ form: 'DeliveryInfo', enableReinitialize: true, destroyOnUnmount: !module.hot })
+
 export default class extends Component {
 
   constructor(props) {
