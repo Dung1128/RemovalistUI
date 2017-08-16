@@ -159,23 +159,20 @@ export default class extends Component {
     }
 
     onDateSelect(date) {
-        setTimeout(() => {
             this.setState({
                 listByDate: this.renderDate(date),
                 dateTitle: this.renderDateTit(date)
             })
             this.updateList(this.renderDate(date));
-        }, 10000)
-
     }
 
     render() {
         // const dayNow = this.renderDate();
         return (
             <View style={{ flex: 1 }}>
-                <Calendar style={{ width: '100%', marginHorizontal: 10 }} onDateSelect={date => this.onDateSelect()} />
+                <Calendar style={{ width: '100%', marginHorizontal: 10 }} onDateSelect={date => this.onDateSelect(date)} />
                 {
-                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='To day' /> : <TitleItem title={this.state.dateTitle} />
+                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
                 }
                 {!this.state.ready && <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
                 {

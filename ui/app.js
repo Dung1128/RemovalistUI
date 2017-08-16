@@ -30,8 +30,9 @@ export default class App extends Component {
         return (
             <StyleProvider style={getTheme(material)}>
                 <View style={{ flex: 1 }}>
-                    {this.props.isLogged ? <Home screenProps={this.props.user} /> : <Login />}
-                    <Toasts />
+                    {/*{this.props.isLogged ? <Home screenProps={this.props.user} /> : <Login />}*/}
+                    <Home />
+                    {/*<Toasts />*/}
                 </View>
             </StyleProvider>
         )
