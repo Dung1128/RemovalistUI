@@ -222,8 +222,7 @@ export default class extends Component {
         }
         <Button
           onPress={() => this.props.navigation.navigate('general_screen')}
-          style={{ backgroundColor: material.redColor, position: 'absolute', bottom: 20, right: 20, borderRadius: 50 / 2, width: 50, height: 50 }}
-          position="bottomRight">
+          style={{ backgroundColor: material.redColor, position: 'absolute', bottom: 20, right: 20, borderRadius: 50 / 2, width: 50, height: 50 }}>
           <Icon name="add" color='#fff' size={20} />
         </Button>
       </Container>

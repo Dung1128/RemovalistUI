@@ -175,7 +175,7 @@ export default class extends Component {
             <View style={{ flex: 1 }}>
                 <Calendar style={{ width: '100%', marginHorizontal: 10 }} onDateSelect={date => this.onDateSelect()} />
                 {
-                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='To day' /> : <TitleItem title={this.state.dateTitle} />
+                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
                 }
                 {!this.state.ready && <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
                 {
