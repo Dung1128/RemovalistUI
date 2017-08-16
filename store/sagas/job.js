@@ -4,13 +4,13 @@ import api from '~/store/api';
 import { createRequestSaga } from '~/store/sagas/common';
 import { setToast, noop, forwardTo } from '~/store/actions/common';
 
-import { 
-    saveListStatus, 
-    saveListMaterial, 
+import {
+    saveListStatus,
+    saveListMaterial,
     saveMaterialCategoryList,
     saveTruckList,
     saveReferenceContactList,
-    getJobById, 
+    getJobById,
     getMaterialList,
     getMaterialCategoryList,
     getTruckList,
@@ -71,6 +71,14 @@ const requestGetReferenceContactList = createRequestSaga({
     ],
     failure: [(error) => setToast('Couldn\'t get Refer Contacts', 'error')]
 });
+const requestGetJobByDate = createRequestSaga({
+    request: api.job.getJobByDate,
+    key: 'getJobByDate',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t get job', 'error')]
+});
 
 // root saga reducer
 export default [
@@ -86,6 +94,7 @@ export default [
             takeLatest('job/getMaterialCategoryList', requestGetMaterialCategoryList),
             takeLatest('job/getTruckList', requestGetTruckList),
             takeLatest('job/getReferenceContactList', requestGetReferenceContactList),
+            takeLatest('job/getJobByDate', requestGetJobByDate),
         ];
     }
 ];

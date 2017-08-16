@@ -28,6 +28,12 @@ export const getReferenceContactList = (...args) => ({
     args
 })
 
+export const getJobByDate = (...args) => ({
+    type: 'job/getJobByDate',
+    args
+})
+
+
 // actions called by sagas
 
 export const saveListStatus = (data) => ({

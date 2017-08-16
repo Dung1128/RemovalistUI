@@ -33,6 +33,7 @@ export default class extends Component {
   }
 
   static propTypes = {
+    fullDataTime: PropTypes.func,
     currentMonth: PropTypes.any,
     customStyle: PropTypes.object,
     dayHeadings: PropTypes.array,
@@ -275,9 +276,13 @@ export default class extends Component {
       </View>
     )
   }
+  fullDataTime (d) {
+    return d;
+  }
 
   renderTopBar() {
     let localizedMonth = this.props.monthNames[this.state.currentMonthMoment.month()]
+    this.fullDataTime(this.state.currentMonthMoment);
     return this.props.showControls
       ? (
         <View style={[styles.calendarControls, this.props.customStyle.calendarControls]}>
