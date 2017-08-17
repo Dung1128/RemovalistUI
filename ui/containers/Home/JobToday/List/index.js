@@ -170,7 +170,9 @@ export default class extends Component {
         // const dayNow = this.renderDate();
         return (
             <View style={{ flex: 1 }}>
-                <Calendar style={{ width: '100%', marginHorizontal: 10 }} onDateSelect={date => this.onDateSelect(date)} />
+                <Calendar style={{ width: '100%', marginHorizontal: 10 }}
+                scrollEnabled={true}
+                 onDateSelect={date => this.onDateSelect(date)} />
                 {
                     this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
                 }
