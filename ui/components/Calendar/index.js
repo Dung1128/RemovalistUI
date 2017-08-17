@@ -240,7 +240,9 @@ export default class extends Component {
           <View
             key={weekRows.length}
             // onLayout={weekRows.length ? undefined : this.onWeekRowLayout}
-            style={[styles.weekRow, this.props.customStyle.weekRow, {height: this.props.rowHeight}]}
+            style={[styles.weekRow, this.props.customStyle.weekRow, {
+              height: this.props.rowHeight,              
+            }]}
           >
             {days}
           </View>)
@@ -257,7 +259,8 @@ export default class extends Component {
     const containerStyle = [styles.monthContainer, this.props.customStyle.monthContainer]
     const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)
     return (
-      <ScrollView   key={argMoment.month()}                     
+      <ScrollView   
+            key={argMoment.month()}                     
             scrollEnabled
             pagingEnabled
             removeClippedSubviews={false}
@@ -266,7 +269,7 @@ export default class extends Component {
             automaticallyAdjustContentInsets
             style={containerStyle}
             contentContainerStyle={{
-              height: this.props.rowHeight * numOfWeeks,                
+              height: this.props.rowHeight * numOfWeeks,                             
             }}
           >
         {weekRows}

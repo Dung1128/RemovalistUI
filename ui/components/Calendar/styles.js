@@ -5,7 +5,7 @@ export default {
     backgroundColor: material.redColor,
   },
   monthContainer: {
-    width: material.deviceWidth,
+    width: material.deviceWidth,    
   },
   calendarControls: {
     flexDirection: 'row',
@@ -48,14 +48,14 @@ export default {
     justifyContent: 'space-between',
     marginHorizontal: 10
   },
-  dayButton: {
-    alignItems: 'center',
+  dayButton: {    
     padding: 5,
-    width: '100%',
+    width: 28,
+    justifyContent: 'center',
   },
   dayButtonFiller: {
     padding: 5,
-    width: '14%',
+    width: 28,
   },
   day: {
     fontSize: 16,
