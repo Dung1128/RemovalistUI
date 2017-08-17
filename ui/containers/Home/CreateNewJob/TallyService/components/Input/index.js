@@ -17,18 +17,19 @@ export default class extends Component {
     }
 
     render() {
-        const { text, nameIcon, add, measure, onChange, value, ...props } = this.props;
+        const { text, nameIcon, add, keyboardType = 'numeric', placeholder = '0', icon = true, measure, onChange, value, ...props } = this.props;
         return (
             <View
                 style={styles.Item}
                 collapsable={false} {...props}>
-                <Icon name='quantity' size={20} style={styles.colorIcon} />
+                {icon && <Icon name='quantity' size={20} style={styles.colorIcon} />}
                 <TextInput
+                    keyboardType={keyboardType}
                     value={value}
                     onChangeText={onChange}
-                    placeholder='0'
+                    placeholder={placeholder}
                     underlineColorAndroid="transparent"
-                    style={{ width: '60%' }}
+                    style={{ width: '60%', lineHeight: 25 }}
                 />
                 <Text>{measure}</Text>
             </View>

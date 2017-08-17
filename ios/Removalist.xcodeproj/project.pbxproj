@@ -635,8 +635,8 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = EUKQS3744F;
-						ProvisioningStyle = Automatic;
+						DevelopmentTeam = RG9LW688ZP;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -1119,7 +1119,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = EUKQS3744F;
+				DEVELOPMENT_TEAM = RG9LW688ZP;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -1133,10 +1133,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanman.Removalist1234;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanman.Removalist;
 				PRODUCT_NAME = Removalist;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "77f4ed87-34af-4360-b1ed-4179f01cae74";
+				PROVISIONING_PROFILE_SPECIFIER = NEWALL;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1148,7 +1148,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = EUKQS3744F;
+				DEVELOPMENT_TEAM = RG9LW688ZP;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
@@ -1162,10 +1162,10 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.vanman.Removalist1234;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vanman.Removalist;
 				PRODUCT_NAME = Removalist;
-				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE = "77f4ed87-34af-4360-b1ed-4179f01cae74";
+				PROVISIONING_PROFILE_SPECIFIER = NEWALL;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

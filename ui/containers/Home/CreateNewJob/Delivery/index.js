@@ -22,37 +22,29 @@ import {
   PickUpField,
   DropOffField,
 } from './components/Form'
-
+import { validate, initialValues } from './utils'
 @connect(
   state => ({
-    initialValues: {
-      pickup: [{
-        time: '',
-        addressline1: '',
-        addressline2: '',
-        note: ''
-      }],
-      dropoff: [{
-        time: '',
-        addressline1: '',
-        addressline2: '',
-        note: ''
-      }],
-    }
-  }),)
-@reduxForm({ form: 'DeliveryInfo', enableReinitialize: true, destroyOnUnmount: !module.hot })
+    initialValues: initialValues
+  }), )
+@reduxForm({ form: 'DeliveryInfo', validate })
 
 export default class extends Component {
 
   constructor(props) {
     super(props);
     this.state = ({
+      general: this.props.navigation.state.params
     });
 
   }
 
   submitForm(values) {
-    console.log(values)
+    let arr = []
+    arr.push(this.state.general);
+    arr.push(values);
+    // console.log(arr)
+    this.props.navigation.navigate('tallyservice_screen', values.push(this.state.general))
   }
 
   render() {

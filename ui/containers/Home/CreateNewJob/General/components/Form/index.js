@@ -23,6 +23,7 @@ import styles from './styles';
 import Truck from '../Truck';
 import Status from '../Status';
 import moment from 'moment';
+import material from '~/theme/variables/material';
 
 const InputUser = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
     return <InputRow hint='Username' error={touched && error} nameIcon='user' onChangeText={onChange} {...restInput} />
@@ -33,11 +34,11 @@ const InputEmail = ({ input: { onChange, ...restInput }, meta: { touched, error,
 }
 
 const InputAdress1 = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
-    return <InputRow hint='Adresss 1' error={touched && error} nameIcon='building' onChangeText={onChange} {...restInput} />
+    return <InputRow hint='Building/Unit' error={touched && error} nameIcon='building' onChangeText={onChange} {...restInput} />
 }
 
 const InputAdress2 = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
-    return <InputRow hint='Adresss 2' error={touched && error} nameIcon='map' onChangeText={onChange} {...restInput} />
+    return <InputRow hint='Address' error={touched && error} nameIcon='map' onChangeText={onChange} {...restInput} />
 }
 
 const InputPhone = ({ input: { onChange, ...restInput }, meta: { touched, error, warning }, index, fields, ...custom }) => {
@@ -138,13 +139,15 @@ const StartEndField = ({ input, label, meta: { touched, error, warning }, member
     return (
         <View style={styles.itemTime}>
             <Text style={styles.txttitledate}>Time</Text>
-            <View style={{ flexDirection: 'row' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <Field name={`${member}.timeStart`} component={DateField} mode='time' />
                 <Text> - </Text>
                 <Field name={`${member}.timeEnd`} component={DateField} mode='time' />
+                <Text>   </Text>
+                {touched && error && <Icon size={16} color={material.grayIconColor} name='info' />}
             </View>
             <Text style={styles.txttitledate}>Duration: {duration}</Text>
-            {touched && error && <Text>{error}</Text>}
+            {touched && error && <Text style={styles.error}>{error}</Text>}
         </View>
     )
 }

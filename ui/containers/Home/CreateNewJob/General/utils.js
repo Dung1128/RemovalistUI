@@ -1,4 +1,4 @@
-const initialValues = {
+export const initialValues = {
     customer: [{
         username: '',
         phone: [{
@@ -68,15 +68,19 @@ export const validate = values => {
     if (values.truck.TruckId == 0) {
         errors.truck = 'Required'
     }
-    if (values.datetime) {
+    if (!values.datetime.date) {
         console.log(values.datetime)
-        errors.datetime = 'Required'
-        if (!values.datetime || !values.datetime.date || values.datetime.timeStart == '' || values.datetime.timeEnd == '') {
-            errors.datetime = 'Required'
+        let datetimeErrors = {};
+        if (!values.datetime.date) {
+            datetimeErrors.date = 'Required';
+        }
+        if (!values.datetime.timeStart || !values.datetime.timeEnd) {
+            datetimeErrors.time = 'Required';
         }
         if (values.datetime.time && (values.datetime.time.timeStart > values.datetime.time.timeEnd)) {
-            errors.datetime = 'The start time must be greater than the end time'
+            datetimeErrors.time = 'The start time must be greater than the end time'
         }
+        errors.datetime = datetimeErrors;
     }
     return errors
 }

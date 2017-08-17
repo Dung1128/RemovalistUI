@@ -12,10 +12,18 @@ export default {
         borderBottomColor: material.grayTitle,
         borderBottomWidth: 0.5
     },
+    wrapContent: {
+        flexDirection: 'row',
+        borderBottomColor: material.grayTitle,
+        borderBottomWidth: 0.5,
+        paddingLeft: 10,
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        height: 50,
+    },
     Item: {
         flex: 1,
-        borderRightWidth: 0.5,
-        borderRightColor: material.grayTitle,
         padding: 10,
         flexDirection: 'row',
         alignItems: 'center',
@@ -40,4 +48,13 @@ export default {
     content: {
         width: 80,
     },
+
+    titPrice: {
+        flex: 1,
+        fontWeight: 'bold',
+    },
+    money: {
+        justifyContent: 'space-between',
+        width: '20%'
+    }
 };

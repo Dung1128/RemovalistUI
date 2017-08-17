@@ -17,5 +17,9 @@ export default {
     border: {
         borderWidth: 0.5,
         borderColor: material.grayTitle
+    },
+    error: {
+        fontSize: 12,
+        color: material.redColor
     }
 };
