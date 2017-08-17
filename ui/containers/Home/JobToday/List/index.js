@@ -87,14 +87,6 @@ export default class extends Component {
         })
     }
 
-    //     componentWillUpdate(nextProps, nextState) {
-    //     this.props.getJobByDate(this.state.listByDate, accessToken, (error, data) => {
-    //             this.setState({
-    //                 dataSource: data.JobListItemObjects,
-    //             })
-    //         })
-    //   }  
-
     deleteRow(secId, rowId, rowMap) {
         rowMap[`${secId}${rowId}`].props.closeRow();
         const newData = [...this.state.listViewData];
@@ -183,21 +175,21 @@ export default class extends Component {
                 {
                     this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
                 }
-                {!this.state.ready && <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
                 {
                     this.state.dataSource.length == 0 ?
                         <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
                             <Text>Data not found</Text>
                         </View>
-                        :
-                        <List
-                            enableEmptySections
-                            removeClippedSubviews={false}
-                            style={{ flex: 1 }}
-                            dataArray={this.state.dataSource}
-                            renderRow={this.renderRow.bind(this)}
-                        />
+                        : null
                 }
+                <List
+                    enableEmptySections
+                    removeClippedSubviews={false}
+                    style={{ flex: 1 }}
+                    dataArray={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)}
+                />
+                
             </View>
         );
     }

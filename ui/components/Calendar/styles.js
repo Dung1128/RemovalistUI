@@ -50,12 +50,12 @@ export default {
   },
   dayButton: {    
     padding: 5,
-    width: 28,
+    width: 35,
     justifyContent: 'center',
   },
   dayButtonFiller: {
     padding: 5,
-    width: 28,
+    width: 35,
   },
   day: {
     fontSize: 16,
