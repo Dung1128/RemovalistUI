@@ -4,8 +4,10 @@
 
 // Takes care of changing the application state
 // state is previous state,
-
-export const job = (state = {}, { type, payload }) => {
+export const initialState = {
+    listStatus: []
+}
+export const job = (state = initialState, { type, payload }) => {
     switch (type) {
         case 'job/saveListStatus':
             return { ...state, listStatus: payload };

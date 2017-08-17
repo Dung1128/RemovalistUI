@@ -66,6 +66,7 @@ export default class extends Component {
                 JobDetails: data.JobDetails,
                 ready: true
             })
+            console.log(data.JobDetails.TimeStart, data.JobDetails.TimeEnd)
             this.renderTime(data.JobDetails.TimeStart, data.JobDetails.TimeEnd);
         })
     }
@@ -108,14 +109,27 @@ export default class extends Component {
         const minutesStart = new Date(start).getMinutes();
         const minutesEnd = new Date(end).getMinutes();
         var diff = Math.abs(start - end);
+
+        let minutesStartValue = new Date(start).getHours() * 60 + new Date(start).getMinutes();
+        let minutesEndValue = new Date(end).getHours() * 60 + new Date(end).getMinutes();
+        let sub = minutesEndValue - minutesStartValue;
+        let hour = Math.floor(sub/60);
+        let minutes = sub - hour * 60;
+
+        console.log(hour+':'+minutes);
+
+        let showHours = hour > 10 ? hour : '0' + hour;
+        let showMinutes = minutes > 10 ? minutes : '0' + minutes;
+
         this.setState({
             date: day,
-            time: `${hourStart}:${minutesStart} - ${hourEnd}:${minutesEnd}`
-        })
+            time: `${hourStart}:${minutesStart} - ${hourEnd}:${minutesEnd}`,
+            duration: 'Duration: ' + showHours + ':' + showMinutes + ' h'
+        }, ()=> console.log(this.state.time))
     }
 
     render() {
-        const { StatusName, JobStatusColor, JobDetails, date, time } = this.state;
+        const { StatusName, JobStatusColor, JobDetails, date, time, duration } = this.state;
         return (
 
             <Container>
@@ -152,7 +166,7 @@ export default class extends Component {
                                 <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
                                     <View style={styles.itemTime}>
                                         <Text style={styles.txttitledate}>Date</Text>
-                                        <Text style={styles.date}>{date}</Text>
+                                        <Text style={styles.date}>{new Date(date).toDateString()}</Text>
                                         <Text style={styles.txttitledate}>Today</Text>
                                     </View>
                                     <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
@@ -161,7 +175,7 @@ export default class extends Component {
                                         <View style={{ flexDirection: 'row' }}>
                                             <Text style={styles.date}>{time}</Text>
                                         </View>
-                                        <Text style={styles.txttitledate}>Duration: 6 h</Text>
+                                        <Text style={styles.txttitledate}>{this.state.duration}</Text>
                                     </View>
                                 </View>
                                 <TitleItem title='Truck' />
@@ -174,10 +188,10 @@ export default class extends Component {
                             </Content>
 
                             <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen')}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration} )}>
                                     <Icon name='time' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen')}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen', {dataCall: JobDetails})}>
                                     <Icon name='call' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('chat_screen')}>

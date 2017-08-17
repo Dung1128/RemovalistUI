@@ -45,9 +45,12 @@ export default class extends Component {
         }
     }
     render() {
-        const { listTruck, onChange, value } = this.props;
+        const { listTruck, onChange, value, error } = this.props;
         return (
-            <View>
+            <View style={{
+                borderBottomColor: error ? material.redColor : '#fff',
+                borderBottomWidth: 1
+            }}>
                 <TitleItem title='Truck' />
                 <TouchableOpacity onPress={() => this.setModalVisible()}>
                     <View
@@ -69,7 +72,7 @@ export default class extends Component {
                         style={{ backgroundColor: 'rgba(0,0,0,.8)', flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                         <TouchableOpacity activeOpacity={1} style={{
                             width: 300,
-                            height: 300,
+                            maxHeight: 300,
                             backgroundColor: 'white',
                         }}>
 

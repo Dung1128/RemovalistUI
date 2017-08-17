@@ -24,33 +24,35 @@ import Truck from '../Truck';
 import Status from '../Status';
 import moment from 'moment';
 
-const InputUser = ({ input: { onChange, ...restInput } }) => {
-    return <InputRow hint='Username' nameIcon='user' onChangeText={onChange} {...restInput} />
+const InputUser = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
+    return <InputRow hint='Username' error={touched && error} nameIcon='user' onChangeText={onChange} {...restInput} />
 }
 
-const InputEmail = ({ input: { onChange, ...restInput } }) => {
-    return <InputRow hint='Email' nameIcon='email' onChangeText={onChange} {...restInput} />
+const InputEmail = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
+    return <InputRow hint='Email' error={touched && error} nameIcon='email' onChangeText={onChange} {...restInput} />
 }
 
-const InputAdress1 = ({ input: { onChange, ...restInput } }) => {
-    return <InputRow hint='Adresss 1' nameIcon='building' onChangeText={onChange} {...restInput} />
+const InputAdress1 = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
+    return <InputRow hint='Adresss 1' error={touched && error} nameIcon='building' onChangeText={onChange} {...restInput} />
 }
 
-const InputAdress2 = ({ input: { onChange, ...restInput } }) => {
-    return <InputRow hint='Adresss 2' nameIcon='map' onChangeText={onChange} {...restInput} />
+const InputAdress2 = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
+    return <InputRow hint='Adresss 2' error={touched && error} nameIcon='map' onChangeText={onChange} {...restInput} />
 }
 
-const InputPhone = ({ input: { onChange, ...restInput }, index, fields, ...custom }) => {
-    return <InputRow
-        hint={`Phone ${index + 1}`}
-        nameIcon='call'
-        add
-        addIcon={index != 0 ? 'delete' : 'add'}
-        onChangeText={onChange} {...restInput}
-        onPress={() => {
-            index == 0 ? fields.push({}) : fields.remove(index)
-        }}
-    />
+const InputPhone = ({ input: { onChange, ...restInput }, meta: { touched, error, warning }, index, fields, ...custom }) => {
+    return (
+        <InputRow
+            error={touched && error}
+            hint={`Phone ${index + 1}`}
+            nameIcon='call'
+            add
+            addIcon={index != 0 ? 'delete' : 'add'}
+            onChangeText={onChange} {...restInput}
+            onPress={() => {
+                index == 0 ? fields.push({}) : fields.remove(index)
+            }} />
+    )
 }
 
 const InputPhoneArray = ({ fields = 1, meta: { error, submitFailed }, ...custom }) => {
@@ -96,20 +98,23 @@ export const CustomerField = ({ fields, meta: { error, submitFailed }, ...custom
             }
         />
         {fields.map((member, index) => renderCustomer(member, index, fields))}
+        {submitFailed && error && <Text>{error}</Text>}
     </View>
 )
 
 
-export const TruckField = ({ input, ...custom }) => (
+export const TruckField = ({ input, meta: { touched, error, warning }, ...custom }) => (
     <Truck
+        error={touched && error}
         {...input}
         {...custom}
     />
 )
 
 
-export const StatusField = ({ input, ...custom }) => (
+export const StatusField = ({ input, meta: { touched, error, warning }, ...custom }) => (
     <Status
+        error={touched && error}
         {...input}
         {...custom}
     />
@@ -125,6 +130,7 @@ const DateField = ({ input, label, meta: { touched, error, warning }, ...custom 
 
 
 const StartEndField = ({ input, label, meta: { touched, error, warning }, member }) => {
+    console.log(input);
     let hour = moment(input.value.timeEnd).diff(input.value.timeStart, 'hour');
     let minutes = moment(input.value.timeEnd).diff(input.value.timeStart, 'minutes');
     let checkMinutes = minutes % 60;

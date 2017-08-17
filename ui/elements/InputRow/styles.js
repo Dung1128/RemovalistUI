@@ -1,6 +1,14 @@
 import material from '~/theme/variables/material';
 
 export default {
+    wrapContent: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        paddingLeft: 20,
+        justifyContent: 'space-between',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+    },
     iconAdd: {
         color: '#fff',
     },
@@ -14,4 +22,14 @@ export default {
         position: 'absolute',
         right: 10
     },
+    error: {
+        borderWidth: 1,
+        borderColor: material.redColor,
+        height: 50,
+        marginHorizontal: 10,
+    },
+    noerror: {
+        height: 50,
+        marginHorizontal: 10,
+    }
 };

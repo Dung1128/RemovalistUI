@@ -29,7 +29,7 @@ export default class extends Component {
         let date = 'ngày'
         let year = 'năm'
         let datetime = new Date().toDateString();
-        if (value && mode == 'time') {
+        if (value) {
             if (mode == 'time') {
                 datetime = moment(value).format("HH:mm");
             } else {

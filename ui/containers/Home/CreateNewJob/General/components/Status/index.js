@@ -46,18 +46,23 @@ export default class extends Component {
             this.setState({ modalVisible: true });
         }
     }
+
     render() {
-        const { listStatus, onChange, value } = this.props;
+        const { listStatus, onChange, value, error } = this.props;
         return (
-            <View>
+            <View style={{
+                borderBottomColor: error ? material.redColor : '#fff',
+                borderBottomWidth: 1
+            }}>
                 <TitleItem title='Status' />
                 <TouchableOpacity onPress={() => this.setModalVisible()}>
                     <View style={{ flexDirection: 'row' }}>
-                        <StatusItem color={`#${value.JobStatusColor}`} />
+                        <StatusItem color={value ? `#${value.JobStatusColor}` : '#fff'} />
                         <View style={{ ...styles.Items }}>
                             <Text style={styles.txtForm}>{value.StatusName}</Text>
                             <Icon name='arrown-drop' size={15} style={styles.down} />
                         </View>
+
                     </View>
                 </TouchableOpacity>
                 <Modal
@@ -72,11 +77,12 @@ export default class extends Component {
                         style={{ backgroundColor: 'rgba(0,0,0,.8)', flex: 1, justifyContent: 'center', alignItems: 'center' }} >
                         <TouchableOpacity activeOpacity={1} style={{
                             width: 300,
-                            height: 300,
+                            maxHeight: 300,
                             backgroundColor: 'white',
                         }}>
 
                             <List dataArray={listStatus.slice(0, 3)}
+                                enableEmptySections
                                 renderRow={(item) =>
                                     <ListItem onPress={() => { onChange(item); this.setModalVisible() }}>
                                         <Text>{item.StatusName}</Text>

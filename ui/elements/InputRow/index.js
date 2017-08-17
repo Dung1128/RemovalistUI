@@ -10,19 +10,13 @@ import material from '~/theme/variables/material'
 export default class extends Component {
 
     render() {
-        const { hint, nameIcon, add, iconRemove, size=18, addIcon, onPress, onChangeText, ...props } = this.props;
+        const { hint, nameIcon, add, iconRemove, error, size = 18, addIcon, onPress, right, onChangeText, ...props } = this.props;
         return (
             <View
                 style={{
-                    flexDirection: 'row',
-                    borderBottomWidth: 1,
-                    borderBottomColor: '#e9edf0',
-                    paddingLeft: 20,
-                    paddingRight: 20,
-                    justifyContent: 'space-between',
-                    backgroundColor: '#fff',
-                    alignItems: 'center',
-
+                    ...styles.wrapContent,
+                    borderBottomColor: error ? material.redColor : '#e9edf0',
+                    paddingRight: add ? 50 : 20,
                 }}
                 collapsable={false} {...props}>
                 <Icon name={nameIcon} size={20} style={{ color: 'gray', paddingHorizontal: 0 }} />
@@ -32,14 +26,16 @@ export default class extends Component {
                     underlineColorAndroid="transparent"
                     placeholder={hint}
                     onChangeText={onChangeText}
-                    style={{ height: 50, width: '100%', marginHorizontal: 10 }} />
+                    style={styles.noerror} />
                 {add && <TouchableOpacity style={styles.buttonAdd}
                     onPress={onPress} {...props}>
-                        {addIcon == 'delete'
+                    {addIcon == 'delete'
                         ? <IconIonicons name='md-remove' style={{ paddingHorizontal: 4, height: 20 }} size={size} color='#fff' />
                         : <Icon size={16} style={styles.iconAdd} name={addIcon} />
                     }
                 </TouchableOpacity>}
+                {error && <Icon size={16} color={material.grayIconColor} name='info' />}
+                {right}
 
             </View>
         );
