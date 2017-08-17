@@ -57,9 +57,11 @@ export default class extends Component {
                 >
                     <Text style={styles.styleTime}>
                         {datetime}
+                        {mode != 'time' && "   "}
                     </Text>
+                    {error && <Icon size={16} color={material.grayIconColor} name='info' />}
                 </TouchableOpacity>
-                {error && <Icon size={16} color={material.grayIconColor} name='info' />}
+
             </View>
         )
     }
