@@ -38,6 +38,7 @@ export default class extends Component {
             dataSource: [],
             listByDate: 'init'
         };
+        this.date = null
     }
 
     renderStatus(id) {
@@ -66,16 +67,22 @@ export default class extends Component {
         this.props.getJobByDate(this.renderDate(new Date()), accessToken, (error, data) => {
             this.setState({
                 dataSource: data.JobListItemObjects,
+                
             })
             console.log(data)
         })
 
     }
 
-    updateList(date) {
+    updateList(date, dateTit) {
+        
         this.props.getJobByDate(date, accessToken, (error, data) => {
+            console.log(data)
+            if(data)
             this.setState({
-                dataSource: data.JobListItemObjects,
+                 listByDate: this.renderDate(dateTit),
+                 dateTitle: this.renderDateTit(dateTit),
+                 dataSource: data.JobListItemObjects,
             })
         })
     }
@@ -159,15 +166,15 @@ export default class extends Component {
     }
 
     onDateSelect(date) {
-            this.setState({
-                listByDate: this.renderDate(date),
-                dateTitle: this.renderDateTit(date)
-            })
-            this.updateList(this.renderDate(date));
+         if(this.date && date.toString() === this.date.toString())
+            return
+        this.date = date
+            this.updateList(this.renderDate(date), date);
     }
 
     render() {
         // const dayNow = this.renderDate();
+        console.log(this.props)
         return (
             <View style={{ flex: 1 }}>
                 <Calendar style={{ width: '100%', marginHorizontal: 10 }} onDateSelect={date => this.onDateSelect(date)} />

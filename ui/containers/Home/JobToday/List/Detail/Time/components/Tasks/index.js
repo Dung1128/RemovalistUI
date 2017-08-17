@@ -15,10 +15,9 @@ import ButtonIcon from '~/ui/components/ButtonIcon';
 export default class extends Component {
     render() {
         return (
-            <View rowpadding full style={{ backgroundColor: '#fff', }}>
+            <View  style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10}}>
                 <Icon name='note' size={20} color={material.grayIconColor} />
                 <Input placeholder='Tasks description' />
-                <ButtonIcon icon='add' size={18} color='#fff' />
             </View>
         )
     }

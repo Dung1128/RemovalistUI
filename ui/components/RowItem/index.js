@@ -17,7 +17,7 @@ export default class extends Component {
 
             <View rowpadding full style={{ backgroundColor: '#fff' }} {...props }>
                 <View row>
-                    <Icon name={icon} size={size} color={color} />
+                    { icon && <Icon name={icon} size={size} color={color} /> }
                     <Text style={{ marginLeft: 10 }}>{title}</Text>
                 </View>
                 {
@@ -27,3 +27,4 @@ export default class extends Component {
         )
     }
 }
+
