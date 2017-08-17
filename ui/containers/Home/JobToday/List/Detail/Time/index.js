@@ -18,6 +18,14 @@ import ButtonIcon from '~/ui/components/ButtonIcon';
 import Button from '~/ui/components/Button';
 import Tasks from './components/Tasks';
 import moment from 'moment';
+import { connect } from 'react-redux'
+
+import * as jobActions from '~/store/actions/job'
+const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6ImVvc29UR3FCMHZwNWlsS1dWMGcxclZmaVBFMGRaWnVGQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTExMDg3NDQ0LCJpYXQiOjE1MDI0NDc0NDQsInNjb3BlIjoiIn0.U3xQQLeGTFuzr-37PXefhZnynHWYUx7Ow_SuBfb8FM2S3cxAQdk6WN14bPKqSKaAsbMU7Sd6VsvTFDtlSRrkDmghfNNIQ7eTD8qECZ6N94XePH-oggOM7PDUVsWzTT5t5279w-8PFc5NjByPiptu-hvAV2JAR0tJd_UDJHF-tArnYeq99v_bftkdhngd_JblRJBC6oDqaAGPaAQa4SCL0aG3WxUXVz1CeLywyKUBYVE88RWC-GWlnwozBcegqku5BRP4zzlJmY3Xw73Bdj8zEt5aQtl_rc3EaG2mwFtUMokBNxUAqzHtG3WCFgCxb2463EvyCqJQHlwAFnzGYFwqDg'
+
+@connect(state => ({
+}), { ...jobActions })
+
 
 export default class extends Component {
     constructor(props){
@@ -30,8 +38,45 @@ export default class extends Component {
             starttime: '--:--',
             finish: '--:--',
             duration: '00:00',
-            durationStart: this.props.navigation.state.params.durationStart
+            durationStart: this.props.navigation.state.params.durationStart,
+            Delivery: this.props.navigation.state.params.Delivery
         }
+
+        this.dataDeliveryUpdate = {
+            TruckId: '',
+            StartTime: '',
+            FinishTime: '',
+            JobDetailsId: '',
+            Task: [],
+            DeliveryId: ''
+        }
+
+        this.dataDeliveryCreate = {
+            TruckId: '',
+            StartTime: '',
+            JobDetailsId: '',
+            Task: [],
+        }
+
+       
+    }
+
+    componentDidMount() {
+        // console.log('dammmmme'+this.state.Delivery.DeliveryId)
+         if(this.state.Delivery) {
+            this.setState({
+             done: true,
+             starttime: (new Date(this.state.Delivery.StartTime).getHours() - 14) + ':' +new Date(this.state.Delivery.StartTime).getMinutes(),
+             start: new Date(this.state.Delivery.StartTime),
+            })
+         } 
+
+         if(this.state.Delivery && this.state.Delivery.FinishTime){
+            this.setState({
+             disable: true,
+             finish: (new Date(this.state.Delivery.FinishTime).getHours() - 14) + ':' +new Date(this.state.Delivery.FinishTime).getMinutes(),
+            })
+         } 
     }
 
     duration() {
@@ -45,10 +90,13 @@ export default class extends Component {
         // this.setState({
         //     duration: duration
         // })
-        let minutesStart = new Date(this.state.start).getHours() * 60 + new Date(this.state.start).getMinutes();
-        let minutesEnd = new Date(this.state.end).getHours() * 60 + new Date(this.state.end).getMinutes();
+        let minutesStart = (new Date(this.state.start).getHours() - 7) * 60 + new Date(this.state.start).getMinutes();
+        let minutesEnd = (new Date(this.state.end).getHours()-7) * 60 + new Date(this.state.end).getMinutes();
+        
         let sub = minutesEnd - minutesStart;
         let hour = Math.floor(sub/60);
+        console.log(hour)
+
         let minutes = sub - hour * 60;
 
         console.log(hour+':'+minutes);
@@ -58,6 +106,31 @@ export default class extends Component {
         this.setState({
             duration: showHours + ':' + showMinutes
         })
+
+        this.dataDeliveryUpdate = {
+            TruckId: this.state.JobDetails.TruckId,
+            StartTime: this.state.start,
+            JobDetailsId: this.state.JobDetails.JobDetailsId,
+            Tasks: [],
+            FinishTime: this.state.end,
+            DeliveryId: 8
+        }
+        console.log('cai dinh menh: ' + this.dataDeliveryUpdate.DeliveryId)
+        this.updateStaus = {
+                JobDetailsId: this.state.JobDetails.JobDetailsId,
+                StatusId: 5
+            }
+
+        this.props.postDeliveryUpdate(this.dataDeliveryUpdate, accessToken, (error, data) => {
+                            console.log(data)
+                            this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) =>{
+                                this.props.navigation.navigate('jobtoday_screen')
+                            })
+                            
+                        })
+
+
+        
     }
 
     actionStart() {
@@ -66,8 +139,8 @@ export default class extends Component {
                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 {
                     text: 'OK', onPress: () => {
-                        const starttime = moment(new Date()).format("HH:mm");
-                        const start = new Date()
+                        let starttime = moment(new Date()).format("HH:mm");
+                        let start = new Date()
                         this.setState({ 
                             done: !this.state.done,
                             starttime: starttime,
@@ -75,6 +148,24 @@ export default class extends Component {
                         })
                         console.log('Ok Pressed');
                         console.log(starttime)
+                        this.dataDeliveryCreate = {
+                            TruckId: this.state.JobDetails.TruckId,
+                            StartTime: start,
+                            JobDetailsId: this.state.JobDetails.JobDetailsId,
+                            Tasks: [],
+                        }
+                        this.updateStaus = {
+                            JobDetailsId: this.state.JobDetails.JobDetailsId,
+                            StatusId: 4
+                        }
+                        
+                        this.props.postDeliveryCreate(this.dataDeliveryCreate, accessToken, (error, data) => {
+                            console.log(data)
+                            this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) =>{
+                                this.props.navigation.navigate('jobtoday_screen')
+                            })
+                            
+                        })
                     }
                 },
             ],
@@ -89,12 +180,13 @@ export default class extends Component {
                 {
                     text: 'OK', onPress: () => {
                         console.log('Cancel Pressed');
-                        const end = new Date();
-                        const finish = moment(new Date()).format("HH:mm");
+                        let end = new Date();
+                        let finish = moment(new Date()).format("HH:mm");
                         this.setState({ 
                             done: !this.state.done,
                             finish: finish,
-                            end: end
+                            end: end,
+                            Delivery:{FinishTime: finish}
                         }, ()=>{this.duration()})
                         
                     }
@@ -107,7 +199,9 @@ export default class extends Component {
     onPress(){
         !this.state.done ? this.actionStart() : this.actionComplete()
     }
+
     render() {
+        console.log(this.state.Delivery)
         console.log(this.state.JobDetails)
         console.log(this.state.time)
         const { done, time, date, starttime, finish, duration, durationStart } = this.state;
@@ -160,11 +254,18 @@ export default class extends Component {
                     <TitleItem title='Drop Off' />
                     <RowItem icon='map' title={this.state.JobDetails.JobLocations[1].AddressLine1} />
                 </Content>
-                <Button 
-                    text={!done ? 'START' : 'COMPLETE'} 
-                style={{ width: '100%', height: 60, backgroundColor: !done ? material.redColor : material.greenColor }} 
-                onPress={()=>this.onPress()}
-                />
+                {
+                    this.state.JobDetails.StatusId > 2 ? 
+                    <Button 
+                        text={!done ? 'START' : 'COMPLETE'} 
+                    style={{ width: '100%', height: 60, backgroundColor: !done ? material.redColor : material.greenColor }} 
+
+                    onPress={()=>this.onPress()}
+                    />
+                    :
+                    <View />
+                }
+                
             </Container>
         )
     }

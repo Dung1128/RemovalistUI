@@ -40,5 +40,18 @@ export default {
         return apiGetNoData(`/api/jobdetails/ReferenceContactList`, accessToken)
     },
 
+    getDeliveryJob(data, accessToken) {
+        return apiGetNoKey(`/api/jobdetails/getDeliveryByJobId/`, data, accessToken)
+    },
+    postDeliveryUpdate(data, accessToken) {
+        return apiPost(`/api/JobDetails/updateDelivery`, data, accessToken)
+    },
+
+    postDeliveryCreate(data, accessToken) {
+        return apiPost(`/api/JobDetails/createDelivery`, data, accessToken)
+    },
+    updateStatusJob(data, accessToken) {
+        return apiPost(`/api/JobDetails/UpdateJobDetailsStatus`, data, accessToken)
+    }
 
 }

@@ -80,6 +80,41 @@ const requestGetJobByDate = createRequestSaga({
     failure: [(error) => setToast('Couldn\'t get job', 'error')]
 });
 
+const requestGetDeliveryJob = createRequestSaga({
+    request: api.job.getDeliveryJob,
+    key: 'getDeliveryJob',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t get delivery job', 'error')]
+});
+
+const requestPostDeliveryCreate = createRequestSaga({
+    request: api.job.postDeliveryCreate,
+    key: 'postDeliveryCreate',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t post delivery update job', 'error')]
+});
+
+const requestPostDeliveryUpdate = createRequestSaga({
+    request: api.job.postDeliveryUpdate,
+    key: 'postDeliveryUpdate',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t post delivery update job', 'error')]
+});
+const requestUpdateStatusJob = createRequestSaga({
+    request: api.job.updateStatusJob,
+    key: 'updateStatusJob',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t update job', 'error')]
+});
+
 // root saga reducer
 export default [
     // like case return, this is take => call
@@ -95,6 +130,10 @@ export default [
             takeLatest('job/getTruckList', requestGetTruckList),
             takeLatest('job/getReferenceContactList', requestGetReferenceContactList),
             takeLatest('job/getJobByDate', requestGetJobByDate),
+            takeLatest('job/getDeliveryJob', requestGetDeliveryJob),
+            takeLatest('job/postDeliveryUpdate', requestPostDeliveryUpdate),
+            takeLatest('job/postDeliveryCreate', requestPostDeliveryCreate),
+            takeLatest('job/updateStatusJob', requestUpdateStatusJob),
         ];
     }
 ];

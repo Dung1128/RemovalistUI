@@ -40,6 +40,7 @@ export default class extends Component {
             StatusName: '',
             JobStatusColor: 'fff',
             JobDetails: '',
+            Delivery: '',
             ready: false,
             id: this.props.navigation.state.params.id
         }
@@ -66,6 +67,13 @@ export default class extends Component {
                 JobDetails: data.JobDetails,
                 ready: true
             })
+            this.props.getDeliveryJob(this.state.id, accessToken, (error, data) => {
+                console.log('Delivery:' + data)
+                this.setState({
+                    Delivery: data.Delivery
+                })
+            })
+        
             console.log(data.JobDetails.TimeStart, data.JobDetails.TimeEnd)
             this.renderTime(data.JobDetails.TimeStart, data.JobDetails.TimeEnd);
         })
@@ -104,8 +112,8 @@ export default class extends Component {
         const day = new Date(start).toLocaleDateString()
         // const month = new Date(start).getMonth() + 1;
         // const day = new Date(start).getDate();
-        const hourStart = new Date(start).getHours();
-        const hourEnd = new Date(end).getHours();
+        const hourStart = (new Date(start).getHours()-7);
+        const hourEnd = (new Date(end).getHours()-7);
         const minutesStart = new Date(start).getMinutes();
         const minutesEnd = new Date(end).getMinutes();
         var diff = Math.abs(start - end);
@@ -188,7 +196,7 @@ export default class extends Component {
                             </Content>
 
                             <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration} )}>
+                                <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery} )}>
                                     <Icon name='time' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen', {dataCall: JobDetails})}>

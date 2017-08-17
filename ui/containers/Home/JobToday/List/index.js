@@ -102,7 +102,7 @@ export default class extends Component {
             case 3:
                 return '#4E91DF';
             case 4:
-                return '#D74A';
+                return '#00D74A';
             case 5:
                 return '#BB0DDD';
             case 6:

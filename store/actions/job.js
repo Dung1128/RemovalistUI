@@ -33,6 +33,26 @@ export const getJobByDate = (...args) => ({
     args
 })
 
+export const getDeliveryJob = (...args) => ({
+    type: 'job/getDeliveryJob',
+    args
+})
+
+export const postDeliveryUpdate = (...args) => ({
+    type: 'job/postDeliveryUpdate',
+    args
+})
+
+export const postDeliveryCreate = (...args) => ({
+    type: 'job/postDeliveryCreate',
+    args
+})
+export const updateStatusJob = (...args) => ({
+    type: 'job/updateStatusJob',
+    args
+})
+
+
 
 // actions called by sagas
 

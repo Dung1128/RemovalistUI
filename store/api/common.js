@@ -28,7 +28,7 @@ export const fetchJson = (url, options = {}, base = API_BASE) => {
       ...options.headers,
       //'Content-Type':'multipart/form-data',     
       'Accept': '',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
     },
   })
     .then(rejectErrors)
