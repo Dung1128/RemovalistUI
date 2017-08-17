@@ -130,6 +130,13 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
+		243E99491F45374A00C77A8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 83CBBA2D1A601D0E00E9B192;
+			remoteInfo = React;
+		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */;
@@ -615,6 +622,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				243E994A1F45374A00C77A8D /* PBXTargetDependency */,
 			);
 			name = Removalist;
 			productName = "Hello World";
@@ -1046,6 +1054,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* Removalist */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		243E994A1F45374A00C77A8D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = React;
+			targetProxy = 243E99491F45374A00C77A8D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
