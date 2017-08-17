@@ -29,7 +29,7 @@ export default class extends Component {
   state = {
     currentMonthMoment: moment(this.props.startDate),
     selectedMoment: moment(this.props.selectedDate),
-    rowHeight: null,
+    // rowHeight: 20,
   }
 
   static propTypes = {
@@ -61,6 +61,8 @@ export default class extends Component {
     titleFormat: PropTypes.string,
     today: PropTypes.any,
     weekStart: PropTypes.number,
+    weekRowsVisible: PropTypes.number,
+    rowHeight: PropTypes.number,
   }
 
   static defaultProps = {
@@ -79,6 +81,8 @@ export default class extends Component {
     startDate: moment().format('YYYY-MM-DD'),
     titleFormat: 'MMMM YYYY',
     weekStart: 1,
+    weekRowsVisible: 2,
+    rowHeight: 35,
   }
 
   componentDidMount() {
@@ -174,11 +178,11 @@ export default class extends Component {
     }
   }
 
-  onWeekRowLayout = (event) => {
-    if (this.state.rowHeight !== event.nativeEvent.layout.height) {
-      this.setState({ rowHeight: event.nativeEvent.layout.height })
-    }
-  }
+  // onWeekRowLayout = (event) => {
+  //   if (this.state.rowHeight !== event.nativeEvent.layout.height) {
+  //     this.setState({ rowHeight: event.nativeEvent.layout.height })
+  //   }
+  // }
 
   renderMonthView(argMoment, eventsMap) {
 
@@ -204,12 +208,12 @@ export default class extends Component {
       : null
 
     // let myday = 15
-    let myindex = 0
+    // let myindex = 0
     do {
       const dayIndex = renderIndex - offset
       const isoWeekday = (renderIndex + weekStart) % 7
-      if (dayIndex === todayIndex)
-        myindex = weekRows.length
+      // if (dayIndex === todayIndex)
+        // myindex = weekRows.length
       if (dayIndex >= 0 && dayIndex < argMonthDaysCount) {
         days.push((
           <Day
@@ -235,8 +239,8 @@ export default class extends Component {
         weekRows.push(
           <View
             key={weekRows.length}
-            onLayout={weekRows.length ? undefined : this.onWeekRowLayout}
-            style={[styles.weekRow, this.props.customStyle.weekRow]}
+            // onLayout={weekRows.length ? undefined : this.onWeekRowLayout}
+            style={[styles.weekRow, this.props.customStyle.weekRow, {height: this.props.rowHeight}]}
           >
             {days}
           </View>)
@@ -251,7 +255,23 @@ export default class extends Component {
 
     // console.log(weekRows.slice(myindex, myindex + 2));
     const containerStyle = [styles.monthContainer, this.props.customStyle.monthContainer]
-    return <View key={argMoment.month()} style={containerStyle}>{weekRows.slice(myindex, myindex + 2)}</View>
+    const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)
+    return (
+      <ScrollView   key={argMoment.month()}                     
+            scrollEnabled
+            pagingEnabled
+            removeClippedSubviews={false}
+            scrollEventThrottle={1000}
+            showsVeriticalScrollIndicator={false}
+            automaticallyAdjustContentInsets
+            style={containerStyle}
+            contentContainerStyle={{
+              height: this.props.rowHeight * numOfWeeks,                
+            }}
+          >
+        {weekRows}
+      </ScrollView>
+    )
   }
 
   renderHeading(titleFormat) {
@@ -319,8 +339,8 @@ export default class extends Component {
   render() {
     const calendarDates = this.getMonthStack(this.state.currentMonthMoment)
     const eventDatesMap = this.prepareEventDates(this.props.eventDates, this.props.events)
-    const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)
-    const { showDayHeadings } = this.props
+    // const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)
+    const { showDayHeadings, weekRowsVisible, rowHeight } = this.props
     return (
       <View style={[styles.calendarContainer, this.props.customStyle.calendarContainer]}>
         {showDayHeadings && this.renderHeading(this.props.titleFormat)}
@@ -336,7 +356,7 @@ export default class extends Component {
             automaticallyAdjustContentInsets
             onMomentumScrollEnd={(event) => this.scrollEnded(event)}
             style={{
-              height: this.state.rowHeight ? this.state.rowHeight * numOfWeeks : null,
+              height: rowHeight * weekRowsVisible,                
             }}
           >
             {calendarDates.map((date) => this.renderMonthView(moment(date), eventDatesMap))}

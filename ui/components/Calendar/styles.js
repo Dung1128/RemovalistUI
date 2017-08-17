@@ -5,7 +5,7 @@ export default {
     backgroundColor: material.redColor,
   },
   monthContainer: {
-    width: '100%',
+    width: material.deviceWidth,
   },
   calendarControls: {
     flexDirection: 'row',
