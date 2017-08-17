@@ -123,6 +123,7 @@ export const StatusField = ({ input, meta: { touched, error, warning }, ...custo
 
 const DateField = ({ input, label, meta: { touched, error, warning }, ...custom }) => (
     <DateTime
+        error={touched && error}
         {...input}
         {...custom}
     />
@@ -130,7 +131,6 @@ const DateField = ({ input, label, meta: { touched, error, warning }, ...custom 
 
 
 const StartEndField = ({ input, label, meta: { touched, error, warning }, member }) => {
-    console.log(input);
     let hour = moment(input.value.timeEnd).diff(input.value.timeStart, 'hour');
     let minutes = moment(input.value.timeEnd).diff(input.value.timeStart, 'minutes');
     let checkMinutes = minutes % 60;
@@ -144,6 +144,7 @@ const StartEndField = ({ input, label, meta: { touched, error, warning }, member
                 <Field name={`${member}.timeEnd`} component={DateField} mode='time' />
             </View>
             <Text style={styles.txttitledate}>Duration: {duration}</Text>
+            {touched && error && <Text>{error}</Text>}
         </View>
     )
 }

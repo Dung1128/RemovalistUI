@@ -68,8 +68,15 @@ export const validate = values => {
     if (values.truck.TruckId == 0) {
         errors.truck = 'Required'
     }
-    if (values.datetime.TruckId == 0) {
+    if (values.datetime) {
+        console.log(values.datetime)
         errors.datetime = 'Required'
+        if (!values.datetime || !values.datetime.date || values.datetime.timeStart == '' || values.datetime.timeEnd == '') {
+            errors.datetime = 'Required'
+        }
+        if (values.datetime.time && (values.datetime.time.timeStart > values.datetime.time.timeEnd)) {
+            errors.datetime = 'The start time must be greater than the end time'
+        }
     }
     return errors
 }

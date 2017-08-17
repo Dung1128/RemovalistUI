@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Text, Button, View } from 'native-base'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import material from '~/theme/variables/material';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import Icon from '~/ui/components/Icon';
 import {
     TouchableOpacity,
 } from 'react-native';
@@ -24,7 +24,7 @@ export default class extends Component {
 
 
     render() {
-        const { text, value, mode, ...props } = this.props;
+        const { text, value, mode, error, ...props } = this.props;
         let month = 'tháng'
         let date = 'ngày'
         let year = 'năm'
@@ -59,6 +59,7 @@ export default class extends Component {
                         {datetime}
                     </Text>
                 </TouchableOpacity>
+                {error && <Icon size={16} color={material.grayIconColor} name='info' />}
             </View>
         )
     }
