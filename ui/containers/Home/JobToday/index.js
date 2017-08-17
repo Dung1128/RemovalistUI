@@ -24,7 +24,7 @@ import {
 import TabBar from '~/ui/components/TabBar';
 import Icon from '~/ui/components/Icon';
 import Header from '~/ui/components/Header';
-import Preload from '~/ui/components/Preload';
+import LoadingModal from '~/ui/components/LoadingModal';
 import api from '~/store/api';
 import * as jobActions from '~/store/actions/job'
 import { areRequestsPending } from '~/store/selectors/common'
@@ -168,9 +168,7 @@ export default class extends Component {
 
 
   render() {
-    if (this.props.isPending) {
-      return <Preload />
-    }
+    
     return (
       <Container>
         <Header
@@ -215,6 +213,10 @@ export default class extends Component {
           style={{ backgroundColor: material.redColor, position: 'absolute', bottom: 20, right: 20, borderRadius: 50 / 2, width: 50, height: 50 }}>
           <Icon name="add" color='#fff' size={20} />
         </Button>
+
+        
+        <LoadingModal loading={this.props.isPending} />
+    
       </Container>
     );
   }
