@@ -34,17 +34,17 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      general: this.props.navigation.state.params
+      // general: this.props.navigation.state.params
     });
 
   }
 
   submitForm(values) {
-    let arr = []
-    arr.push(this.state.general);
-    arr.push(values);
+    // let arr = []
+    // arr.push(this.state.general);
+    // arr.push(values);
     // console.log(arr)
-    this.props.navigation.navigate('tallyservice_screen', values.push(this.state.general))
+    this.props.navigation.navigate('tallyservice_screen')
   }
 
   render() {
@@ -57,8 +57,8 @@ export default class extends Component {
           <FieldArray name="dropoff" component={DropOffField} />
         </ScrollView>
         <Button
-          onPress={() => this.props.navigation.navigate('tallyservice_screen')}
-          //onPress={handleSubmit(this.submitForm.bind(this))}
+          //onPress={() => this.props.navigation.navigate('tallyservice_screen')}
+          onPress={handleSubmit(this.submitForm.bind(this))}
           full
           iconRight='arrow-right'
           text='TALLY SERVICE INFO'
