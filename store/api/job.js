@@ -8,21 +8,21 @@ export default {
     createJob(data, accessToken) {
 
     return apiPost(`/api/jobdetails`, {      
-      data,
-      accessToken
-    });
-  },
-  getJobByDate(data, accessToken) {
-      return apiGetNoKey('/api/jobdetails/JobItemListByDate/',data, accessToken)
-  },
+        data,
+        accessToken
+        });
+    },
+    getJobByDate(data, accessToken) {
+        return apiGetNoKey('/api/jobdetails/JobItemListByDate/',data, accessToken)
+    },
 
-getStatusJobList(accessToken) {
-    return apiGetNoData(`/api/jobdetails/JobStatusList`, accessToken)
-},
+    getStatusJobList(accessToken) {
+        return apiGetNoData(`/api/jobdetails/JobStatusList`, accessToken)
+    },
 
-getJobById(data, accessToken) {
-    return apiGetNoKey(`/api/jobdetails/`, data, accessToken)
-},
+    getJobById(data, accessToken) {
+        return apiGetNoKey(`/api/jobdetails/`, data, accessToken)
+    },
 
     getMaterialList(accessToken) {
         return apiGetNoData(`/api/jobdetails/MaterialList`, accessToken)

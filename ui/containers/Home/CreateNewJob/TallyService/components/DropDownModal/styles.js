@@ -18,6 +18,7 @@ export default {
     content: {
         paddingLeft: 10,
         paddingRight: 10,
+        width: 80,
     },
     colorIcon: {
         color: 'gray'

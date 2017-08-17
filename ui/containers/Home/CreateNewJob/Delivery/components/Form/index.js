@@ -52,7 +52,7 @@ const renderPickUp = (member, index, fields) => {
     )
 }
 
-export const PickUpField = ({ fields, meta: { error, submitFailed }, ...custom }) => console.log(fields)||(
+export const PickUpField = ({ fields, meta: { error, submitFailed }, ...custom }) => (
     <View>
         <TitleItem title='Pick Up'
             right={

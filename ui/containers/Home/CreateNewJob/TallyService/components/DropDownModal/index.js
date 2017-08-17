@@ -29,20 +29,7 @@ export default class extends Component {
     }
 
     render() {
-        const { text, listItems = [
-            {
-                id: 1,
-                name: 'Type1'
-            },
-            {
-                id: 2,
-                name: 'Type2'
-            },
-            {
-                id: 3,
-                name: 'Type3'
-            },
-        ], nameItem = 'name', nameIcon, onChange, value, ...props } = this.props;
+        const { text, listItems = [], nameIcon, onChange, value, ...props } = this.props;
         return (
             <View
                 style={styles.container}
@@ -50,7 +37,7 @@ export default class extends Component {
                 <TouchableOpacity onPress={() => this.setModalVisible()}>
                     <View style={styles.Item}>
                         <Icon name={nameIcon} size={20} style={styles.colorIcon} />
-                        <Text style={styles.content}>{value}</Text>
+                        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}>{value.Name}</Text>
                         <Icon name='arrown-drop' size={12} />
                     </View>
                 </TouchableOpacity>
@@ -73,7 +60,7 @@ export default class extends Component {
                                 renderRow={(item) =>
                                     <ListItem>
                                         <TouchableOpacity onPress={() => { this.setModalVisible(), onChange(item) }}>
-                                            <Text>{item[`${nameItem}`]}</Text>
+                                            <Text>{item ? item.Name : 'Empty'}</Text>
                                         </TouchableOpacity>
                                     </ListItem>
                                 }>

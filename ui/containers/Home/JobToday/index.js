@@ -24,14 +24,16 @@ import {
 import TabBar from '~/ui/components/TabBar';
 import Icon from '~/ui/components/Icon';
 import Header from '~/ui/components/Header';
+import Preload from '~/ui/components/Preload';
 import api from '~/store/api';
 import * as jobActions from '~/store/actions/job'
+import { areRequestsPending } from '~/store/selectors/common'
 
 const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6ImVvc29UR3FCMHZwNWlsS1dWMGcxclZmaVBFMGRaWnVGQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTExMDg3NDQ0LCJpYXQiOjE1MDI0NDc0NDQsInNjb3BlIjoiIn0.U3xQQLeGTFuzr-37PXefhZnynHWYUx7Ow_SuBfb8FM2S3cxAQdk6WN14bPKqSKaAsbMU7Sd6VsvTFDtlSRrkDmghfNNIQ7eTD8qECZ6N94XePH-oggOM7PDUVsWzTT5t5279w-8PFc5NjByPiptu-hvAV2JAR0tJd_UDJHF-tArnYeq99v_bftkdhngd_JblRJBC6oDqaAGPaAQa4SCL0aG3WxUXVz1CeLywyKUBYVE88RWC-GWlnwozBcegqku5BRP4zzlJmY3Xw73Bdj8zEt5aQtl_rc3EaG2mwFtUMokBNxUAqzHtG3WCFgCxb2463EvyCqJQHlwAFnzGYFwqDg'
 
 @connect(
   state => ({
-
+    isPending: areRequestsPending(state)
   }), { ...jobActions }
 )
 export default class extends Component {
@@ -73,26 +75,11 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    this.props.getStatusJobList(accessToken, (error, data) => {
-      console.log(error)
-      console.log(data)
-    });
-    this.props.getMaterialList(accessToken, (error, data) => {
-      console.log(error)
-      console.log(data)
-    })
-    this.props.getMaterialCategoryList(accessToken, (error, data) => {
-      console.log(error)
-      console.log(data)
-    })
-    this.props.getTruckList(accessToken, (error, data) => {
-      console.log(error)
-      console.log(data)
-    })
-    this.props.getReferenceContactList(accessToken, (error, data) => {
-      console.log(error)
-      console.log(data)
-    })
+    this.props.getStatusJobList(accessToken, (error, data) => { });
+    this.props.getMaterialList(accessToken, (error, data) => { })
+    this.props.getMaterialCategoryList(accessToken, (error, data) => { })
+    this.props.getTruckList(accessToken, (error, data) => { })
+    this.props.getReferenceContactList(accessToken, (error, data) => { })
   }
 
 
@@ -181,6 +168,9 @@ export default class extends Component {
 
 
   render() {
+    if (this.props.isPending) {
+      return <Preload />
+    }
     return (
       <Container>
         <Header

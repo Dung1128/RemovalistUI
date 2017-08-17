@@ -17,4 +17,10 @@ export default {
         right: 30,
         // top: 10
     },
+    error: {
+        borderWidth: 1,
+        borderColor: material.redColor,
+        height: 50,
+        marginHorizontal: 10,
+    },
 };

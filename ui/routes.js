@@ -71,7 +71,10 @@ export const AppNavigator = DrawerNavigator(
                 {
                     headerMode: 'none'
                 }
-            )
+            ),
+            navigationOptions: ({ navigation }) => ({
+                drawerLockMode: 'locked-closed'
+            })
         },
         enquiry: {
             screen: Enquiry
