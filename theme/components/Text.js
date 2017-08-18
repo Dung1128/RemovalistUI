@@ -42,8 +42,15 @@ export default (variables = variable) => {
       fontSize: 14,
       color: material.grayColor,
     },
-    
-    
+    '.wraning': {
+      fontSize: 11,
+      color: material.redColor,
+    },
+    '.padding': {
+      paddingHorizontal: 20
+    }
+
+
   };
 
   return textTheme;

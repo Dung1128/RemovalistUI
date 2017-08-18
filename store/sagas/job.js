@@ -14,7 +14,8 @@ import {
     getMaterialList,
     getMaterialCategoryList,
     getTruckList,
-    getReferenceContactList
+    getReferenceContactList,
+    posNewJob
 } from '~/store/actions/job';
 
 const requestGetStatusJobList = createRequestSaga({
@@ -115,6 +116,15 @@ const requestUpdateStatusJob = createRequestSaga({
     failure: [(error) => setToast('Couldn\'t update job', 'error')]
 });
 
+const requestPosNewJob = createRequestSaga({
+    request: api.job.posNewJob,
+    key: 'posNewJob',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t post delivery update job', 'error')]
+});
+
 // root saga reducer
 export default [
     // like case return, this is take => call
@@ -134,6 +144,7 @@ export default [
             takeLatest('job/postDeliveryUpdate', requestPostDeliveryUpdate),
             takeLatest('job/postDeliveryCreate', requestPostDeliveryCreate),
             takeLatest('job/updateStatusJob', requestUpdateStatusJob),
+            takeLatest('job/posNewJob', requestPosNewJob),
         ];
     }
 ];

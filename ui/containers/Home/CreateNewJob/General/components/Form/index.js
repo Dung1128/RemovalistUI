@@ -132,8 +132,8 @@ const DateField = ({ input, label, meta: { touched, error, warning }, ...custom 
 
 
 const StartEndField = ({ input, label, meta: { touched, error, warning }, member }) => {
-    let hour = moment(input.value.timeEnd).diff(input.value.timeStart, 'hour');
-    let minutes = moment(input.value.timeEnd).diff(input.value.timeStart, 'minutes');
+    let hour = input.value.timeEnd && input.value.timeStart ? moment(input.value.timeEnd).diff(input.value.timeStart, 'hour') : 0;
+    let minutes = input.value.timeEnd && input.value.timeStart ? moment(input.value.timeEnd).diff(input.value.timeStart, 'minutes') : 0;
     let checkMinutes = minutes % 60;
     let duration = `${hour}h ${checkMinutes != 0 ? checkMinutes : ''}`;
     return (
@@ -143,11 +143,9 @@ const StartEndField = ({ input, label, meta: { touched, error, warning }, member
                 <Field name={`${member}.timeStart`} component={DateField} mode='time' />
                 <Text> - </Text>
                 <Field name={`${member}.timeEnd`} component={DateField} mode='time' />
-                <Text>   </Text>
-                {touched && error && <Icon size={16} color={material.grayIconColor} name='info' />}
             </View>
             <Text style={styles.txttitledate}>Duration: {duration}</Text>
-            {touched && error && <Text style={styles.error}>{error}</Text>}
+
         </View>
     )
 }
@@ -162,7 +160,7 @@ export const DateTimeField = ({ name }) => {
                 <Text style={styles.txttitledate}>Today</Text>
             </View>
             <View style={styles.border} />
-            <Field name={`${name}.time`} member={`${name}.time`} component={StartEndField} />
+            <Field name={name} member={name} component={StartEndField} />
         </View>
     )
 }

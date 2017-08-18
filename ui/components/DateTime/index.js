@@ -59,7 +59,7 @@ export default class extends Component {
                         {datetime}
                         {mode != 'time' && "   "}
                     </Text>
-                    {error && <Icon size={16} color={material.grayIconColor} name='info' />}
+                    {error && <Icon size={16} color={material.redColor} name='info' />}
                 </TouchableOpacity>
 
             </View>

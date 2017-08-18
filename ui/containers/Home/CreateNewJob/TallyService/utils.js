@@ -34,7 +34,6 @@ export const initialValues = {
 }
 export const validate = values => {
     const errors = {}
-    console.log(values)
 
     if (values.servicetime) {
         let servicetimeErrors = {};
@@ -44,7 +43,10 @@ export const validate = values => {
         if (!values.servicetime.input) {
             servicetimeErrors.input = 'Required'
         }
-        errors.servicetime = servicetimeErrors
+        if (servicetimeErrors.length) {
+            errors.servicetime = servicetimeErrors
+        }
+
     }
     if (values.traveltime) {
         let traveltimeErrors = {};
@@ -54,7 +56,10 @@ export const validate = values => {
         if (!values.traveltime.input) {
             traveltimeErrors.input = 'Required'
         }
-        errors.traveltime = traveltimeErrors
+        if (traveltimeErrors.length) {
+            errors.traveltime = traveltimeErrors
+        }
+
     }
     if (values.fuel) {
         let fuelErrors = {};
@@ -64,7 +69,10 @@ export const validate = values => {
         if (!values.fuel.input) {
             fuelErrors.input = 'Required'
         }
-        errors.fuel = fuelErrors
+        if (fuelErrors.length) {
+            errors.fuel = fuelErrors
+        }
+
     }
     if (values.material) {
         const materialArrayErrors = []
@@ -84,5 +92,6 @@ export const validate = values => {
         }
     }
 
+    console.log(errors)
     return errors
 }

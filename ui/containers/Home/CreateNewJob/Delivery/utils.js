@@ -1,12 +1,12 @@
 export const initialValues = {
     pickup: [{
-        time: '',
+        time: new Date(),
         addressline1: '',
         addressline2: '',
         note: ''
     }],
     dropoff: [{
-        time: '',
+        time: new Date(),
         addressline1: '',
         addressline2: '',
         note: ''

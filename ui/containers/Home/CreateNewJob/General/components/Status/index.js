@@ -85,7 +85,7 @@ export default class extends Component {
                                 enableEmptySections
                                 renderRow={(item) =>
                                     <ListItem onPress={() => { onChange(item); this.setModalVisible() }}>
-                                        <Text>{item.StatusName}</Text>
+                                        <Text>{item && item.StatusName ? item.StatusName : 'No item'}</Text>
                                     </ListItem>
                                 }>
                             </List>

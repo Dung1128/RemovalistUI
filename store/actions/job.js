@@ -52,6 +52,11 @@ export const updateStatusJob = (...args) => ({
     args
 })
 
+export const posNewJob = (...args) => ({
+    type: 'job/posNewJob',
+    args
+})
+
 
 
 // actions called by sagas

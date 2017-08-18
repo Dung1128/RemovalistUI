@@ -54,7 +54,6 @@ const InputSurchargeField = ({ input, ...custom }) => {
 }
 
 export const InputSurcharge = ({ input, meta: { touched, error, warning }, member }) => {
-    console.log(input.value.price && input.value.price)
     let price = parseFloat(input.value && input.value.price != '' ? input.value.price : 0).toFixed(2);
     return (
         <View>
@@ -67,7 +66,7 @@ export const InputSurcharge = ({ input, meta: { touched, error, warning }, membe
             />
             <View style={styles.wrapContent}>
                 <Icon size={22} color={material.grayIconColor} name='note' />
-                <Field name={`${member}.note`} component={InputSurchargeField} placeholder='Note' keyboardType='default' />
+                <Field name={`${member}.note`} component={InputSurchargeField} placeholder='Note' keyboardType='default' on />
                 <View style={styles.borderLeft}>
                     <Text style={{ paddingLeft: 10 }}>  $ </Text>
                     <Field name={`${member}.price`} component={InputSurchargeField} />
@@ -78,6 +77,7 @@ export const InputSurcharge = ({ input, meta: { touched, error, warning }, membe
 }
 
 const StatusInputField = ({ input, meta: { touched, error, warning }, member, nameIcon, measure, listItems, title }) => {
+
     const price = (input.value && input.value.status.CategoryId ? (input.value.status.PricePerUnit * input.value.input) : 0).toFixed(2);
     const hrs = input.value.input > 1 ? 'hrs' : 'hr'
     return (

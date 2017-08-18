@@ -34,17 +34,16 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      // general: this.props.navigation.state.params
+      general: this.props.navigation.state.params
     });
 
   }
 
   submitForm(values) {
-    // let arr = []
-    // arr.push(this.state.general);
-    // arr.push(values);
-    // console.log(arr)
-    this.props.navigation.navigate('tallyservice_screen')
+    let obj = {}
+    obj.general = this.state.general
+    obj.delivery = values
+    this.props.navigation.navigate('tallyservice_screen', obj)
   }
 
   render() {

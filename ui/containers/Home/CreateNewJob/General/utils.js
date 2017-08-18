@@ -1,28 +1,3 @@
-export const initialValues = {
-    customer: [{
-        username: '',
-        phone: [{
-
-        }],
-        email: '',
-        addressline1: '',
-        addressline2: ''
-    }],
-    truck: {
-        TruckId: 0,
-        TruckName: 'Select Truck'
-    },
-    status: {
-        JobStatusId: 0,
-        StatusName: 'Select Status',
-        JobStatusColor: 'fff'
-    },
-    datetime: {
-        date: '',
-        timeStart: '',
-        timeEnd: ''
-    }
-}
 export const validate = values => {
     const errors = {}
     if (values.customer) {
@@ -38,6 +13,10 @@ export const validate = values => {
                 customer.phone.forEach((phone, phoneIndex) => {
                     if (!phone || !phone.length) {
                         phoneArrayErrors[phoneIndex] = 'Required'
+                    } else if (isNaN(Number(phone))) {
+                        phoneArrayErrors[phoneIndex] = 'Must be a number'
+                    } else if (Number(phone.length) != 11) {
+                        phoneArrayErrors[phoneIndex] = 'Sorry, you must be 11 number'
                     }
                 })
                 if (phoneArrayErrors.length) {
@@ -47,6 +26,9 @@ export const validate = values => {
             }
             if (!customer || !customer.email) {
                 customerErrors.email = 'Required'
+                customerArrayErrors[customerIndex] = customerErrors
+            } else if (!customer || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(customer.email)) {
+                customerErrors.email = 'Invalid email address'
                 customerArrayErrors[customerIndex] = customerErrors
             }
             if (!customer || !customer.addressline1) {
@@ -62,25 +44,21 @@ export const validate = values => {
             errors.customer = customerArrayErrors
         }
     }
-    if (values.status.JobStatusId == 0) {
-        errors.status = 'Required'
-    }
     if (values.truck.TruckId == 0) {
         errors.truck = 'Required'
     }
-    if (!values.datetime.date) {
-        console.log(values.datetime)
+    if (values.datetime) {
         let datetimeErrors = {};
-        if (!values.datetime.date) {
-            datetimeErrors.date = 'Required';
-        }
         if (!values.datetime.timeStart || !values.datetime.timeEnd) {
-            datetimeErrors.time = 'Required';
+            datetimeErrors.timeEnd = 'Required';
         }
-        if (values.datetime.time && (values.datetime.time.timeStart > values.datetime.time.timeEnd)) {
-            datetimeErrors.time = 'The start time must be greater than the end time'
+        if (values.datetime.timeStart > values.datetime.timeEnd) {
+            datetimeErrors.timeEnd = 'The start time must be greater than the end time'
         }
-        errors.datetime = datetimeErrors;
+        if (datetimeErrors && datetimeErrors.timeEnd) {
+            errors.datetime = datetimeErrors;
+        }
+
     }
     return errors
 }
