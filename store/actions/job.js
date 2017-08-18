@@ -52,8 +52,8 @@ export const updateStatusJob = (...args) => ({
     args
 })
 
-export const posNewJob = (...args) => ({
-    type: 'job/posNewJob',
+export const postNewJob = (...args) => ({
+    type: 'job/postNewJob',
     args
 })
 

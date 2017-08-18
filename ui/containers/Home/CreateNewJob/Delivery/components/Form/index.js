@@ -64,10 +64,10 @@ const renderPickUp = (member, index, fields) => {
                     }
                 />
             }
-            <Field name={`${member}.time`} component={InputTime} />
-            <Field name={`${member}.addressline1`} component={InputAdress1} />
-            <Field name={`${member}.addressline2`} component={InputAdress2} />
-            <Field name={`${member}.note`} component={InputNote} />
+            <Field name={`${member}.Time`} component={InputTime} />
+            <Field name={`${member}.AddressLine1`} component={InputAdress1} />
+            <Field name={`${member}.AddressLine2`} component={InputAdress2} />
+            <Field name={`${member}.Notes`} component={InputNote} />
         </View>
     )
 }
@@ -76,7 +76,12 @@ export const PickUpField = ({ fields, meta: { error, submitFailed }, ...custom }
     <View>
         <TitleItem title='Pick Up'
             right={
-                <ButtonIcon onPress={() => fields.push({})} icon='add' size={18} color='#fff' />
+                <ButtonIcon onPress={() => fields.push({
+                    Time: new Date(),
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    Notes: ''
+                })} icon='add' size={18} color='#fff' />
             }
         />
         {fields.map((member, index) => renderPickUp(member, index, fields))}
@@ -93,10 +98,10 @@ const renderDropOff = (member, index, fields) => {
                     }
                 />
             }
-            <Field name={`${member}.time`} component={InputTime} />
-            <Field name={`${member}.addressline1`} component={InputAdress1} />
-            <Field name={`${member}.addressline2`} component={InputAdress2} />
-            <Field name={`${member}.note`} component={InputNote} />
+            <Field name={`${member}.Time`} component={InputTime} />
+            <Field name={`${member}.AddressLine1`} component={InputAdress1} />
+            <Field name={`${member}.AddressLine2`} component={InputAdress2} />
+            <Field name={`${member}.Notes`} component={InputNote} />
         </View>
     )
 }
@@ -105,7 +110,12 @@ export const DropOffField = ({ fields, meta: { error, submitFailed }, ...custom 
     <View>
         <TitleItem title='Drop Off'
             right={
-                <ButtonIcon onPress={() => fields.push({})} icon='add' size={18} color='#fff' />
+                <ButtonIcon onPress={() => fields.push({
+                    Time: new Date(),
+                    AddressLine1: '',
+                    AddressLine2: '',
+                    Notes: ''
+                })} icon='add' size={18} color='#fff' />
             }
         />
         {fields.map((member, index) => renderDropOff(member, index, fields))}

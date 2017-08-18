@@ -17,15 +17,20 @@ import {
   Field,
   FieldArray,
   reduxForm,
+  formValueSelector,
 } from 'redux-form'
 import {
   PickUpField,
   DropOffField,
 } from './components/Form'
 import { validate, initialValues } from './utils'
+
+const selector = formValueSelector('CustomerInfo')
+
 @connect(
   state => ({
-    initialValues: initialValues
+    initialValues: initialValues,
+    status: selector(state, 'status')
   }), )
 @reduxForm({ form: 'DeliveryInfo', validate })
 
@@ -39,12 +44,38 @@ export default class extends Component {
 
   }
 
+  renderJobLocations(pickup, dropoff) {
+    for (const i = 0; i < pickup.length; i++) {
+      if (i == 0) {
+        pickup[0].IsFirst = true;
+      } else {
+        pickup[0].IsFirst = false;
+      }
+      pickup[i].IsPickUp = true;
+    }
+
+    for (const i = 0; i < dropoff.length; i++) {
+      if (i == 0) {
+        dropoff[0].IsFirst = true;
+      } else {
+        dropoff[0].IsFirst = false;
+      }
+      dropoff[i].IsPickUp = false;
+    }
+
+    return pickup.concat(dropoff)
+  }
+
   submitForm(values) {
+    const data = this.renderJobLocations(values.pickup, values.dropoff)
+    // console.log(data)
     let obj = {}
     obj.general = this.state.general
-    obj.delivery = values
+    obj.delivery = data
     this.props.navigation.navigate('tallyservice_screen', obj)
   }
+
+
 
   render() {
     const { handleSubmit, submitting } = this.props

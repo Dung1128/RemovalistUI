@@ -4,28 +4,28 @@ export const initialValues = {
             Name: 'Select Type',
             CategoryId: 0
         },
-        input: '',
+        NumberOfMaterial: '',
     },
     traveltime: {
         status: {
             Name: 'Select Type',
             CategoryId: 0
         },
-        input: '',
+        NumberOfMaterial: '',
     },
     fuel: {
         status: {
             Name: 'Select Type',
             CategoryId: 0
         },
-        input: '',
+        NumberOfMaterial: '',
     },
     material: [{
         status: {
             Name: 'Select Type',
             CategoryId: 0
         },
-        input: '',
+        NumberOfMaterial: '',
     }],
     surcharge: {
         note: '',
@@ -40,8 +40,8 @@ export const validate = values => {
         if (values.servicetime.status.CategoryId == 0) {
             servicetimeErrors.status = 'Required'
         }
-        if (!values.servicetime.input) {
-            servicetimeErrors.input = 'Required'
+        if (!values.servicetime.NumberOfMaterial) {
+            servicetimeErrors.NumberOfMaterial = 'Required'
         }
         if (servicetimeErrors.length) {
             errors.servicetime = servicetimeErrors
@@ -53,8 +53,8 @@ export const validate = values => {
         if (values.traveltime.status.CategoryId == 0) {
             traveltimeErrors.status = 'Required'
         }
-        if (!values.traveltime.input) {
-            traveltimeErrors.input = 'Required'
+        if (!values.traveltime.NumberOfMaterial) {
+            traveltimeErrors.NumberOfMaterial = 'Required'
         }
         if (traveltimeErrors.length) {
             errors.traveltime = traveltimeErrors
@@ -66,8 +66,8 @@ export const validate = values => {
         if (values.fuel.status.CategoryId == 0) {
             fuelErrors.status = 'Required'
         }
-        if (!values.fuel.input) {
-            fuelErrors.input = 'Required'
+        if (!values.fuel.NumberOfMaterial) {
+            fuelErrors.NumberOfMaterial = 'Required'
         }
         if (fuelErrors.length) {
             errors.fuel = fuelErrors
@@ -82,8 +82,8 @@ export const validate = values => {
                 materialErrors.status = 'Required'
                 materialArrayErrors[materialIndex] = materialErrors
             }
-            if (!material || !material.input) {
-                materialErrors.input = 'Required'
+            if (!material || !material.NumberOfMaterial) {
+                materialErrors.NumberOfMaterial = 'Required'
                 materialArrayErrors[materialIndex] = materialErrors
             }
         })

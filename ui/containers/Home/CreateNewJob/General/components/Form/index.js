@@ -11,6 +11,7 @@ import {
     Field,
     FieldArray,
     reduxForm,
+    formValueSelector
 } from 'redux-form'
 
 import CustomerInfo from '~/ui/elements/CustomerInfo';
@@ -24,9 +25,10 @@ import Truck from '../Truck';
 import Status from '../Status';
 import moment from 'moment';
 import material from '~/theme/variables/material';
+import { connect } from 'react-redux'
 
 const InputUser = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
-    return <InputRow hint='Username' error={touched && error} nameIcon='user' onChangeText={onChange} {...restInput} />
+    return <InputRow hint='Customer Name' error={touched && error} nameIcon='user' onChangeText={onChange} {...restInput} />
 }
 
 const InputEmail = ({ input: { onChange, ...restInput }, meta: { touched, error, warning } }) => {
@@ -74,11 +76,11 @@ const renderCustomer = (member, index, fields) => {
                     }
                 />
             }
-            <Field name={`${member}.username`} component={InputUser} />
-            <FieldArray name={`${member}.phone`} component={InputPhoneArray} />
-            <Field name={`${member}.email`} component={InputEmail} />
-            <Field name={`${member}.addressline1`} component={InputAdress1} />
-            <Field name={`${member}.addressline2`} component={InputAdress2} />
+            <Field name={`${member}.CompanyName`} component={InputUser} />
+            <FieldArray name={`${member}.Phone`} component={InputPhoneArray} />
+            <Field name={`${member}.Email`} component={InputEmail} />
+            <Field name={`${member}.AddressLine1`} component={InputAdress1} />
+            <Field name={`${member}.AddressLine2`} component={InputAdress2} />
         </View>
     )
 }
@@ -123,11 +125,13 @@ export const StatusField = ({ input, meta: { touched, error, warning }, ...custo
 
 
 const DateField = ({ input, label, meta: { touched, error, warning }, ...custom }) => (
-    <DateTime
-        error={touched && error}
-        {...input}
-        {...custom}
-    />
+    <View>
+        <DateTime
+            error={touched && error}
+            {...input}
+            {...custom}
+        />
+    </View>
 )
 
 
@@ -145,24 +149,29 @@ const StartEndField = ({ input, label, meta: { touched, error, warning }, member
                 <Field name={`${member}.timeEnd`} component={DateField} mode='time' />
             </View>
             <Text style={styles.txttitledate}>Duration: {duration}</Text>
-
+            {touched && error && <Text wraning>{error.timeEnd}</Text>}
         </View>
     )
 }
 
 
-export const DateTimeField = ({ name }) => {
+const selector = formValueSelector('CustomerInfo')
+
+export const DateTimeField = connect((state) => ({
+    datetime: selector(state, 'datetime'),
+}))(({ name, datetime }) => {
+    const checkdate = new Date()
     return (
         <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
             <View style={styles.itemTime}>
                 <Text style={styles.txttitledate}>Date</Text>
                 <Field name={`${name}.date`} component={DateField} />
-                <Text style={styles.txttitledate}>Today</Text>
+                {datetime.date.toString() == checkdate.toString() && <Text style={styles.txttitledate}>Today</Text>}
             </View>
             <View style={styles.border} />
             <Field name={name} member={name} component={StartEndField} />
         </View>
     )
-}
+})
 
 

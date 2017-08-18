@@ -1,24 +1,25 @@
-import {store} from '~/store/config'
+import moment from 'moment'
+import { store } from '~/store/config'
 import { formValueSelector } from 'redux-form';
 
 const formCustomerSelectors = formValueSelector('CustomerInfo')
 
 export const initialValues = {
     pickup: [{
-        time: new Date(),
-        addressline1: '',
-        addressline2: '',
-        note: ''
+        Time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
+        AddressLine1: '',
+        AddressLine2: '',
+        Notes: ''
     }],
     dropoff: [{
-        time: new Date(),
-        addressline1: '',
-        addressline2: '',
-        note: ''
+        Time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
+        AddressLine1: '',
+        AddressLine2: '',
+        Notes: ''
     }],
 }
-export const validate = (values, {navigation}) => {
-    const errors = {}    
+export const validate = (values, { navigation }) => {
+    const errors = {}
     // prev props
     console.log(navigation.state.params.status)
 
@@ -26,16 +27,16 @@ export const validate = (values, {navigation}) => {
         const pickupArrayErrors = []
         values.pickup.forEach((pickup, pickupIndex) => {
             const pickupErrors = {}
-            if (!pickup || !pickup.time) {
-                pickupErrors.time = 'Required'
+            if (!pickup || !pickup.Time) {
+                pickupErrors.Time = 'Required'
                 pickupArrayErrors[pickupIndex] = pickupErrors
             }
-            if (!pickup || !pickup.addressline1) {
-                pickupErrors.addressline1 = 'Required'
+            if (!pickup || !pickup.AddressLine1) {
+                pickupErrors.AddressLine1 = 'Required'
                 pickupArrayErrors[pickupIndex] = pickupErrors
             }
-            if (!pickup || !pickup.addressline2) {
-                pickupErrors.addressline2 = 'Required'
+            if (!pickup || !pickup.AddressLine2) {
+                pickupErrors.AddressLine2 = 'Required'
                 pickupArrayErrors[pickupIndex] = pickupErrors
             }
         })
@@ -47,16 +48,16 @@ export const validate = (values, {navigation}) => {
         const dropoffArrayErrors = []
         values.dropoff.forEach((dropoff, dropoffIndex) => {
             const dropoffErrors = {}
-            if (!dropoff || !dropoff.time) {
-                dropoffErrors.time = 'Required'
+            if (!dropoff || !dropoff.Time) {
+                dropoffErrors.Time = 'Required'
                 dropoffArrayErrors[dropoffIndex] = dropoffErrors
             }
-            if (!dropoff || !dropoff.addressline1) {
-                dropoffErrors.addressline1 = 'Required'
+            if (!dropoff || !dropoff.AddressLine1) {
+                dropoffErrors.AddressLine1 = 'Required'
                 dropoffArrayErrors[dropoffIndex] = dropoffErrors
             }
-            if (!dropoff || !dropoff.addressline2) {
-                dropoffErrors.addressline2 = 'Required'
+            if (!dropoff || !dropoff.AddressLine2) {
+                dropoffErrors.AddressLine2 = 'Required'
                 dropoffArrayErrors[dropoffIndex] = dropoffErrors
             }
         })
