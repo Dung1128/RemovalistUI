@@ -10,13 +10,12 @@ export const validate = values => {
             }
             if (customer && customer.phone && customer.phone.length) {
                 const phoneArrayErrors = []
+                var reValidatePhone = new RegExp("^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$");
                 customer.phone.forEach((phone, phoneIndex) => {
                     if (!phone || !phone.length) {
                         phoneArrayErrors[phoneIndex] = 'Required'
-                    } else if (isNaN(Number(phone))) {
+                    }else if (!reValidatePhone.test(phone)) {
                         phoneArrayErrors[phoneIndex] = 'Must be a number'
-                    } else if (Number(phone.length) != 11) {
-                        phoneArrayErrors[phoneIndex] = 'Sorry, you must be 11 number'
                     }
                 })
                 if (phoneArrayErrors.length) {
