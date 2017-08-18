@@ -1,4 +1,4 @@
-import { takeLatest, takeEvery } from 'redux-saga/effects';
+import { takeLatest, takeEvery, all } from 'redux-saga/effects';
 
 import api from '~/store/api';
 import { createRequestSaga } from '~/store/sagas/common';
@@ -25,8 +25,8 @@ export default [
     // from direct watcher we just yield value
     function* fetchWatcher() {
         // use takeLatest instead of take every, so double click in short time will not trigger more fork
-        yield [
+        yield all([
             takeLatest('job/getMaterialByCategory', requestGetMaterialByCategory),
-        ];
+        ]);
     }
 ];

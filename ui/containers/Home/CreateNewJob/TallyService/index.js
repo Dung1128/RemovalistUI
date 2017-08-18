@@ -173,11 +173,11 @@ export default class extends Component {
                         name='servicetime'
                         nameIcon='time' measure='hr'
                         listItems={listServiceTime}
-                        title='Travel Time'
+                        title='Service Time'
                     />
                     <InputServiceField
                         name='traveltime'
-                        nameIcon='time' measure='hr'
+                        nameIcon='truck' measure='hr'
                         listItems={listTravelTime}
                         title='Travel Time'
                     />

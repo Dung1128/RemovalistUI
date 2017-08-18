@@ -1,4 +1,5 @@
 export const validate = values => {
+
     const errors = {}
     if (values.Contact) {
         const ContactArrayErrors = []

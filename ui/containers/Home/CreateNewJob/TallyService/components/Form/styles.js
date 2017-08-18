@@ -8,7 +8,7 @@ export default {
     wrapItem: {
         backgroundColor: '#fff',
         flexDirection: 'row',
-        height: 50,
+        height: 60,
         borderBottomColor: material.grayTitle,
         borderBottomWidth: 0.5
     },
@@ -20,11 +20,11 @@ export default {
         justifyContent: 'space-between',
         backgroundColor: '#fff',
         alignItems: 'center',
-        height: 50,
+        height: 60,
     },
     Item: {
         flex: 1,
-        padding: 10,
+        padding: 0,
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 10,
@@ -37,7 +37,6 @@ export default {
         height: '100%',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
     },
     button: {
         position: 'absolute',
