@@ -23,6 +23,7 @@ export default class extends Component {
                     <Icon name={nameIcon} size={20} style={{ color: 'gray', paddingHorizontal: 0 }} />
                     <Input
                         autoCapitalize='none'
+                        autoCorrect={false}
                         placeholderTextColor={material.grayColor}
                         underlineColorAndroid="transparent"
                         placeholder={hint}

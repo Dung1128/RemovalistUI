@@ -46,7 +46,7 @@ const selector = formValueSelector('TallyService')
         material: selector(state, 'material'),
         surcharge: selector(state, 'surcharge'),
 
-    }), { ...materialActions })
+    }), { ...materialActions, ...jobActions })
 @reduxForm({ form: 'TallyService', validate })
 export default class extends Component {
 
@@ -112,8 +112,9 @@ export default class extends Component {
         //         "NumberOfMaterial": 10
         //     }]
         // }
-        // this.createJob(data)
-        Alert.alert('Notify', 'Done')
+        this.createJob(data)
+        console.log(JSON.stringify(data,null,2))
+        // Alert.alert('Notify', 'Done')
     }
 
     componentDidMount() {
@@ -152,7 +153,7 @@ export default class extends Component {
 
     sumPrice() {
         const { servicetime, traveltime, fuel, material, surcharge } = this.props;
-        if (servicetime && traveltime && fuel && material[0].input) {
+        if (servicetime && traveltime && fuel && material && material[0].input) {
             let materialvalue = material.map(input => (input.status && input.status.CategoryId ? (input.status.PricePerUnit * input.input) : 0))
                 .reduce((a, b) => a + b);
             let price = (parseInt(servicetime.input) * (servicetime.status.PricePerUnit || 0))
