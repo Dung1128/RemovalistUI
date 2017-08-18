@@ -29,7 +29,20 @@ const selector = formValueSelector('CustomerInfo')
 
 @connect(
   state => ({
-    initialValues: initialValues,
+    initialValues: {
+      pickup: [{
+        Time: selector(state, 'datetime').timeStart,
+        AddressLine1: '',
+        AddressLine2: '',
+        Notes: ''
+      }],
+      dropoff: [{
+        Time: selector(state, 'datetime').timeEnd,
+        AddressLine1: '',
+        AddressLine2: '',
+        Notes: ''
+      }],
+    },
     status: selector(state, 'status')
   }), )
 @reduxForm({ form: 'DeliveryInfo', validate })

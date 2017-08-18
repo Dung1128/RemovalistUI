@@ -21,13 +21,19 @@ export const initialValues = {
 export const validate = (values, { navigation }) => {
     const errors = {}
     // prev props
-    if (navigation.state.params.status.JobStatusId != 1) {
+    const params = navigation.state.params
+    console.log(params)
+    if (params.status.JobStatusId != 1) {
         if (values.pickup) {
             const pickupArrayErrors = []
             values.pickup.forEach((pickup, pickupIndex) => {
                 const pickupErrors = {}
                 if (!pickup || !pickup.Time) {
                     pickupErrors.Time = 'Required'
+                    pickupArrayErrors[pickupIndex] = pickupErrors
+                }
+                if (new Date(pickup.Time) < new Date(params.datetime.timeStart)) {
+                    pickupErrors.Time = 'Time must be more than' + params.datetime.timeStart
                     pickupArrayErrors[pickupIndex] = pickupErrors
                 }
                 if (!pickup || !pickup.AddressLine1) {
@@ -49,6 +55,10 @@ export const validate = (values, { navigation }) => {
                 const dropoffErrors = {}
                 if (!dropoff || !dropoff.Time) {
                     dropoffErrors.Time = 'Required'
+                    dropoffArrayErrors[dropoffIndex] = dropoffErrors
+                }
+                if (new Date(dropoff.Time) > new Date(params.datetime.timeEnd)) {
+                    dropoffErrors.Time = 'Time must be less than' + params.datetime.timeEnd
                     dropoffArrayErrors[dropoffIndex] = dropoffErrors
                 }
                 if (!dropoff || !dropoff.AddressLine1) {

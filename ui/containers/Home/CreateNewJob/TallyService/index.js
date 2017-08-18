@@ -93,12 +93,13 @@ export default class extends Component {
     submitForm(values) {
         const { delivery } = this.state;
         const dataform = this.renderForm(values);
-        const date = new Date(delivery.general.datetime.date).toLocaleString();
-
+        const date = moment(delivery.general.datetime.date).format("YYYY-MM-DD");
+        const timeStart = moment(delivery.general.datetime.timeStart).format("HH:mm");
+        const timeEnd = moment(delivery.general.datetime.timeEnd).format("HH:mm");
         const obj = {
             "Notes": (values.surcharge.note || ''),
-            "TimeStart": moment(delivery.general.datetime.timeStart).format("YYYY-MM-DD HH:mm"),
-            "TimeEnd": moment(delivery.general.datetime.timeEnd).format("YYYY-MM-DD HH:mm"),
+            "TimeStart": `${date} ${timeStart}`,
+            "TimeEnd": `${date} ${timeEnd}`,
             "TotalCost": this.sumPrice(),
             "AssignedTruckId": (delivery.general.truck.TruckId || ''),
             "AdjustmentMatrix": (values.surcharge.price || 0),
