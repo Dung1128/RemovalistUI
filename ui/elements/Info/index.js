@@ -37,12 +37,9 @@ export default class extends Component {
                     </View>
                 } />
                 <View white style={{ paddingHorizontal: 5 }}>
-                    <RowItem icon='time' title={time} />
-                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                    <RowItem icon='building' title={address1} />
-                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                    <RowItem icon='map' title={address2} />
-                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                    <RowItem icon='time' title={time} />               
+                    <RowItem icon='building' title={address1} />             
+                    <RowItem icon='map' title={address2} />                 
                     <RowItem icon='note' title={note} />
                 </View>
             </View>

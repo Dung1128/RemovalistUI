@@ -98,7 +98,7 @@ export default class extends Component {
                 >
                     <StatusItem width={10} style={styles.statusItem} color={material.yellowColor} />
 
-                    <Text style={styles.itemText}>To be comfirmed</Text>
+                    <Text style={styles.itemText}>To be confirmed</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.itemList}
