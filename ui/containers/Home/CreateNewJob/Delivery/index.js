@@ -17,15 +17,20 @@ import {
   Field,
   FieldArray,
   reduxForm,
+  formValueSelector,
 } from 'redux-form'
 import {
   PickUpField,
   DropOffField,
 } from './components/Form'
 import { validate, initialValues } from './utils'
+
+const selector = formValueSelector('CustomerInfo')
+
 @connect(
   state => ({
-    initialValues: initialValues
+    initialValues: initialValues,
+    status: selector(state, 'status')
   }), )
 @reduxForm({ form: 'DeliveryInfo', validate })
 
@@ -40,11 +45,14 @@ export default class extends Component {
   }
 
   submitForm(values) {
+    console.log(values)
     let obj = {}
     obj.general = this.state.general
     obj.delivery = values
     this.props.navigation.navigate('tallyservice_screen', obj)
   }
+
+
 
   render() {
     const { handleSubmit, submitting } = this.props

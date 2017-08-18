@@ -14,8 +14,8 @@ export const validate = values => {
                 customer.phone.forEach((phone, phoneIndex) => {
                     if (!phone || !phone.length) {
                         phoneArrayErrors[phoneIndex] = 'Required'
-                    }else if (!reValidatePhone.test(phone)) {
-                        phoneArrayErrors[phoneIndex] = 'Must be a number'
+                    } else if (!reValidatePhone.test(phone)) {
+                        phoneArrayErrors[phoneIndex] = 'Invalid number'
                     }
                 })
                 if (phoneArrayErrors.length) {
@@ -43,21 +43,24 @@ export const validate = values => {
             errors.customer = customerArrayErrors
         }
     }
-    if (values.truck.TruckId == 0) {
-        errors.truck = 'Required'
-    }
     if (values.datetime) {
         let datetimeErrors = {};
         if (!values.datetime.timeStart || !values.datetime.timeEnd) {
             datetimeErrors.timeEnd = 'Required';
         }
         if (values.datetime.timeStart > values.datetime.timeEnd) {
-            datetimeErrors.timeEnd = 'The start time must be greater than the end time'
+            datetimeErrors.timeEnd = 'Start time is required to be less than end time'
         }
         if (datetimeErrors && datetimeErrors.timeEnd) {
             errors.datetime = datetimeErrors;
         }
 
+    }
+    // check status
+    if (values.status.JobStatusId != 1) {
+        if (values.truck.TruckId == 0) {
+            errors.truck = 'Required'
+        }
     }
     return errors
 }

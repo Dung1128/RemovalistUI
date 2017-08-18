@@ -39,7 +39,6 @@ const selector = formValueSelector('TallyService')
     state => ({
         initialValues: initialValues,
         listMaterial: jobSelectors.getMaterialList(state),
-        // tallyService: selector(state, 'servicetime', 'traveltime', 'fuel', 'material', 'surcharge')
         servicetime: selector(state, 'servicetime'),
         traveltime: selector(state, 'traveltime'),
         fuel: selector(state, 'fuel'),
@@ -113,7 +112,7 @@ export default class extends Component {
         //     }]
         // }
         // this.createJob(data)
-        Alert.alert('Notify', 'Done')
+        Alert.alert('Notify', 'Create job successfully')
     }
 
     componentDidMount() {
