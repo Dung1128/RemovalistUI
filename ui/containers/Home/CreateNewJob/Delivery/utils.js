@@ -1,3 +1,8 @@
+import {store} from '~/store/config'
+import { formValueSelector } from 'redux-form';
+
+const formCustomerSelectors = formValueSelector('CustomerInfo')
+
 export const initialValues = {
     pickup: [{
         time: new Date(),
@@ -12,8 +17,11 @@ export const initialValues = {
         note: ''
     }],
 }
-export const validate = values => {
-    const errors = {}
+export const validate = (values, {navigation}) => {
+    const errors = {}    
+    // prev props
+    console.log(navigation.state.params.status)
+
     if (values.pickup) {
         const pickupArrayErrors = []
         values.pickup.forEach((pickup, pickupIndex) => {

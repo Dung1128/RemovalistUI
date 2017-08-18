@@ -27,7 +27,7 @@ const enhancer = [autoRehydrate(), applyMiddleware(...middleware)]
 window.devToolsExtension && enhancer.push(window.devToolsExtension())
 
 // mount it on the Store
-const store = createStore(
+export const store = createStore(
   rootReducer,
   initialState,
   // if you use getStoredState then no need to use auto hydrate to get state back

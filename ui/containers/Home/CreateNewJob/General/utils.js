@@ -1,5 +1,7 @@
 export const validate = values => {
+
     const errors = {}
+    return errors
     if (values.customer) {
         const customerArrayErrors = []
         values.customer.forEach((customer, customerIndex) => {
