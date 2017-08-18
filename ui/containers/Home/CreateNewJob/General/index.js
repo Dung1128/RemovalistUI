@@ -94,7 +94,6 @@ export default class extends Component {
                     <TitleItem style={{ padding: 0 }} />
                 </ScrollView>
                 <Button
-                    //onPress={() => this.props.navigation.navigate('delivery_screen', 'aaaaa')}
                     onPress={handleSubmit(this.submitForm.bind(this))}
                     full iconRight='arrow-right' text='DELIVERY INFO' />
 

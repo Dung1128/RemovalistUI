@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Alert
 } from 'react-native';
+import { NavigationActions } from 'react-navigation'
 import styles from './styles';
 import material from '~/theme/variables/material';
 import { Container, Left, Body, Right, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
@@ -59,24 +60,43 @@ export default class extends Component {
             listMaterial: '',
             delivery: this.props.navigation.state.params
         });
-
         this.sumPrice = this.sumPrice.bind(this);
 
     }
 
     createJob(obj) {
         this.props.postNewJob(obj, accessToken, (error, data) => {
-            console.log(error)
-            console.log(data)
+            if (data) {
+                if (data.Status == 1) {
+                    Alert.alert('Notify', 'Create job successfully')
+                    const resetAction = NavigationActions.reset({
+                        index: 0,
+                        actions: [
+                            NavigationActions.navigate({ routeName: 'jobtoday_screen' })
+                        ]
+                    })
+                    this.props.navigation.dispatch(resetAction)
+                }
+                if (data.Status == 2) {
+                    Alert.alert('Notify', data.Message);
+                }
+            }
+
+
+            if (error) {
+                Alert.alert('Notify', error);
+            }
+
         })
     }
 
     submitForm(values) {
         const { delivery } = this.state;
-        // console.log(values)
         const dataform = this.renderForm(values);
+        const date = new Date(delivery.general.datetime.date).toLocaleString();
+
         const obj = {
-            "Notes": (values.surcharge.note || ''), // surcharge
+            "Notes": (values.surcharge.note || ''),
             "TimeStart": moment(delivery.general.datetime.timeStart).format("YYYY-MM-DD HH:mm"),
             "TimeEnd": moment(delivery.general.datetime.timeEnd).format("YYYY-MM-DD HH:mm"),
             "TotalCost": this.sumPrice(),
@@ -87,10 +107,8 @@ export default class extends Component {
             "Contact": delivery.general.Contact,
             "JobDetailsMaterials": this.renderForm(values)
         }
-        console.log(JSON.stringify(obj))
         this.createJob(obj)
-        Alert.alert('Notify', 'Create job successfully')
-        // console.log(JSON.stringify(data, null, 2))
+
     }
 
     componentDidMount() {
@@ -123,7 +141,6 @@ export default class extends Component {
             listFuel,
             listMaterial
         });
-        // this.sumPrice();
     }
 
     renderForm(values) {
@@ -209,9 +226,7 @@ export default class extends Component {
                     <TitleItem style={{ padding: 0 }} />
                 </Content>
                 <Button
-                    //disable
                     onPress={handleSubmit(this.submitForm.bind(this))}
-                    //onPress={() => this.props.navigation.navigate('jobtoday_screen')} 
                     full
                     text='DONE'
                 />

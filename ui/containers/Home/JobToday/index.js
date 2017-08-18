@@ -213,10 +213,6 @@ export default class extends Component {
           style={{ backgroundColor: material.redColor, position: 'absolute', bottom: 20, right: 20, borderRadius: 50 / 2, width: 50, height: 50 }}>
           <Icon name="add" color='#fff' size={20} />
         </Button>
-
-
-        <LoadingModal loading={this.props.isPending} />
-
       </Container>
     );
   }
