@@ -29,9 +29,10 @@ import * as jobActions from '~/store/actions/job'
 import * as jobSelectors from '~/store/selectors/job'
 const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6ImVvc29UR3FCMHZwNWlsS1dWMGcxclZmaVBFMGRaWnVGQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTExMDg3NDQ0LCJpYXQiOjE1MDI0NDc0NDQsInNjb3BlIjoiIn0.U3xQQLeGTFuzr-37PXefhZnynHWYUx7Ow_SuBfb8FM2S3cxAQdk6WN14bPKqSKaAsbMU7Sd6VsvTFDtlSRrkDmghfNNIQ7eTD8qECZ6N94XePH-oggOM7PDUVsWzTT5t5279w-8PFc5NjByPiptu-hvAV2JAR0tJd_UDJHF-tArnYeq99v_bftkdhngd_JblRJBC6oDqaAGPaAQa4SCL0aG3WxUXVz1CeLywyKUBYVE88RWC-GWlnwozBcegqku5BRP4zzlJmY3Xw73Bdj8zEt5aQtl_rc3EaG2mwFtUMokBNxUAqzHtG3WCFgCxb2463EvyCqJQHlwAFnzGYFwqDg'
 import Communications from 'react-native-communications'
-
+import moment from 'moment';
 @connect(state => ({
-    listStatus: jobSelectors.getStatusJobList(state)
+    listStatus: jobSelectors.getStatusJobList(state),
+    listTruck: jobSelectors.getTruckList(state),
 }), { ...jobActions })
 export default class extends Component {
     constructor(props) {
@@ -59,10 +60,22 @@ export default class extends Component {
         }
     }
 
+    renderTruck(id) {
+        const arr = this.props.listTruck
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].TruckId == id) {
+                this.setState({
+                    TruckName: arr[i].TruckName,
+                })
+            }
+        }
+    }
+
     componentDidMount() {
         this.props.getJobById(this.state.id, accessToken, (error, data) => {
             console.log(data)
             this.renderStatus(data.JobDetails.StatusId);
+            this.renderTruck(data.JobDetails.TruckId)
             this.setState({
                 JobDetails: data.JobDetails,
                 ready: true
@@ -90,16 +103,16 @@ export default class extends Component {
                     onPress={() => Communications.phonecall(item, true)}
                         />
                 </View>
+                
             }
         />)
     }
-
     renderJobLocation(item, index) {
         return (
             <Info
                 key={index}
                 title={item.IsPickUp ? 'Pick Up' : 'Drop Off'}
-                time={item.Time}
+                time={moment(item.Time).format("HH:mm")}
                 address1={item.AddressLine1}
                 address2={item.AddressLine2}
                 note={item.Notes}
@@ -156,11 +169,11 @@ export default class extends Component {
                                 <TitleItem title='Customer Info' />
                                 <View white style={{ paddingHorizontal: 5 }}>
                                     <RowItem icon='user' title={JobDetails.Contact[0].CompanyName} />
-                                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                                    
                                     {
                                         JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
                                     }
-                                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                                    
                                     <RowItem icon='email' title={JobDetails.Contact[0].Email} />
                                 </View>
                                 <TitleItem title='Start Time'
@@ -177,7 +190,7 @@ export default class extends Component {
                                         <Text style={styles.date}>{new Date(date).toDateString()}</Text>
                                         <Text style={styles.txttitledate}>Today</Text>
                                     </View>
-                                    <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+                                    
                                     <View style={styles.itemTime}>
                                         <Text style={styles.txttitledate}>Time</Text>
                                         <View style={{ flexDirection: 'row' }}>
@@ -188,7 +201,7 @@ export default class extends Component {
                                 </View>
                                 <TitleItem title='Truck' />
                                 <View white style={{ paddingHorizontal: 5 }}>
-                                    <RowItem icon='truck' title='Truck 1' />
+                                    <RowItem icon='truck' title={this.state.TruckName} />
                                 </View>
                                 {
                                     JobDetails.JobLocations.map((item, index) => this.renderJobLocation(item, index))

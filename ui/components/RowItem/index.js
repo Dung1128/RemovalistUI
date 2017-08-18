@@ -14,7 +14,7 @@ export default class extends Component {
     render() {
         const { title, icon, size = 22, right, color = material.grayIconColor, ...props } = this.props;
         return (
-
+            <View>
             <View rowpadding full style={{ backgroundColor: '#fff' }} {...props }>
                 <View row>
                     { icon && <Icon name={icon} size={size} color={color} /> }
@@ -23,6 +23,8 @@ export default class extends Component {
                 {
                     right && right
                 }
+            </View>
+            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
             </View>
         )
     }

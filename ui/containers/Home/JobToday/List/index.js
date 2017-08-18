@@ -115,6 +115,7 @@ export default class extends Component {
     renderRow(data) {
         // this.renderStatus(data.StatusId);
         return (
+            <View>
             <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })}>
                 <View style={{
                     width: 5,
@@ -128,7 +129,10 @@ export default class extends Component {
                         <Text style={styles.textbottom}>{data.Phone}</Text>
                     </View>
                 </View>
+                
             </TouchableOpacity>
+            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+            </View>
         );
     }
 

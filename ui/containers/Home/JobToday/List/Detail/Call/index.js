@@ -65,8 +65,7 @@ export default class extends Component {
                             {
                                 JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
                             }
-                            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                            <RowItem icon='email' title={JobDetails.Contact[0].Email} />
+         
                         </View>
                  
                     <TitleItem title='Self Storage' />

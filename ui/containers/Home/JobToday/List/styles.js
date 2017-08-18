@@ -42,11 +42,11 @@ export default {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingTop: 10,
-        width: '80%',
+        width: '85%',
         alignItems: 'center'
     },
     textbottom: {
         fontSize: 14,
-        flex: 1
+        flex: 1,
     }
 }
