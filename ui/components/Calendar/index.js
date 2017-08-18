@@ -265,7 +265,7 @@ export default class extends Component {
             pagingEnabled
             removeClippedSubviews={false}
             scrollEventThrottle={1000}
-            showsVeriticalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             automaticallyAdjustContentInsets
             style={containerStyle}
             contentContainerStyle={{

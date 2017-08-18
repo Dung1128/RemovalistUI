@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
      "ba": "cd android && ./gradlew assembleRelease",
-    "ia": "adb devices | awk 'NR>1 && $1 ~ /^[^:]+$/ { system(\"adb -s \" $1 \" install -r android/app/build/outputs/apk/app-armeabi-v7a-release.apk\") }'",
+    "ia": "adb devices | awk 'NR>1 && $1 ~ /^[^:]+$/ { system(\"adb -s \" $1 \" install -r android/app/build/outputs/apk/app-release.apk\") }'",
     "test": "jest"
   },
   "rnpm": {
