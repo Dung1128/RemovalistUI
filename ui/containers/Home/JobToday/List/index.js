@@ -65,25 +65,29 @@ export default class extends Component {
         console.log(this.renderDate(this.date))
 
         this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
-            this.setState({
-                dataSource: data.JobListItemObjects,
-                
-            })
+            if(data){
+                this.setState({
+                    dataSource: data.JobListItemObjects,
+                    
+                })
+            }
             console.log(data)
         })
 
     }
 
+
     updateList(date, dateTit) {
         
         this.props.getJobByDate(date, accessToken, (error, data) => {
             console.log(data)
-            if(data)
-            this.setState({
-                 listByDate: this.renderDate(dateTit),
-                 dateTitle: this.renderDateTit(dateTit),
-                 dataSource: data.JobListItemObjects,
-            })
+            if(data) {
+                this.setState({
+                     listByDate: this.renderDate(dateTit),
+                     dateTitle: this.renderDateTit(dateTit),
+                     dataSource: data.JobListItemObjects,
+                })
+            }
         })
     }
 
