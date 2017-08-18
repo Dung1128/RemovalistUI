@@ -76,11 +76,11 @@ const renderCustomer = (member, index, fields) => {
                     }
                 />
             }
-            <Field name={`${member}.username`} component={InputUser} />
-            <FieldArray name={`${member}.phone`} component={InputPhoneArray} />
-            <Field name={`${member}.email`} component={InputEmail} />
-            <Field name={`${member}.addressline1`} component={InputAdress1} />
-            <Field name={`${member}.addressline2`} component={InputAdress2} />
+            <Field name={`${member}.CompanyName`} component={InputUser} />
+            <FieldArray name={`${member}.Phone`} component={InputPhoneArray} />
+            <Field name={`${member}.Email`} component={InputEmail} />
+            <Field name={`${member}.AddressLine1`} component={InputAdress1} />
+            <Field name={`${member}.AddressLine2`} component={InputAdress2} />
         </View>
     )
 }

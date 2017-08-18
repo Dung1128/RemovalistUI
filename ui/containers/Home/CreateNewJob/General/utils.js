@@ -1,46 +1,46 @@
 export const validate = values => {
     const errors = {}
-    if (values.customer) {
-        const customerArrayErrors = []
-        values.customer.forEach((customer, customerIndex) => {
-            const customerErrors = {}
-            if (!customer || !customer.username) {
-                customerErrors.username = 'Required'
-                customerArrayErrors[customerIndex] = customerErrors
+    if (values.Contact) {
+        const ContactArrayErrors = []
+        values.Contact.forEach((Contact, ContactIndex) => {
+            const ContactErrors = {}
+            if (!Contact || !Contact.CompanyName) {
+                ContactErrors.CompanyName = 'Required'
+                ContactArrayErrors[ContactIndex] = ContactErrors
             }
-            if (customer && customer.phone && customer.phone.length) {
-                const phoneArrayErrors = []
+            if (Contact && Contact.Phone && Contact.Phone.length) {
+                const PhoneArrayErrors = []
                 var reValidatePhone = new RegExp("^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$");
-                customer.phone.forEach((phone, phoneIndex) => {
-                    if (!phone || !phone.length) {
-                        phoneArrayErrors[phoneIndex] = 'Required'
-                    } else if (!reValidatePhone.test(phone)) {
-                        phoneArrayErrors[phoneIndex] = 'Invalid number'
+                Contact.Phone.forEach((Phone, PhoneIndex) => {
+                    if (!Phone || !Phone.length) {
+                        PhoneArrayErrors[PhoneIndex] = 'Required'
+                    } else if (!reValidatePhone.test(Phone)) {
+                        PhoneArrayErrors[PhoneIndex] = 'Invalid number'
                     }
                 })
-                if (phoneArrayErrors.length) {
-                    customerErrors.phone = phoneArrayErrors
-                    customerArrayErrors[customerIndex] = customerErrors
+                if (PhoneArrayErrors.length) {
+                    ContactErrors.Phone = PhoneArrayErrors
+                    ContactArrayErrors[ContactIndex] = ContactErrors
                 }
             }
-            if (!customer || !customer.email) {
-                customerErrors.email = 'Required'
-                customerArrayErrors[customerIndex] = customerErrors
-            } else if (!customer || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(customer.email)) {
-                customerErrors.email = 'Invalid email address'
-                customerArrayErrors[customerIndex] = customerErrors
+            if (!Contact || !Contact.Email) {
+                ContactErrors.Email = 'Required'
+                ContactArrayErrors[ContactIndex] = ContactErrors
+            } else if (!Contact || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Contact.Email)) {
+                ContactErrors.Email = 'Invalid Email address'
+                ContactArrayErrors[ContactIndex] = ContactErrors
             }
-            if (!customer || !customer.addressline1) {
-                customerErrors.addressline1 = 'Required'
-                customerArrayErrors[customerIndex] = customerErrors
+            if (!Contact || !Contact.AddressLine1) {
+                ContactErrors.AddressLine1 = 'Required'
+                ContactArrayErrors[ContactIndex] = ContactErrors
             }
-            if (!customer || !customer.addressline2) {
-                customerErrors.addressline2 = 'Required'
-                customerArrayErrors[customerIndex] = customerErrors
+            if (!Contact || !Contact.AddressLine2) {
+                ContactErrors.AddressLine2 = 'Required'
+                ContactArrayErrors[ContactIndex] = ContactErrors
             }
         })
-        if (customerArrayErrors.length) {
-            errors.customer = customerArrayErrors
+        if (ContactArrayErrors.length) {
+            errors.Contact = ContactArrayErrors
         }
     }
     if (values.datetime) {

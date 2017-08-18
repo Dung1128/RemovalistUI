@@ -5,8 +5,9 @@ export default {
     getListJob(data, accessToken) {
         return apiGetNoKey(`/api/jobdetails/JobDetailList/`, data, accessToken)
     },
-    posNewJob(data, accessToken) {
-        return apiPost(`/api/jobdetails`, { data, accessToken });
+    postNewJob(data, accessToken) {
+        console.log(accessToken, data);
+        return apiPost(`/api/jobdetails`, data, accessToken);
     },
     getJobByDate(data, accessToken) {
         return apiGetNoKey('/api/jobdetails/JobItemListByDate/', data, accessToken)

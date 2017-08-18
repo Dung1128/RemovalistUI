@@ -43,14 +43,14 @@ const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4Ump
     state => ({
         listStatus: jobSelectors.getStatusJobList(state),
         initialValues: {
-            customer: [{
-                username: '',
-                phone: [{
+            Contact: [{
+                CompanyName: '',
+                Phone: [{
 
                 }],
-                email: '',
-                addressline1: '',
-                addressline2: ''
+                Email: '',
+                AddressLine1: '',
+                AddressLine2: ''
             }],
             truck: {
                 TruckId: 0,
@@ -85,7 +85,7 @@ export default class extends Component {
                 <Header title='General Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
                 <ScrollView style={styles.content}>
                     <Field name="status" component={StatusField} />
-                    <FieldArray name="customer" component={CustomerField} />
+                    <FieldArray name="Contact" component={CustomerField} />
                     <View style={styles.titGeneral}>
                         <Text bold>Start time</Text>
                     </View>

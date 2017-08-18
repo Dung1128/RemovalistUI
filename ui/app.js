@@ -27,12 +27,11 @@ export default class App extends Component {
     // init route with tab, then each page in tab will have stack navigator
     // which will not be cached, but tab at home will be, and it should be
     render() {
+        const { user, isLogged } = this.props
         return (
             <StyleProvider style={getTheme(material)}>
                 <View style={{ flex: 1 }}>
-                    {/*{this.props.isLogged ? <Home screenProps={this.props.user} /> : <Login />}*/}
-                    <Home />
-                    {/*<Toasts />*/}
+                    <Home screenProps={user} />
                 </View>
             </StyleProvider>
         )
