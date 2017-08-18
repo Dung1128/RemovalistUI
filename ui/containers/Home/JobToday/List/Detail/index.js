@@ -176,14 +176,19 @@ export default class extends Component {
                                     
                                     <RowItem icon='email' title={JobDetails.Contact[0].Email} />
                                 </View>
-                                <TitleItem title='Start Time'
+                                {
+                                    this.state.JobDetails.StatusId == 3 ? <TitleItem title='Start Time'
                                     right={
                                         <View row style={{ justifyContent: 'space-between', width: '25%' }}>
-                                            <ButtonIcon icon='direction' size={18} color='#fff' />
+                                            <ButtonIcon icon='direction' size={18} color='#fff' onPress={()=> this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery} )}/>
                                             <Text style={styles.textUp}>START</Text>
                                         </View>
                                     }
                                 />
+                                :
+                                    <TitleItem title='Start Time'/>
+                                }
+                                
                                 <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
                                     <View style={styles.itemTime}>
                                         <Text style={styles.txttitledate}>Date</Text>
@@ -225,7 +230,7 @@ export default class extends Component {
                             </View>
                         </Container>
                         :
-                        <Spinner color={material.redColor} style={{ marginTop: '50%' }} />}
+                        <View></View>}
             </Container>
         )
     }

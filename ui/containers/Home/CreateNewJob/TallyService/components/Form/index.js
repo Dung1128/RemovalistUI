@@ -34,7 +34,7 @@ const DropDownField = ({ input, meta: { touched, error, warning }, ...custom }) 
 )
 
 const InputField = ({ input, meta: { touched, error, warning }, ...custom }) => (
-    <View collapsable={false} style={{ ...styles.Item, borderBottomWidth: 0.5, borderBottomColor: touched && error ? material.redColor : '#e9edf0', }}>
+    <View style={{ ...styles.Item, borderBottomWidth: 0.5, borderBottomColor: touched && error ? material.redColor : '#e9edf0', }}>
         <Input
             {...input}
             {...custom}
@@ -93,7 +93,7 @@ const StatusInputField = ({ input, meta: { touched, error, warning }, member, na
                 />
             }
 
-            <View collapsable={false} style={styles.wrapItem}>
+            <View style={styles.wrapItem}>
                 <Field name={`${member}.status`} component={DropDownField} nameIcon={nameIcon} listItems={listItems} />
                 <View style={styles.border} />
                 <Field name={`${member}.input`} component={InputField} measure={measure == 'hr' ? hrs : measure} />
