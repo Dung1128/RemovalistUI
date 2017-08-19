@@ -41,7 +41,7 @@ export default class extends Component {
             if (mode == 'time') {
                 datetime = moment(new Date()).format("HH:mm");
             } else {
-                datetime = new Date().toDateString();
+                datetime = moment(new Date()).format("ddd, MMM DD");
             }
         }
         return (

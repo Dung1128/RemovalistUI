@@ -99,7 +99,7 @@ const StatusInputField = ({ input, meta: { touched, error, warning }, member, na
                 <Field name={`${member}.NumberOfMaterial`} component={InputField} measure={measure == 'hr' ? hrs : measure} />
                 <View style={styles.border} />
                 <View style={styles.Item}>
-                    <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}> ${price}</Text>
+                    <Text style={styles.content}> ${price}</Text>
                 </View>
             </View>
         </View>
