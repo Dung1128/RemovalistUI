@@ -126,8 +126,8 @@ export default class extends Component {
         const day = new Date(start).toLocaleDateString()
         // const month = new Date(start).getMonth() + 1;
         // const day = new Date(start).getDate();
-        const hourStart = (new Date(start).getHours()-7);
-        const hourEnd = (new Date(end).getHours()-7);
+        const hourStart = (new Date(start).getHours());
+        const hourEnd = (new Date(end).getHours());
         const minutesStart = new Date(start).getMinutes();
         const minutesEnd = new Date(end).getMinutes();
         var diff = Math.abs(start - end);
@@ -145,7 +145,7 @@ export default class extends Component {
 
         this.setState({
             date: day,
-            time: `${hourStart}:${minutesStart} - ${hourEnd}:${minutesEnd}`,
+            time: `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`,
             duration: 'Duration: ' + showHours + ':' + showMinutes + ' h'
         }, ()=> console.log(this.state.time))
     }

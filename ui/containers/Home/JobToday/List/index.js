@@ -67,7 +67,7 @@ export default class extends Component {
     componentDidMount() {
         console.log(this.renderDate(this.date))
 
-        this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
+        this.props.getJobByDate(this.renderDate(new Date()), accessToken, (error, data) => {
             if(data){
                 this.setState({
                     dataSource: data.JobListItemObjects,
@@ -205,7 +205,7 @@ export default class extends Component {
                 scrollEnabled={true}
                  onDateSelect={date => this.onDateSelect(date)} />
                 {
-                    this.state.listByDate == this.renderDate(this.date) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
+                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
                 }
                 {
                     this.state.dataSource.length == 0 ?
