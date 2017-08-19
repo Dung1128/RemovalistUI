@@ -145,7 +145,7 @@ export default class extends Component {
 
         this.setState({
             date: day,
-            time: `${hourStart - 7}:${minutesStart} - ${hourEnd - 7}:${minutesEnd}`,
+            time: `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`,
             duration: 'Duration: ' + showHours + ':' + showMinutes + ' h'
         }, ()=> console.log(this.state.time))
     }
