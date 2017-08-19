@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
-    AppRegistry,
-    StyleSheet,
+    InteractionManager,
     View,
     TouchableOpacity,
     Alert
@@ -58,7 +57,8 @@ export default class extends Component {
             listTravelTime: '',
             listFuel: '',
             listMaterial: '',
-            delivery: this.props.navigation.state.params
+            delivery: this.props.navigation.state.params,
+            loading: false
         });
         this.sumPrice = this.sumPrice.bind(this);
 
@@ -67,30 +67,46 @@ export default class extends Component {
     createJob(obj) {
         this.props.postNewJob(obj, accessToken, (error, data) => {
             if (data) {
+
+                this.setState({
+                    loading: false
+                })
                 if (data.Status == 1) {
-                    Alert.alert('Notify', 'Create job successfully')
+
                     const resetAction = NavigationActions.reset({
                         index: 0,
                         actions: [
                             NavigationActions.navigate({ routeName: 'jobtoday_screen' })
                         ]
                     })
-                    this.props.navigation.dispatch(resetAction)
+                    Alert.alert('Notify', 'Create job successfully', [
+                        {
+                            text: 'OK', onPress: () => {
+                                this.props.navigation.dispatch(resetAction);
+                                InteractionManager.runAfterInteractions(() => {
+                                    this.setState({
+                                        loading: false
+                                    })
+                                })
+                            }
+                        },
+                    ], )
+
                 }
                 if (data.Status == 2) {
                     Alert.alert('Notify', data.Message);
                 }
             }
-
-
             if (error) {
                 Alert.alert('Notify', error);
             }
-
         })
     }
 
     submitForm(values) {
+        this.setState({
+            loading: true
+        })
         const { delivery } = this.state;
         const dataform = this.renderForm(values);
         const date = moment(delivery.general.datetime.date).format("YYYY-MM-DD");
@@ -227,6 +243,7 @@ export default class extends Component {
                     <TitleItem style={{ padding: 0 }} />
                 </Content>
                 <Button
+                    loading={this.state.loading}
                     onPress={handleSubmit(this.submitForm.bind(this))}
                     full
                     text='DONE'
