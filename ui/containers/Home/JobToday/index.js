@@ -45,7 +45,7 @@ export default class extends Component {
       dataSource: {},
     };
     this.dataSource = {};
-
+    this.navigated = false
     this.items = {}
   }
 
@@ -209,7 +209,15 @@ export default class extends Component {
             : <List navigation={this.props.navigation} dataSource={this.dataSource} />
         }
         <Button
-          onPress={() => this.props.navigation.navigate('general_screen')}
+          onPress={() => {
+            if(!this.navigated) {
+              this.props.navigation.navigate('general_screen')
+              this.navigated = true
+              setTimeout(()=>{
+                this.navigated = false
+              },2000)
+            }
+          }}
           style={{ backgroundColor: material.redColor, position: 'absolute', bottom: 20, right: 20, borderRadius: 50 / 2, width: 50, height: 50 }}>
           <Icon name="add" color='#fff' size={20} />
         </Button>

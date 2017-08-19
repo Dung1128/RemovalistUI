@@ -46,6 +46,7 @@ export default class extends Component {
             id: this.props.navigation.state.params.id
         }
         console.log('jpbID' + this.props.navigation.state.params.id)
+        this.navigated = false
     }
 
     renderStatus(id) {
@@ -214,23 +215,57 @@ export default class extends Component {
                             </Content>
 
                             <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery} )}>
+                                <TouchableOpacity onPress={() => {
+                                        if(!this.navigated) {
+                                             this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery} )}
+                                             this.navigated = true
+                                             setTimeout(() => {
+                                                this.navigated = false
+                                             }, 2000)
+                                        }
+                                    }
+                                    >
+                                   
                                     <Icon name='time' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen', {dataCall: JobDetails})}>
+                                <TouchableOpacity onPress={() => {
+                                        if(!this.navigated) {
+                                            this.props.navigation.navigate('call_screen', {dataCall: JobDetails})}
+                                            this.navigated = true
+                                            setTimeout(() => {
+                                                this.navigated = false
+                                            }, 2000)
+                                        }
+                                    }>
                                     <Icon name='call' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('chat_screen')}>
+                                <TouchableOpacity onPress={() => {
+                                    if(!this.navigated) {
+                                        this.props.navigation.navigate('chat_screen')}
+                                        this.navigated = true
+                                        setTimeout(() => {
+                                            this.navigated = false
+                                        }, 2000)
+                                    }
+                                }>
                                     <Icon name='chat' size={22} color={material.grayIconColor} />
                                     <View style={{ backgroundColor: 'red', width: 4, height: 4, borderRadius: 4 / 2, position: 'absolute', top: -5, right: -8 }} />
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this.props.navigation.navigate('tally_screen')}>
+                                <TouchableOpacity onPress={() => {
+                                        if(!this.navigated) {
+                                            this.props.navigation.navigate('tally_screen')}
+                                            this.navigated = true
+                                            setTimeout(() => {
+                                                this.navigated = false
+                                            }, 2000)
+                                        }
+                                    }>
                                     <Icon name='tally' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
                             </View>
                         </Container>
                         :
-                        <View></View>}
+                        <Spinner color={material.bgColor} />}
             </Container>
         )
     }

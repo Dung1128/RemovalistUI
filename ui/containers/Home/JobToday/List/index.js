@@ -5,7 +5,8 @@ import {
     WebView,
     TouchableOpacity,
     Alert,
-    InteractionManager
+    InteractionManager,
+    RefreshControl
 } from 'react-native';
 import { connect } from 'react-redux'
 import TabBar from '~/ui/components/TabBar';
@@ -36,9 +37,11 @@ export default class extends Component {
             ready: false,
             basic: true,
             dataSource: [],
-            listByDate: 'init'
+            listByDate: 'init',
+            isRefreshing: false,
         };
-        this.date = new Date()
+        this.date = new Date(),
+        this.navigated = false
     }
 
     renderStatus(id) {
@@ -91,12 +94,19 @@ export default class extends Component {
         })
     }
 
-    deleteRow(secId, rowId, rowMap) {
-        rowMap[`${secId}${rowId}`].props.closeRow();
-        const newData = [...this.state.listViewData];
-        newData.splice(rowId, 1);
-        this.setState({ listViewData: newData });
+    refreshList() {
+        this.setState({ isRefreshing: true });
+        this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
+            if(data){
+                this.setState({
+                    dataSource: data.JobListItemObjects,
+                    isRefreshing: false
+                    
+                })
+            }
+    })
     }
+
     renderColorStatus(key) {
         switch (key) {
             case 1:
@@ -116,11 +126,22 @@ export default class extends Component {
         }
     }
 
+    navigate(data) {
+        if(!this.navigated)  {
+            this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })
+            this.navigated = true
+            setTimeout(() => {
+                this.navigated = false
+            }, 2000)
+        }
+            
+      }
+
     renderRow(data) {
         // this.renderStatus(data.StatusId);
         return (
             <View>
-            <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })}>
+            <TouchableOpacity style={styles.itemList} onPress={() => this.navigate(data)}>
                 <View style={{
                     width: 5,
                     backgroundColor: this.renderColorStatus(data.StatusId),
@@ -173,6 +194,8 @@ export default class extends Component {
     }
 
     render() {
+        this.navigated = false
+        console.log(this.props.navigation)
         // const dayNow = this.renderDate();
         console.log(this.props)
         return (
@@ -192,6 +215,14 @@ export default class extends Component {
                         : null
                 }
                 <List
+                    refreshControl={
+                        <RefreshControl
+                            colors={['#039BE5']}
+                            tintColor='#fff'
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this.refreshList.bind(this)}
+                        />
+                    }
                     enableEmptySections
                     removeClippedSubviews={false}
                     style={{ flex: 1 }}
