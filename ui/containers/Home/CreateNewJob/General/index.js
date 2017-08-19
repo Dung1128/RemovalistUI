@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import {
+    AppRegistry,
+    StyleSheet,
     View,
+    TouchableOpacity,
+    Linking,
+    Modal,
     Alert,
-    ScrollView,
-    InteractionManager
+    ListView,
+    ScrollView
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
@@ -65,21 +70,12 @@ export default class extends Component {
     constructor(props) {
         super(props);
         this.state = ({
-            loading: false
         });
     }
 
 
     submitForm(values) {
-        this.setState({
-            loading: true
-        })
         this.props.navigation.navigate('delivery_screen', values)
-        InteractionManager.runAfterInteractions(() => {
-            this.setState({
-                loading: false
-            })
-        })
     }
 
     render() {
@@ -98,7 +94,7 @@ export default class extends Component {
                     <TitleItem style={{ padding: 0 }} />
                 </ScrollView>
                 <Button
-                    loading={this.state.loading}
+                    //onPress={() => this.props.navigation.navigate('delivery_screen', 'aaaaa')}
                     onPress={handleSubmit(this.submitForm.bind(this))}
                     full iconRight='arrow-right' text='DELIVERY INFO' />
 

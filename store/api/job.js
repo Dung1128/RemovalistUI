@@ -6,7 +6,6 @@ export default {
         return apiGetNoKey(`/api/jobdetails/JobDetailList/`, data, accessToken)
     },
     postNewJob(data, accessToken) {
-        console.log(accessToken, data);
         return apiPost(`/api/jobdetails`, data, accessToken);
     },
     getJobByDate(data, accessToken) {

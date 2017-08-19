@@ -22,7 +22,6 @@ export const validate = (values, { navigation }) => {
     const errors = {}
     // prev props
     const params = navigation.state.params
-    console.log(params)
     if (params.status.JobStatusId != 1) {
         if (values.pickup) {
             const pickupArrayErrors = []
