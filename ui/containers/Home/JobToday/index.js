@@ -53,7 +53,10 @@ export default class extends Component {
     this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'calendar'
     this.refChildren={}
     this.selectedRefPage = null    
-    this.children = {}    
+    this.children = {
+      'calendar': this.renderChart(),
+      'list': <List navigation={this.props.navigation} dataSource={this.dataSource} />      
+    }    
 
     this.tabbarData = [
       { key: 'calendar', title: 'Calendar'}, 
@@ -185,20 +188,20 @@ export default class extends Component {
     //     return 
 
     this.selectedRoute = route    
-
-    if(!this.children[route]){
-      switch(route){
-        case 'calendar':
-          this.children[route] = this.renderChart() 
-          break;
-        default:
-          this.children[route] = <List navigation={this.props.navigation} dataSource={this.dataSource} />
-          break;
-      }           
-      this.forceUpdate()      
-    } else {
-      this.componentDidUpdate()
-    }
+    this.componentDidUpdate()
+    // if(!this.children[route]){
+    //   switch(route){
+    //     case 'calendar':
+    //       this.children[route] = this.renderChart() 
+    //       break;
+    //     default:
+    //       this.children[route] = <List navigation={this.props.navigation} dataSource={this.dataSource} />
+    //       break;
+    //   }           
+    //   this.forceUpdate()      
+    // } else {
+    //   this.componentDidUpdate()
+    // }
     
     // set Transition
     // update
@@ -271,7 +274,7 @@ export default class extends Component {
           />
 
         </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1,zIndex:0}}>
         {
           Object.keys(this.children).map(key=>(
             <View style={{position: 'absolute', top: 0, right:0, left:0,bottom:0, opacity: 0, zIndex:0}} key={key} ref={ref=>this.refChildren[key]=ref}>
