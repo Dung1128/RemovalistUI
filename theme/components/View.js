@@ -20,6 +20,10 @@ export default (variables = variable) => {
       justifyContent: 'space-between',
       width: '100%',
     },
+    '.container': {
+      height: '100%',
+      width: '100%',
+    },
     '.phonect': {
       overflow: 'hidden',
       'NativeBase.ListItem': {
