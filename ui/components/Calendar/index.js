@@ -206,14 +206,14 @@ export default class extends Component {
     const events = (eventsMap !== null)
       ? eventsMap[argMoment.startOf('month').format()]
       : null
-
-    // let myday = 15
-    // let myindex = 0
+    
+    let selectedWeekRow = 0
     do {
       const dayIndex = renderIndex - offset
       const isoWeekday = (renderIndex + weekStart) % 7
-      // if (dayIndex === todayIndex)
-        // myindex = weekRows.length
+      if (argMonthIsToday && dayIndex === todayIndex){
+        selectedWeekRow = weekRows.length
+      }
       if (dayIndex >= 0 && dayIndex < argMonthDaysCount) {
         days.push((
           <Day
@@ -258,16 +258,22 @@ export default class extends Component {
     // console.log(weekRows.slice(myindex, myindex + 2));
     const containerStyle = [styles.monthContainer, this.props.customStyle.monthContainer]
     const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)
+    console.log('let scrolling', selectedWeekRow)
     return (
       <ScrollView   
             key={argMoment.month()}                     
             scrollEnabled
             pagingEnabled
+            snapToAlignment="center"            
             removeClippedSubviews={false}
             scrollEventThrottle={1000}
             showsVerticalScrollIndicator={false}
             automaticallyAdjustContentInsets
             style={containerStyle}
+            contentOffset={{
+              x: 0,
+              y: this.props.rowHeight * selectedWeekRow,
+            }}
             contentContainerStyle={{
               height: this.props.rowHeight * numOfWeeks,                             
             }}
