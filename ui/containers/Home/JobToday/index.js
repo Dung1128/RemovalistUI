@@ -5,6 +5,7 @@ import {
   ListView,
   TouchableOpacity,
   ScrollView,
+  // LayoutAnimation,
 } from 'react-native';
 import { connect } from 'react-redux'
 import IconIonicons from 'react-native-vector-icons/Ionicons';
@@ -49,10 +50,19 @@ export default class extends Component {
     this.dataSource = {};
     this.navigated = false
     this.items = {}
+    this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'calendar'
+    this.refChildren={}
+    this.selectedRefPage = null    
+    this.children = {}    
+
+    this.tabbarData = [
+      { key: 'calendar', title: 'Calendar'}, 
+      { key: 'list', title: 'List'},      
+    ]
   }
 
   componentWillMount() {
-    // this.getData();
+    // this.getData();    
   }
 
   async getData() {
@@ -82,6 +92,8 @@ export default class extends Component {
     this.props.getMaterialCategoryList(accessToken, (error, data) => { })
     this.props.getTruckList(accessToken, (error, data) => { })
     this.props.getReferenceContactList(accessToken, (error, data) => { })
+
+    this.navigateTab(this.selectedRoute)
   }
 
 
@@ -167,10 +179,58 @@ export default class extends Component {
     )
   }
 
+  navigateTab(route){
+
+    // if(this.selectedRoute == route)
+    //     return 
+
+    this.selectedRoute = route    
+
+    if(!this.children[route]){
+      switch(route){
+        case 'calendar':
+          this.children[route] = this.renderChart() 
+          break;
+        default:
+          this.children[route] = <List navigation={this.props.navigation} dataSource={this.dataSource} />
+          break;
+      }           
+      this.forceUpdate()      
+    } else {
+      this.componentDidUpdate()
+    }
+    
+    // set Transition
+    // update
+
+  }
+
+  componentDidUpdate(){
+
+    // animate here
+    this.selectedRefPage && this.selectedRefPage.setNativeProps({
+      style: {
+        opacity: 0,
+        zIndex: 0,
+      }
+    })
+    
+    // this.refChildren[key]
+    this.selectedRefPage = this.refChildren[this.selectedRoute]
+    // console.log(this.selectedRoute)
+    this.selectedRefPage && this.selectedRefPage.setNativeProps({
+      style: {
+        opacity: 1,
+          zIndex: 1,
+      }
+    })
+
+    this.needUpdate = false
+  }
 
 
   render() {
-
+    
     return (
       <Container>
         <Header
@@ -196,20 +256,30 @@ export default class extends Component {
         />
         <View style={{ backgroundColor: material.redColor }}>
           <TabBar
-            style={{ marginHorizontal: 20, marginBottom: 10 }}
-            titleActive="Calendar"
-            titleNonActive="List"
-            onPressActive={() => { this.setState({ calendar: !this.state.calendar }); }}
-            onPressNonActive={() => { this.setState({ calendar: !this.state.calendar }); }}
+            style={{ 
+              marginHorizontal: 20, 
+              marginBottom: 10, 
+              flexDirection:'row', 
+              justifyContent:'space-between',
+              borderWidth: 1,
+              borderColor: 'white',
+              borderRadius: 5,
+            }}
+            selected={this.selectedRoute}
+            dataArray={this.tabbarData}
+            onPress={(item) => { this.navigateTab(item.key) }}            
           />
 
         </View>
+        <View style={{flex:1}}>
         {
-          this.state.calendar
-            // ? <Calendar navigation={this.props.navigation} />
-            ? this.renderChart()
-            : <List navigation={this.props.navigation} dataSource={this.dataSource} />
+          Object.keys(this.children).map(key=>(
+            <View style={{position: 'absolute', top: 0, right:0, left:0,bottom:0, opacity: 0, zIndex:0}} key={key} ref={ref=>this.refChildren[key]=ref}>
+              {this.children[key]}
+            </View>
+          ))
         }
+        </View>
         <Button
           onPress={() => {            
             this.props.navigation.navigate('general_screen')

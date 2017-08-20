@@ -79,6 +79,7 @@ export default class extends Component {
 
     submitForm(values) {
         this.props.navigation.navigate('delivery_screen', values)
+        // this.props.navigation.navigate('jobtoday_screen', {defaultRoute:'list'})
     }
 
     render() {

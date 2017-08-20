@@ -3,18 +3,16 @@ import { fontMaker } from '~/ui/utils';
 
 export default {
     hdMenu: {
-        width: platform.fullWidth - 50,
-        height: 30,
-        borderWidth: 1,
-        borderColor: 'white',
-        borderRadius: 5,
-        flexDirection: 'row',
-        alignSelf: 'center',
+        // width: platform.fullWidth / 2,
+        flex: 1,
+        height: 30,        
+        // flexDirection: 'row',
+        // alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-    },
+    },    
     itemMenu: {
-        flex: 1,
+        width: '100%',
         justifyContent: 'center',
         height: '100%',
         alignItems: 'center',

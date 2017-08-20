@@ -6,63 +6,40 @@ import styles from './styles';
 
 export default class extends Component {
     static propTypes = {
-        titleActive: PropTypes.string.isRequired, 
-        titleNonActive: PropTypes.string.isRequired,
-        onPressActive: PropTypes.func.isRequired,
-        onPressNonActive: PropTypes.func.isRequired,                  
+        dataArray: PropTypes.array.isRequired, 
+        selected: PropTypes.string,                  
     }
 
     constructor(props) {
         super(props);
         this.state = {
-            info: true,
-            policy: false
+            selected: props.selected || props.dataArray[0].key,
         };
     }
 
     render() {
         const { 
-            onPressActive, 
-            onPressNonActive, 
-            titleActive, 
-            titleNonActive, 
+            onPress,
+            dataArray,            
             ...props } = this.props; 
         return (
             <View {...props} >
-                {
-                        this.state.info ?
-                        <View style={styles.hdMenu}>
-                            <TouchableOpacity style={styles.itemMenuActive}>
-                                <Text style={styles.textMenuActive}>{titleActive}</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity 
-                            style={styles.itemMenu} 
-                            onPress={() => { 
-                                onPressActive();
-                                this.setState({ info: !this.state.info });
+                {dataArray.map(item=> {     
+                    const isSelected = item.key === this.state.selected                
+                    return (
+                        <View key={item.key} style={styles.hdMenu}>
+                            <TouchableOpacity onPress={() => { 
+                                onPress(item);
+                                (!isSelected) && this.setState({ selected: item.key });
                             }}
-                            >
-                                <Text style={styles.textMenu}>{titleNonActive}</Text>
-                            </TouchableOpacity>
-                        </View>
-                        :
-                        <View style={styles.hdMenu}>
-                            <TouchableOpacity 
-                            style={styles.itemMenu} 
-                            onPress={() => { 
-                                onPressNonActive(); 
-                                this.setState({ info: !this.state.info });
-                            }}
-                            >
-                                <Text style={styles.textMenu}>{titleActive}</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity style={styles.itemMenuActive} >
-                                <Text style={styles.textMenuActive}>{titleNonActive}</Text>
-                            </TouchableOpacity>
-                        </View>
-                    }
+                             style={styles[isSelected ? 'itemMenuActive' : 'itemMenu']}>
+                                <Text style={styles[isSelected ? 'textMenuActive' : 'textMenu']}>
+                                    {item.title}
+                                </Text>
+                            </TouchableOpacity>  
+                        </View> 
+                    )                                                 
+                })}                                            
             </View>
         );
     }

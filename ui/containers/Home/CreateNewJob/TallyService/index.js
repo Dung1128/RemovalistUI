@@ -77,7 +77,12 @@ export default class extends Component {
                     const resetAction = NavigationActions.reset({
                         index: 0,
                         actions: [
-                            NavigationActions.navigate({ routeName: 'jobtoday_screen' })
+                            NavigationActions.navigate({ 
+                                routeName: 'jobtoday_screen', 
+                                params: {
+                                    defaultRoute: 'list' 
+                                }                                
+                            })
                         ]
                     })
                     Alert.alert('Notify', 'Create job successfully', [
