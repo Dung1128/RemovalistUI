@@ -8,7 +8,8 @@ import {
     Modal,
     Alert,
     ListView,
-    ScrollView
+    ScrollView,
+    Keyboard,    
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
@@ -69,9 +70,31 @@ export default class extends Component {
 
     constructor(props) {
         super(props);
-        this.state = ({
-        });
+        this.contentHeight = material.deviceHeight - material.toolbarHeight - 60
+        this.state = {
+            height: this.contentHeight,
+        };
+
+        this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+        this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     }
+
+    componentWillUnmount() {
+    this.keyboardWillShowSub.remove();
+    this.keyboardWillHideSub.remove();
+  }
+
+  keyboardWillShow = (event) => {        
+    this.setState({
+        height: this.contentHeight - event.endCoordinates.height + 60
+    })
+  };
+
+  keyboardWillHide = (event) => {
+    this.setState({
+        height: this.contentHeight
+    })
+  };
 
 
     submitForm(values) {
@@ -83,6 +106,7 @@ export default class extends Component {
         return (
             <Container>
                 <Header title='General Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
+                <View style={{height:this.state.height}}>
                 <ScrollView style={styles.content}>
                     <Field name="status" component={StatusField} />
                     <FieldArray name="Contact" component={CustomerField} />
@@ -93,6 +117,7 @@ export default class extends Component {
                     <Field name="truck" component={TruckField} />
                     <TitleItem style={{ padding: 0 }} />
                 </ScrollView>
+                </View>
                 <Button
                     //onPress={() => this.props.navigation.navigate('delivery_screen', 'aaaaa')}
                     onPress={handleSubmit(this.submitForm.bind(this))}
