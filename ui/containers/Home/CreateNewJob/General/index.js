@@ -86,7 +86,7 @@ export default class extends Component {
         const { handleSubmit, submitting } = this.props
         return (
             <Container>
-                <Header title='General Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
+                <Header title='General Information' step={1} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
 
                 <KeyboardAwareScrollView style={styles.content}>
                     <Field name="status" component={StatusField} />

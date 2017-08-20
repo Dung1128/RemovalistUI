@@ -204,7 +204,7 @@ export default class extends Component {
 
         return (
             <Container>
-                <Header title='Tally service infomation' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
+                <Header title='Tally service infomation' step={3} iconLeft='back' onPress={() => this.props.navigation.goBack()} />
                 <KeyboardAwareScrollView style={styles.content}>
                     <InputServiceField
                         name='servicetime'

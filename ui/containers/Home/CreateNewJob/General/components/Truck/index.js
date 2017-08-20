@@ -59,14 +59,7 @@ export default class extends Component {
     }
 
     search(value, myArray) {
-        const arrSearch = levenSearch(value.trim(), myArray, item=>item.TruckName)
-        // for (var i = 0; i < myArray.length; i++) {
-        //     console.log(myArray[i])
-        //     if (myArray[i].TruckName === value) {
-        //         arrSearch[i] = myArray[i];
-
-        //     }
-        // }
+        const arrSearch = levenSearch(value.trim(), myArray, item => item.TruckName)
         this.setState({
             arrSearch
         })
