@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
-  ScrollView,
-  InteractionManager
+  ScrollView
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
@@ -53,8 +52,7 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      general: this.props.navigation.state.params,
-      loading: false,
+      general: this.props.navigation.state.params
     });
 
   }
@@ -82,21 +80,12 @@ export default class extends Component {
   }
 
   submitForm(values) {
-    this.setState({
-      loading: true
-    })
     const data = this.renderJobLocations(values.pickup, values.dropoff)
     // console.log(data)
     let obj = {}
     obj.general = this.state.general
     obj.delivery = data
     this.props.navigation.navigate('tallyservice_screen', obj)
-    InteractionManager.runAfterInteractions(() => {
-      this.setState({
-        loading: false
-      })
-    })
-
   }
 
 
@@ -111,7 +100,7 @@ export default class extends Component {
           <FieldArray name="dropoff" component={DropOffField} />
         </ScrollView>
         <Button
-          loading={this.state.loading}
+          //onPress={() => this.props.navigation.navigate('tallyservice_screen')}
           onPress={handleSubmit(this.submitForm.bind(this))}
           full
           iconRight='arrow-right'

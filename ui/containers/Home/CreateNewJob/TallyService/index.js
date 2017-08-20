@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-    InteractionManager,
+    AppRegistry,
+    StyleSheet,
     View,
     TouchableOpacity,
     Alert
@@ -33,7 +34,7 @@ import { validate, initialValues } from './utils'
 import * as jobActions from '~/store/actions/job'
 import moment from 'moment'
 
-const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6InJRcXY0UTBRQXdnQkJwM0k2TlM0NTBhcFh1UWhwN3hHQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTAzMTM3MDU0LCJpYXQiOjE1MDMwNTA2NTQsInNjb3BlIjoiIn0.Jtcal4vmIuZa-nisdr_6oB9HZZdOXXKA1YhlpyYqjyY3laMFVS7dDDI0L_12BRh6fR3nqb3nWhVURLIMSqAIEW6XOwPxbOvKWoCTGkMyi7K0O0bHbYRKiWx-3D6mwMi6Ny9yjWtuFQHByIcE86E9IQtlMgpxEvBGk_PhDQmb-C6d5JBdfzJ9o2Kt-WOtXMAmSQ-DuiDrcZs53F6ZjxB38-wBPk4ZxJM_CR05TIRU_ouQspXQgFHfpQtewV5XOzQfzQhxrxA10jH5QtHnMyrCxfMrrHiJTuIjV4o51PmB6ErJTSGEk1uu1edOPm6Dw2qCfaAJY1vds1zDMBIxZRtz9A'
+const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6InJRcXY0UTBRQXdnQkJwM0k2TlM0NTBhcFh1UWhwN3hHQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTAzMjI5MTI4LCJpYXQiOjE1MDMxNDI3MjgsInNjb3BlIjoiIn0.lJK0SvaoViNdldy8Nx3YS1tOfb4knza41OrpNiSQB_x9fYxnk2gf7UpT8bmjIzT6VP7D-zZ0psdpwCyLaZj-5aYM5pv80C1vo756w_MO8ZHSURIp4ZCDe2ANIOzTPYCpCeab1J2JqQl6amzNoRW05FsHpuC6cjOGKw2ftbgnczaD6bU8Uc3ualofXNCgG9tsNE4yqtfaR-xiAVlh15-dMSksEC-AZOLuoGLHhq_4TEI8X1mozOlPrBXrcLq3ggYbh2LYSOG7bGuAz-76wPvm8OO_oIGSOlHubqLY4habTRmZX63ch_EGoNsKS0vMqeujzOxK-BGvxIDMPKST377mAg'
 
 const selector = formValueSelector('TallyService')
 @connect(
@@ -58,7 +59,6 @@ export default class extends Component {
             listFuel: '',
             listMaterial: '',
             delivery: this.props.navigation.state.params,
-            loading: false
         });
         this.sumPrice = this.sumPrice.bind(this);
 
@@ -67,10 +67,6 @@ export default class extends Component {
     createJob(obj) {
         this.props.postNewJob(obj, accessToken, (error, data) => {
             if (data) {
-
-                this.setState({
-                    loading: false
-                })
                 if (data.Status == 1) {
 
                     const resetAction = NavigationActions.reset({
@@ -80,18 +76,9 @@ export default class extends Component {
                         ]
                     })
                     Alert.alert('Notify', 'Create job successfully', [
-                        {
-                            text: 'OK', onPress: () => {
-                                this.props.navigation.dispatch(resetAction);
-                                InteractionManager.runAfterInteractions(() => {
-                                    this.setState({
-                                        loading: false
-                                    })
-                                })
-                            }
-                        },
+                        { text: 'OK', onPress: () => this.props.navigation.dispatch(resetAction) },
                     ], )
-
+                    this.props.navigation.dispatch(resetAction)
                 }
                 if (data.Status == 2) {
                     Alert.alert('Notify', data.Message);
@@ -243,7 +230,6 @@ export default class extends Component {
                     <TitleItem style={{ padding: 0 }} />
                 </Content>
                 <Button
-                    loading={this.state.loading}
                     onPress={handleSubmit(this.submitForm.bind(this))}
                     full
                     text='DONE'
