@@ -6,6 +6,7 @@ import styles from './styles';
 import material from '~/theme/variables/material';
 import { Container, Left, Body, Right, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import InputRow from '~/ui/elements/InputRow';
 import DeliverInfo from '~/ui/elements/DeliverInfo';
 import CheckDate from '~/ui/elements/CheckDate';
@@ -45,7 +46,7 @@ const selector = formValueSelector('CustomerInfo')
     },
     status: selector(state, 'status')
   }), )
-@reduxForm({ form: 'DeliveryInfo', validate, destroyOnUnmount: !__DEV__  })
+@reduxForm({ form: 'DeliveryInfo', validate, destroyOnUnmount: !__DEV__ })
 
 export default class extends Component {
 
@@ -95,10 +96,10 @@ export default class extends Component {
     return (
       <Container>
         <Header title='Delivery Information' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
-        <ScrollView style={styles.content}>
+        <KeyboardAwareScrollView style={styles.content}>
           <FieldArray name="pickup" component={PickUpField} />
           <FieldArray name="dropoff" component={DropOffField} />
-        </ScrollView>
+        </KeyboardAwareScrollView>
         <Button
           //onPress={() => this.props.navigation.navigate('tallyservice_screen')}
           onPress={handleSubmit(this.submitForm.bind(this))}

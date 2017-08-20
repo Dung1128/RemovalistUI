@@ -8,37 +8,15 @@ export default class extends Component {
   constructor(props) {
     super(props);
     this.state = ({
-      loading: false,
     })
-    this.isFirst = true;
-    this.lastPress = 0
-  }
-
-  onTap() {
-    this.setState({
-      loading: true,
-    })
-    const { onPress } = this.props;
-    let delta = new Date().getTime() - this.lastPress;
-    if (this.isFirst || delta > 1000) {
-      onPress && onPress()
-      setTimeout(() => {
-        this.setState({
-          loading: false,
-        })
-      }, 1000)
-      this.isFirst = false;
-    }
-    this.lastPress = new Date().getTime()
   }
 
   render() {
-    const { loading } = this.state;
-    const { children, text, textStyle, iconRight = false, full = false, ...props } = this.props;
+    const { children, onPress, loading = false, text, textStyle, iconRight = false, full = false, ...props } = this.props;
     return (
       <TouchableOpacity
         { ...props }
-        onPress={() => this.onTap()}
+        onPress={onPress}
         style={full ? { ...styles.paymentButton, width: '100%', height: 60, flexDirection: 'row', justifyContent: iconRight ? 'space-between' : 'center', padding: 10, ...this.props.style } : { ...styles.paymentButton, ...this.props.style }}
       >
         {full && iconRight && <View style={{ width: '15%' }}></View>}

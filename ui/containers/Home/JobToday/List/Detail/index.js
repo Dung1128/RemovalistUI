@@ -46,7 +46,6 @@ export default class extends Component {
             ready: false,
             id: this.props.navigation.state.params.id
         }
-        console.log('jpbID' + this.props.navigation.state.params.id)
         this.navigated = false
     }
 
@@ -75,7 +74,6 @@ export default class extends Component {
 
     componentDidMount() {
         this.props.getJobById(this.state.id, accessToken, (error, data) => {
-            console.log(data)
             this.renderStatus(data.JobDetails.StatusId);
             this.renderTruck(data.JobDetails.TruckId)
             this.setState({
@@ -83,13 +81,10 @@ export default class extends Component {
                 ready: true
             })
             this.props.getDeliveryJob(this.state.id, accessToken, (error, data) => {
-                console.log('Delivery:' + data)
                 this.setState({
                     Delivery: data.Delivery
                 })
             })
-        
-            console.log(data.JobDetails.TimeStart, data.JobDetails.TimeEnd)
             this.renderTime(data.JobDetails.TimeStart, data.JobDetails.TimeEnd);
         })
     }
@@ -98,14 +93,14 @@ export default class extends Component {
         return (<RowItem key={index} icon='call' title={item}
             right={
                 <View row style={{ justifyContent: 'space-between', width: '20%' }}>
-                    <ButtonIcon icon='sms' size={18} color='#fff' 
+                    <ButtonIcon icon='sms' size={18} color='#fff'
                         onPress={() => Communications.text(item, 'hello, im dung')}
                     />
-                    <ButtonIcon icon='call' size={18} color='#fff' 
-                    onPress={() => Communications.phonecall(item, true)}
-                        />
+                    <ButtonIcon icon='call' size={18} color='#fff'
+                        onPress={() => Communications.phonecall(item, true)}
+                    />
                 </View>
-                
+
             }
         />)
     }
@@ -136,10 +131,8 @@ export default class extends Component {
         let minutesStartValue = new Date(start).getHours() * 60 + new Date(start).getMinutes();
         let minutesEndValue = new Date(end).getHours() * 60 + new Date(end).getMinutes();
         let sub = minutesEndValue - minutesStartValue;
-        let hour = Math.floor(sub/60);
+        let hour = Math.floor(sub / 60);
         let minutes = sub - hour * 60;
-
-        console.log(hour+':'+minutes);
 
         let showHours = hour > 10 ? hour : '0' + hour;
         let showMinutes = minutes > 10 ? minutes : '0' + minutes;
@@ -148,7 +141,7 @@ export default class extends Component {
             date: day,
             time: `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`,
             duration: 'Duration: ' + showHours + ':' + showMinutes + ' h'
-        }, ()=> console.log(this.state.time))
+        }, () => console.log(this.state.time))
     }
 
     render() {
@@ -171,33 +164,33 @@ export default class extends Component {
                                 <TitleItem title='Customer Info' />
                                 <View white style={{ paddingHorizontal: 5 }}>
                                     <RowItem icon='user' title={JobDetails.Contact[0].CompanyName} />
-                                    
+
                                     {
                                         JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
                                     }
-                                    
+
                                     <RowItem icon='email' title={JobDetails.Contact[0].Email} />
                                 </View>
                                 {
                                     this.state.JobDetails.StatusId == 3 ? <TitleItem title='Start Time'
-                                    right={
-                                        <View row style={{ justifyContent: 'space-between', width: '25%' }}>
-                                            <ButtonIcon icon='direction' size={18} color='#fff' onPress={()=> this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery} )}/>
-                                            <Text style={styles.textUp}>START</Text>
-                                        </View>
-                                    }
-                                />
-                                :
-                                    <TitleItem title='Start Time'/>
+                                        right={
+                                            <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                                <ButtonIcon icon='direction' size={18} color='#fff' onPress={() => this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })} />
+                                                <Text style={styles.textUp}>START</Text>
+                                            </View>
+                                        }
+                                    />
+                                        :
+                                        <TitleItem title='Start Time' />
                                 }
-                                
+
                                 <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
                                     <View style={styles.itemTime}>
                                         <Text style={styles.txttitledate}>Date</Text>
                                         <Text style={styles.date}>{new Date(date).toDateString()}</Text>
                                         <Text style={styles.txttitledate}>Today</Text>
                                     </View>
-                                    
+
                                     <View style={styles.itemTime}>
                                         <Text style={styles.txttitledate}>Time</Text>
                                         <View style={{ flexDirection: 'row' }}>
@@ -217,50 +210,54 @@ export default class extends Component {
 
                             <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
                                 <TouchableOpacity onPress={() => {
-                                        if(!this.navigated) {
-                                             this.props.navigation.navigate('time_screen', {JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery} )}
-                                             this.navigated = true
-                                             setTimeout(() => {
-                                                this.navigated = false
-                                             }, 2000)
-                                        }
+                                    if (!this.navigated) {
+                                        this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })
                                     }
-                                    >
-                                   
+                                    this.navigated = true
+                                    setTimeout(() => {
+                                        this.navigated = false
+                                    }, 2000)
+                                }
+                                }
+                                >
+
                                     <Icon name='time' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
-                                        if(!this.navigated) {
-                                            this.props.navigation.navigate('call_screen', {dataCall: JobDetails})}
-                                            this.navigated = true
-                                            setTimeout(() => {
-                                                this.navigated = false
-                                            }, 2000)
-                                        }
-                                    }>
+                                    if (!this.navigated) {
+                                        this.props.navigation.navigate('call_screen', { dataCall: JobDetails })
+                                    }
+                                    this.navigated = true
+                                    setTimeout(() => {
+                                        this.navigated = false
+                                    }, 2000)
+                                }
+                                }>
                                     <Icon name='call' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
-                                    if(!this.navigated) {
-                                        this.props.navigation.navigate('chat_screen')}
-                                        this.navigated = true
-                                        setTimeout(() => {
-                                            this.navigated = false
-                                        }, 2000)
+                                    if (!this.navigated) {
+                                        this.props.navigation.navigate('chat_screen')
                                     }
+                                    this.navigated = true
+                                    setTimeout(() => {
+                                        this.navigated = false
+                                    }, 2000)
+                                }
                                 }>
                                     <Icon name='chat' size={22} color={material.grayIconColor} />
                                     <View style={{ backgroundColor: 'red', width: 4, height: 4, borderRadius: 4 / 2, position: 'absolute', top: -5, right: -8 }} />
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
-                                        if(!this.navigated) {
-                                            this.props.navigation.navigate('tally_screen')}
-                                            this.navigated = true
-                                            setTimeout(() => {
-                                                this.navigated = false
-                                            }, 2000)
-                                        }
-                                    }>
+                                    if (!this.navigated) {
+                                        this.props.navigation.navigate('tally_screen')
+                                    }
+                                    this.navigated = true
+                                    setTimeout(() => {
+                                        this.navigated = false
+                                    }, 2000)
+                                }
+                                }>
                                     <Icon name='tally' size={22} color={material.grayIconColor} />
                                 </TouchableOpacity>
                             </View>

@@ -41,7 +41,7 @@ export default class extends Component {
             isRefreshing: false,
         };
         this.date = new Date(),
-        this.navigated = false
+            this.navigated = false
     }
 
     renderStatus(id) {
@@ -65,30 +65,26 @@ export default class extends Component {
         });
     }
     componentDidMount() {
-        console.log(this.renderDate(this.date))
-
         this.props.getJobByDate(this.renderDate(new Date()), accessToken, (error, data) => {
-            if(data){
+            if (data) {
                 this.setState({
                     dataSource: data.JobListItemObjects,
-                    
+
                 })
             }
-            console.log(data)
         })
 
     }
 
 
     updateList(date, dateTit) {
-        
+
         this.props.getJobByDate(date, accessToken, (error, data) => {
-            console.log(data)
-            if(data) {
+            if (data) {
                 this.setState({
-                     listByDate: this.renderDate(dateTit),
-                     dateTitle: this.renderDateTit(dateTit),
-                     dataSource: data.JobListItemObjects,
+                    listByDate: this.renderDate(dateTit),
+                    dateTitle: this.renderDateTit(dateTit),
+                    dataSource: data.JobListItemObjects,
                 })
             }
         })
@@ -97,14 +93,14 @@ export default class extends Component {
     refreshList() {
         this.setState({ isRefreshing: true });
         this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
-            if(data){
+            if (data) {
                 this.setState({
                     dataSource: data.JobListItemObjects,
                     isRefreshing: false
-                    
+
                 })
             }
-    })
+        })
     }
 
     renderColorStatus(key) {
@@ -127,36 +123,35 @@ export default class extends Component {
     }
 
     navigate(data) {
-        if(!this.navigated)  {
+        if (!this.navigated) {
             this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })
             this.navigated = true
             setTimeout(() => {
                 this.navigated = false
             }, 2000)
         }
-            
-      }
+
+    }
 
     renderRow(data) {
-        // this.renderStatus(data.StatusId);
         return (
             <View>
-            <TouchableOpacity style={styles.itemList} onPress={() => this.navigate(data)}>
-                <View style={{
-                    width: 5,
-                    backgroundColor: this.renderColorStatus(data.StatusId),
-                    borderRadius: 5
-                }} />
-                <View style={styles.itemsJob}>
-                    <Text bold style={styles.address}>{data.Address}</Text>
-                    <View style={styles.bottom}>
-                        <Text style={styles.textbottom}>{data.Name}</Text>
-                        <Text style={styles.textbottom}>{data.Phone}</Text>
+                <TouchableOpacity style={styles.itemList} onPress={() => this.navigate(data)}>
+                    <View style={{
+                        width: 5,
+                        backgroundColor: this.renderColorStatus(data.StatusId),
+                        borderRadius: 5
+                    }} />
+                    <View style={styles.itemsJob}>
+                        <Text bold style={styles.address}>{data.Address}</Text>
+                        <View style={styles.bottom}>
+                            <Text style={styles.textbottom}>{data.Name}</Text>
+                            <Text style={styles.textbottom}>{data.Phone}</Text>
+                        </View>
                     </View>
-                </View>
-                
-            </TouchableOpacity>
-            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+
+                </TouchableOpacity>
+                <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
             </View>
         );
     }
@@ -187,23 +182,20 @@ export default class extends Component {
     }
 
     onDateSelect(date) {
-         if(this.date && date.toString() === this.date.toString())
+        if (this.date && date.toString() === this.date.toString())
             return
         this.date = date
-            this.updateList(this.renderDate(date), date);
+        this.updateList(this.renderDate(date), date);
     }
 
     render() {
         this.navigated = false
-        console.log(this.props.navigation)
-        // const dayNow = this.renderDate();
-        console.log(this.props)
         return (
             <View style={{ flex: 1 }}>
                 <Calendar style={{ width: '100%', marginHorizontal: 10 }}
-                currentMonth={this.date}
-                scrollEnabled={true}
-                 onDateSelect={date => this.onDateSelect(date)} />
+                    currentMonth={this.date}
+                    scrollEnabled={true}
+                    onDateSelect={date => this.onDateSelect(date)} />
                 {
                     this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
                 }
@@ -229,7 +221,7 @@ export default class extends Component {
                     dataArray={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
                 />
-                
+
             </View>
         );
     }

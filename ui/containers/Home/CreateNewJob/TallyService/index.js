@@ -28,6 +28,7 @@ import {
     MaterialArray,
     InputSurcharge
 } from './components/Form'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import * as materialActions from '~/store/actions/material'
 import * as jobSelectors from '~/store/selectors/job'
 import { validate, initialValues } from './utils'
@@ -59,6 +60,7 @@ export default class extends Component {
             listFuel: '',
             listMaterial: '',
             delivery: this.props.navigation.state.params,
+            loading: false
         });
         this.sumPrice = this.sumPrice.bind(this);
 
@@ -67,6 +69,9 @@ export default class extends Component {
     createJob(obj) {
         this.props.postNewJob(obj, accessToken, (error, data) => {
             if (data) {
+                this.setState({
+                    loading: false
+                })
                 if (data.Status == 1) {
 
                     const resetAction = NavigationActions.reset({
@@ -178,9 +183,9 @@ export default class extends Component {
         if (servicetime && traveltime && fuel && material && material[0] && material[0].NumberOfMaterial) {
             let materialvalue = material.map(input => (input.status && input.status.CategoryId ? (input.status.PricePerUnit * input.NumberOfMaterial) : 0))
                 .reduce((a, b) => a + b);
-            let price = ((servicetime.NumberOfMaterial||0) * (servicetime.status.PricePerUnit || 0))
-                + ((traveltime.NumberOfMaterial||0) * (traveltime.status.PricePerUnit || 0))
-                + ((fuel.NumberOfMaterial||0) * (fuel.status.PricePerUnit || 0))
+            let price = ((servicetime.NumberOfMaterial || 0) * (servicetime.status.PricePerUnit || 0))
+                + ((traveltime.NumberOfMaterial || 0) * (traveltime.status.PricePerUnit || 0))
+                + ((fuel.NumberOfMaterial || 0) * (fuel.status.PricePerUnit || 0))
                 + materialvalue
 
             return surcharge ? price : price + surcharge.price
@@ -190,12 +195,12 @@ export default class extends Component {
 
     render() {
         const { handleSubmit, submitting } = this.props
-        const { listServiceTime, listTravelTime, listFuel, listMaterial } = this.state;
+        const { listServiceTime, listTravelTime, listFuel, listMaterial, loading } = this.state;
 
         return (
             <Container>
                 <Header title='Tally service infomation' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
-                <Content style={styles.content}>
+                <KeyboardAwareScrollView style={styles.content}>
                     <InputServiceField
                         name='servicetime'
                         nameIcon='time' measure='hr'
@@ -234,9 +239,10 @@ export default class extends Component {
                         <Text style={styles.txtPriceTotal}>${this.sumPrice()}</Text>
                     </View>
                     <TitleItem style={{ padding: 0 }} />
-                </Content>
+                </KeyboardAwareScrollView>
                 <Button
-                    onPress={handleSubmit(this.submitForm.bind(this))}
+                    loading={loading}
+                    onPress={!loading ? handleSubmit(this.submitForm.bind(this)) : () => { }}
                     full
                     text='DONE'
                 />

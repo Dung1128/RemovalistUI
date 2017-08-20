@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-     "ba": "cd android && ./gradlew assembleRelease",
+    "ba": "cd android && ./gradlew assembleRelease",
     "ia": "adb devices | awk 'NR>1 && $1 ~ /^[^:]+$/ { system(\"adb -s \" $1 \" install -r android/app/build/outputs/apk/app-release.apk\") }'",
     "test": "jest"
   },
@@ -27,6 +27,7 @@
     "react-native-auth0": "^1.0.3",
     "react-native-calendars": "^1.5.6",
     "react-native-communications": "^2.2.1",
+    "react-native-keyboard-aware-scroll-view": "^0.3.0",
     "react-native-modal-datetime-picker": "^4.9.0",
     "react-native-vector-icons": "^4.3.0",
     "react-navigation": "^1.0.0-beta.11",
