@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Left, Body, Right, Title, Content, Footer, FooterTab, List, ListItem, Text, View } from 'native-base';
+import { Container, Left, Body, Right, Title, Input, Content, Footer, FooterTab, List, ListItem, Text, View } from 'native-base';
 import InputRow from '~/ui/elements/InputRow';
 import CustomerInfo from '~/ui/elements/CustomerInfo';
 import CheckDate from '~/ui/elements/CheckDate';
@@ -38,7 +38,8 @@ export default class extends Component {
             selected: {
                 TruckId: 0,
                 TruckName: 'Select Truck'
-            }
+            },
+            arrSearch: []
         });
 
     }
@@ -56,6 +57,21 @@ export default class extends Component {
         onChange && onChange(item);
         this.setModalVisible();
     }
+
+    search(value, myArray) {
+        const arrSearch = []
+        for (var i = 0; i < myArray.length; i++) {
+            console.log(myArray[i])
+            if (myArray[i].TruckName === value) {
+                arrSearch[i] = myArray[i];
+
+            }
+        }
+        this.setState({
+            arrSearch
+        })
+    }
+
 
     renderRow(item) {
         const { selected } = this.state;
@@ -76,7 +92,7 @@ export default class extends Component {
 
     render() {
         const { listTruck, onChange, value, error } = this.props;
-        console.log(listTruck)
+        const { arrSearch } = this.state;
         return (
             <View style={{
                 borderBottomColor: error ? material.redColor : '#fff',
@@ -98,9 +114,20 @@ export default class extends Component {
                     onRequestClose={() => this.setModalVisible()}>
                     <View container white>
                         <Header title='Select item' iconLeft='close' onPress={() => this.setModalVisible()} />
+                        <View full style={{ backgroundColor: material.redColor, paddingHorizontal: 15, paddingBottom: 10 }}>
+                            <View row white style={{ borderRadius: 5 }}>
+                                <IconIonicons name='ios-search' size={24} color={material.grayIconColor} style={{ paddingHorizontal: 10 }} />
+                                <Input
+                                    onChangeText={(value) => this.search(value, listTruck)}
+                                    placeholder='Search'
+                                    placeholderTextColor={material.grayColor}
+                                    style={{ height: 40 }} />
+                            </View>
+
+                        </View>
                         <TitleItem style={{ padding: 0, backgroundColor: material.grayBackgroundColor }} />
 
-                        <List dataArray={[{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]}
+                        <List dataArray={arrSearch.length > 0 ? arrSearch : [{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]}
                             renderRow={(item) => this.renderRow(item)}>
                         </List>
                     </View>
