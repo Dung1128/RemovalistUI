@@ -38,6 +38,7 @@ export default class extends Component {
             dataSource: [],
             listByDate: 'init',
             isRefreshing: false,
+            loading: false
         };
         this.date = new Date(),
             this.navigated = false
@@ -84,6 +85,7 @@ export default class extends Component {
                     listByDate: this.renderDate(dateTit),
                     dateTitle: this.renderDateTit(dateTit),
                     dataSource: data.JobListItemObjects,
+                    loading: false,
                 })
             }
         })
@@ -184,10 +186,14 @@ export default class extends Component {
         if (this.date && date.toString() === this.date.toString())
             return
         this.date = date
+        this.setState({
+            loading: true,
+        })
         this.updateList(this.renderDate(date), date);
     }
 
     render() {
+        const { loading } = this.state;
         this.navigated = false
         return (
             <View style={{ flex: 1 }}>
@@ -205,11 +211,13 @@ export default class extends Component {
                         </View>
                         : null
                 }
-                <List
+                {
+                    !loading 
+                    ? <List
                     refreshControl={
                         <RefreshControl
                             colors={['#039BE5']}
-                            tintColor='#fff'
+                            tintColor={material.redColor}
                             refreshing={this.state.isRefreshing}
                             onRefresh={this.refreshList.bind(this)}
                         />
@@ -220,6 +228,9 @@ export default class extends Component {
                     dataArray={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
                 />
+                : <Spinner color={material.redColor} />
+                }
+                
 
             </View>
         );

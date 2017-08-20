@@ -16,6 +16,10 @@ export default {
         justifyContent: 'center',
         height: '100%',
         alignItems: 'center',
+        flex: 1,
+        height: 30, 
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     get itemMenuActive() {
         return {
@@ -48,5 +52,21 @@ export default {
         color: platform.titleFontColor,
         fontSize: 16
 
+    },
+    border: {
+        borderTopWidth: 1,
+        borderBottomWidth: 1,
+        borderColor: 'white',
+        borderRadius: 5,
+    },
+    borderLeft: {
+        borderRightWidth: 1,
+        borderTopLeftRadius: 1,
+        borderBottomLeftRadius: 1,
+    },
+    borderRight: {
+        borderLeftWidth: 1,
+        borderTopRightRadius: 1,
+        borderBottomRightRadius: 1,
     }
 };

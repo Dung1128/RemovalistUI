@@ -180,29 +180,8 @@ export default class extends Component {
   }
 
   navigateTab(route){
-
-    // if(this.selectedRoute == route)
-    //     return 
-
     this.selectedRoute = route    
     this.componentDidUpdate()
-    // if(!this.children[route]){
-    //   switch(route){
-    //     case 'calendar':
-    //       this.children[route] = this.renderChart() 
-    //       break;
-    //     default:
-    //       this.children[route] = <List navigation={this.props.navigation} dataSource={this.dataSource} />
-    //       break;
-    //   }           
-    //   this.forceUpdate()      
-    // } else {
-    //   this.componentDidUpdate()
-    // }
-    
-    // set Transition
-    // update
-
   }
 
   componentDidUpdate(){
@@ -261,9 +240,6 @@ export default class extends Component {
               marginBottom: 10, 
               flexDirection:'row', 
               justifyContent:'space-between',
-              borderWidth: 1,
-              borderColor: 'white',
-              borderRadius: 5,
             }}
             selected={this.selectedRoute}
             dataArray={this.tabbarData}
