@@ -92,6 +92,12 @@ export default class extends Component {
 
   componentDidUpdate() {
     this.scrollToItem(VIEW_INDEX)
+    this.weekList &&  this.weekList.scrollTo({
+      x: 0,
+      y: this.props.rowHeight * this.selectedWeekRow,
+      animated: false,
+    })
+    // console.log('scroll now', this.weekList, this.selectedWeekRow)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -206,13 +212,12 @@ export default class extends Component {
     const events = (eventsMap !== null)
       ? eventsMap[argMoment.startOf('month').format()]
       : null
-    
-    let selectedWeekRow = 0
+        
     do {
       const dayIndex = renderIndex - offset
       const isoWeekday = (renderIndex + weekStart) % 7
       if (argMonthIsToday && dayIndex === todayIndex){
-        selectedWeekRow = weekRows.length
+        this.selectedWeekRow = weekRows.length
       }
       if (dayIndex >= 0 && dayIndex < argMonthDaysCount) {
         days.push((
@@ -257,10 +262,10 @@ export default class extends Component {
 
     // console.log(weekRows.slice(myindex, myindex + 2));
     const containerStyle = [styles.monthContainer, this.props.customStyle.monthContainer]
-    const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)
-    console.log('let scrolling', selectedWeekRow)
+    const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)    
     return (
       <ScrollView   
+            ref={ref=>argMonthIsToday && (this.weekList=ref) && console.log(ref)}            
             key={argMoment.month()}                     
             scrollEnabled
             pagingEnabled
@@ -270,10 +275,10 @@ export default class extends Component {
             showsVerticalScrollIndicator={false}
             automaticallyAdjustContentInsets
             style={containerStyle}
-            contentOffset={{
-              x: 0,
-              y: this.props.rowHeight * selectedWeekRow,
-            }}
+            // contentOffset={{
+            //   x: 0,
+            //   y: this.props.rowHeight * selectedWeekRow,
+            // }}
             contentContainerStyle={{
               height: this.props.rowHeight * numOfWeeks,                             
             }}

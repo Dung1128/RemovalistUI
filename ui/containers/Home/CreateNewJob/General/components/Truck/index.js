@@ -23,7 +23,7 @@ import IconIonicons from 'react-native-vector-icons/dist/Ionicons';
 
 import { connect } from 'react-redux'
 import * as jobSelectors from '~/store/selectors/job';
-
+import { levenSearch } from '~/ui/utils'
 
 @connect(
     state => ({
@@ -59,14 +59,14 @@ export default class extends Component {
     }
 
     search(value, myArray) {
-        const arrSearch = []
-        for (var i = 0; i < myArray.length; i++) {
-            console.log(myArray[i])
-            if (myArray[i].TruckName === value) {
-                arrSearch[i] = myArray[i];
+        const arrSearch = levenSearch(value.trim(), myArray, item=>item.TruckName)
+        // for (var i = 0; i < myArray.length; i++) {
+        //     console.log(myArray[i])
+        //     if (myArray[i].TruckName === value) {
+        //         arrSearch[i] = myArray[i];
 
-            }
-        }
+        //     }
+        // }
         this.setState({
             arrSearch
         })
@@ -91,7 +91,7 @@ export default class extends Component {
     }
 
     render() {
-        const { listTruck, onChange, value, error } = this.props;
+        const { onChange, listTruck, value, error } = this.props;
         const { arrSearch } = this.state;
         return (
             <View style={{
@@ -118,6 +118,8 @@ export default class extends Component {
                             <View row white style={{ borderRadius: 5 }}>
                                 <IconIonicons name='ios-search' size={24} color={material.grayIconColor} style={{ paddingHorizontal: 10 }} />
                                 <Input
+                                    autoCapitalize={'none'}
+                                    autoCorrect={false}
                                     onChangeText={(value) => this.search(value, listTruck)}
                                     placeholder='Search'
                                     placeholderTextColor={material.grayColor}
