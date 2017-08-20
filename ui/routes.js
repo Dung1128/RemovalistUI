@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import {
     addNavigationHelpers,
     StackNavigator,
-    DrawerNavigator
+    DrawerNavigator,
+    NavigationActions,
 } from 'react-navigation';
 
 import Menu from './containers/Home/Menu';
@@ -26,52 +27,66 @@ import ChatAdmin from './containers/Home/Chat';
 import Filter from './containers/Home/Filter';
 
 export const initialRouteName = 'jobtoday'
+
+const navigateOnce = (getStateForAction) => (action, state) => {
+  const {type, routeName} = action;
+  return (
+    state &&
+    type === NavigationActions.NAVIGATE &&
+    routeName === state.routes[state.routes.length - 1].routeName
+  ) ? state : getStateForAction(action, state);  
+};
+
+const JobStackNavigator = StackNavigator(
+    {
+        jobtoday_screen: {
+            screen: JobToday,
+        },
+        detail_screen: {
+            screen: Detail
+        },
+        time_screen: {
+            screen: Time
+        },
+        call_screen: {
+            screen: Call
+        },
+        chat_screen: {
+            screen: Chat
+        },
+        tally_screen: {
+            screen: Tally
+        },
+        general_screen: {
+            screen: General,
+        },
+        delivery_screen: {
+            screen: Delivery
+        },
+        tallyservice_screen: {
+            screen: TallyService
+        },
+        notification_screen: {
+            screen: Notifications
+        },
+        listchat_screen: {
+            screen: ChatAdmin
+        },
+        filter_screen: {
+            screen: Filter
+        },
+    },
+    {
+        headerMode: 'none'
+    }
+)
+
+JobStackNavigator.router.getStateForAction = navigateOnce(JobStackNavigator.router.getStateForAction);
+
 export const AppNavigator = DrawerNavigator(
     {
         jobtoday: {
-            screen: StackNavigator(
-                {
-                    jobtoday_screen: {
-                        screen: JobToday,
-                    },
-                    detail_screen: {
-                        screen: Detail
-                    },
-                    time_screen: {
-                        screen: Time
-                    },
-                    call_screen: {
-                        screen: Call
-                    },
-                    chat_screen: {
-                        screen: Chat
-                    },
-                    tally_screen: {
-                        screen: Tally
-                    },
-                    general_screen: {
-                        screen: General,
-                    },
-                    delivery_screen: {
-                        screen: Delivery
-                    },
-                    tallyservice_screen: {
-                        screen: TallyService
-                    },
-                    notification_screen: {
-                        screen: Notifications
-                    },
-                    listchat_screen: {
-                        screen: ChatAdmin
-                    },
-                    filter_screen: {
-                        screen: Filter
-                    },
-                },
-                {
-                    headerMode: 'none'
-                }
-            ),
+            screen: JobStackNavigator,
         },
         enquiry: {
             screen: Enquiry
@@ -84,6 +99,8 @@ export const AppNavigator = DrawerNavigator(
         contentComponent: props => <Menu {...props} />
     }
 );
+
+
 
 // const AppWithNavigationState = ({ dispatch, nav }) =>
 //     <AppNavigator navigation={addNavigationHelpers({ dispatch, state: nav })} />;
