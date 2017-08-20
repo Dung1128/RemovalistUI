@@ -46,7 +46,7 @@ const selector = formValueSelector('CustomerInfo')
     },
     status: selector(state, 'status')
   }), )
-@reduxForm({ form: 'DeliveryInfo', validate })
+@reduxForm({ form: 'DeliveryInfo', validate, destroyOnUnmount: !__DEV__  })
 
 export default class extends Component {
 

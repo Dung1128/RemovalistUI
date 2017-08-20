@@ -33,6 +33,7 @@ export const initialValues = {
     }
 }
 export const validate = (values, { navigation }) => {
+    console.log(values)
     const errors = {}
     if (navigation.state.params.general.status.JobStatusId != 1) {
         if (values.servicetime) {

@@ -78,7 +78,7 @@ export const InputSurcharge = ({ input, meta: { touched, error, warning }, membe
 
 const StatusInputField = ({ input, meta: { touched, error, warning }, member, nameIcon, measure, listItems, title }) => {
 
-    const price = (input.value && input.value.status.CategoryId ? (input.value.status.PricePerUnit * input.value.NumberOfMaterial) : 0).toFixed(2);
+    const price = (input.value && input.value.status && input.value.status.CategoryId ? (input.value.status.PricePerUnit * input.value.NumberOfMaterial) : 0).toFixed(2);
     const hrs = input.value.NumberOfMaterial > 1 ? 'hrs' : 'hr'
     return (
         <View>
@@ -95,8 +95,8 @@ const StatusInputField = ({ input, meta: { touched, error, warning }, member, na
 
             <View style={styles.wrapItem}>
                 <Field name={`${member}.status`} component={DropDownField} nameIcon={nameIcon} listItems={listItems} />
-                <View style={styles.border} />
-                <Field name={`${member}.NumberOfMaterial`} component={InputField} measure={measure == 'hr' ? hrs : measure} />
+                <View style={styles.border} />                
+                <Field name={`${member}.NumberOfMaterial`} component={InputField} measure={measure == 'hr' ? hrs : measure} />                
                 <View style={styles.border} />
                 <View style={styles.Item}>
                     <Text numberOfLines={1} ellipsizeMode='tail' style={styles.content}> ${price}</Text>
@@ -112,20 +112,11 @@ export const InputServiceField = ({ name, nameIcon, measure, listItems, title })
 
 
 const renderMaterial = (name, index, fields, listItems, measure, nameIcon, title) => {
+    console.log(index)
     return (
-        <View key={index}>
+        <View key={index} style={{paddingRight: 30,backgroundColor:'#fff'}}>
             <Field name={name} member={name} component={StatusInputField} nameIcon={nameIcon} measure={measure} listItems={listItems} title={title} />
-            {
-                index == 0
-                    ? <ButtonIcon style={styles.button} onPress={() => fields.push({
-                        status: {
-                            Name: 'Select Type',
-                            CategoryId: 0
-                        },
-                        NumberOfMaterial: '',
-                    })} icon='add' size={16} color='#fff' />
-                    : <ButtonIcon style={styles.button} onPress={() => fields.remove(index)} iconRemove size={18} color='#fff' />
-            }
+            {index > 0 && <ButtonIcon style={styles.button} onPress={() => fields.remove(index)} iconRemove size={18} color='#fff' />            }
         </View>
     )
 }
@@ -136,8 +127,8 @@ const selector = formValueSelector('TallyService')
 export const MaterialArray = connect((state) => ({
     material: selector(state, 'material'),
 }))(({ fields, meta: { error, submitFailed }, listItems, measure, nameIcon, title, material }) => {
-    const price = material && material.map(input => (input.status && input.status.CategoryId ? (input.status.PricePerUnit * input.NumberOfMaterial) : 0))
-        .reduce((a, b) => a + b).toFixed(2);
+    const price = material && material.length ? material.map(input => (input.status && input.status.CategoryId ? (input.status.PricePerUnit * input.NumberOfMaterial) : 0))
+        .reduce((a, b) => a + b).toFixed(2) : 0.00;
     return (
         <View>
             <TitleItem
@@ -145,6 +136,15 @@ export const MaterialArray = connect((state) => ({
                 right={
                     <View row style={styles.money}>
                         <Text style={styles.titPrice}>${price}</Text>
+
+                        <ButtonIcon style={{}} onPress={() => fields.push({
+                        status: {
+                            Name: 'Select Type',
+                            CategoryId: 0
+                        },
+                        NumberOfMaterial: '',
+                    })} icon='add' size={16} color='#fff' />
+
                     </View>
                 }
             />

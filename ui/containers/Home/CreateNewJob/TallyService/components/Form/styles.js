@@ -27,8 +27,8 @@ export default {
         padding: 0,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 10,
-        justifyContent: 'center',
+        paddingLeft: 0,
+        justifyContent: 'center',        
     },
     borderLeft: {
         flex: 0.5,
@@ -43,7 +43,6 @@ export default {
         right: 10,
         top: 12
     },
-
     content: {
         width: 80,
     },
@@ -51,9 +50,12 @@ export default {
     titPrice: {
         flex: 1,
         fontWeight: 'bold',
+        textAlign: 'right',
+        paddingRight: 10,
     },
     money: {
         justifyContent: 'space-between',
-        width: '20%'
+        width: '50%',
+        paddingLeft: 30,
     }
 };

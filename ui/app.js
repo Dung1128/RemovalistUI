@@ -32,6 +32,7 @@ export default class App extends Component {
             <StyleProvider style={getTheme(material)}>
                 <View style={{ flex: 1 }}>
                     <Home screenProps={user} />
+                    <Toasts/>
                 </View>
             </StyleProvider>
         )
