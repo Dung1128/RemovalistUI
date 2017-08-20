@@ -148,6 +148,7 @@ export default class extends Component {
     }
 
     renderForm(values) {
+        const { delivery } = this.state;
         const { servicetime, traveltime, fuel, material } = values;
         servicetime.MaterialId = servicetime.status.MaterialId;
         traveltime.MaterialId = traveltime.status.MaterialId;
@@ -156,13 +157,18 @@ export default class extends Component {
         for (const i = 0; i < material.length; i++) {
             material[i].MaterialId = material[i].status.MaterialId;
         }
+        if (servicetime.NumberOfMaterial && traveltime.NumberOfMaterial
+            && fuel.NumberOfMaterial && material[0].NumberOfMaterial) {
+            return [
+                servicetime,
+                traveltime,
+                fuel,
+                ...material
+            ]
+        } else {
+            return ""
+        }
 
-        return [
-            servicetime,
-            traveltime,
-            fuel,
-            ...material
-        ]
 
     }
 

@@ -17,4 +17,14 @@ export default {
         right: 30,
         // top: 10
     },
+    item: {
+        flexDirection: 'row',
+        width: '100%',
+        justifyContent: 'space-between'
+    },
+    wrapItem: {
+        marginRight: 0,
+        marginLeft: 0,
+        paddingHorizontal: 15
+    }
 };

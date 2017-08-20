@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
     AppRegistry,
     StyleSheet,
-    View,
     TouchableOpacity,
     Linking,
     Modal,
@@ -12,13 +11,16 @@ import {
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
-import { Container, Left, Body, Right, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
+import { Container, Left, Body, Right, Title, Content, Footer, FooterTab, List, ListItem, Text, View } from 'native-base';
 import InputRow from '~/ui/elements/InputRow';
 import CustomerInfo from '~/ui/elements/CustomerInfo';
 import CheckDate from '~/ui/elements/CheckDate';
 import Icon from '~/ui/components/Icon';
 import Button from '~/ui/components/Button';
+import Header from '~/ui/components/Header';
 import TitleItem from '~/ui/components/TitleItem';
+import IconIonicons from 'react-native-vector-icons/dist/Ionicons';
+
 import { connect } from 'react-redux'
 import * as jobSelectors from '~/store/selectors/job';
 
@@ -33,6 +35,10 @@ export default class extends Component {
         super(props);
         this.state = ({
             modalVisible: false,
+            selected: {
+                TruckId: 0,
+                TruckName: 'Select Truck'
+            }
         });
 
     }
@@ -44,8 +50,33 @@ export default class extends Component {
             this.setState({ modalVisible: true });
         }
     }
+    handleValueChange(item) {
+        const { onChange } = this.props;
+        this.setState({ selected: item })
+        onChange && onChange(item);
+        this.setModalVisible();
+    }
+
+    renderRow(item) {
+        const { selected } = this.state;
+        return (
+
+            <ListItem style={styles.wrapItem}>
+                <TouchableOpacity style={styles.item} onPress={() => this.handleValueChange(item)}>
+                    <Text>{item.TruckName}</Text>
+                    {item.TruckId == selected.TruckId
+                        ? <IconIonicons name="ios-radio-button-on" size={30} color={material.redColor} />
+                        : <IconIonicons name="ios-radio-button-off" size={30} color={material.redColor} />
+                    }
+                </TouchableOpacity>
+            </ListItem>
+
+        )
+    }
+
     render() {
         const { listTruck, onChange, value, error } = this.props;
+        console.log(listTruck)
         return (
             <View style={{
                 borderBottomColor: error ? material.redColor : '#fff',
@@ -65,28 +96,14 @@ export default class extends Component {
                     transparent={true}
                     visible={this.state.modalVisible}
                     onRequestClose={() => this.setModalVisible()}>
-                    <TouchableOpacity activeOpacity={1}
-                        onPress={() => {
-                            this.setModalVisible()
-                        }}
-                        style={{ backgroundColor: 'rgba(0,0,0,.8)', flex: 1, justifyContent: 'center', alignItems: 'center' }} >
-                        <TouchableOpacity activeOpacity={1} style={{
-                            width: 300,
-                            maxHeight: 300,
-                            backgroundColor: 'white',
-                        }}>
+                    <View container white>
+                        <Header title='Select item' iconLeft='close' onPress={() => this.setModalVisible()} />
+                        <TitleItem style={{ padding: 0, backgroundColor: material.grayBackgroundColor }} />
 
-                            <List dataArray={listTruck}
-                                renderRow={(item) =>
-                                    <ListItem>
-                                        <TouchableOpacity onPress={() => { onChange(item); this.setModalVisible() }}>
-                                            <Text>{item.TruckName}</Text>
-                                        </TouchableOpacity>
-                                    </ListItem>
-                                }>
-                            </List>
-                        </TouchableOpacity>
-                    </TouchableOpacity>
+                        <List dataArray={[{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]}
+                            renderRow={(item) => this.renderRow(item)}>
+                        </List>
+                    </View>
                 </Modal>
             </View>
         );
