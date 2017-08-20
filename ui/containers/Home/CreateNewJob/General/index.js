@@ -9,11 +9,12 @@ import {
     Alert,
     ListView,
     ScrollView,
-    Keyboard,    
+    Keyboard,
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
 import { Container, Left, Body, Right, Title, Content, Footer, FooterTab, List, ListItem, Text } from 'native-base';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import InputRow from '~/ui/elements/InputRow';
 import CustomerInfo from '~/ui/elements/CustomerInfo';
 import CheckDate from '~/ui/elements/CheckDate';
@@ -65,36 +66,15 @@ const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4Ump
             }
         }
     }), )
-@reduxForm({ form: 'CustomerInfo', validate, destroyOnUnmount: !__DEV__  })
+@reduxForm({ form: 'CustomerInfo', validate, destroyOnUnmount: !__DEV__ })
 export default class extends Component {
 
     constructor(props) {
         super(props);
-        this.contentHeight = material.deviceHeight - material.toolbarHeight - 60
         this.state = {
-            height: this.contentHeight,
         };
 
-        this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
-        this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     }
-
-    componentWillUnmount() {
-    this.keyboardWillShowSub.remove();
-    this.keyboardWillHideSub.remove();
-  }
-
-  keyboardWillShow = (event) => {        
-    this.setState({
-        height: this.contentHeight - event.endCoordinates.height + 60
-    })
-  };
-
-  keyboardWillHide = (event) => {
-    this.setState({
-        height: this.contentHeight
-    })
-  };
 
 
     submitForm(values) {
@@ -106,8 +86,8 @@ export default class extends Component {
         return (
             <Container>
                 <Header title='General Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
-                <View style={{height:this.state.height}}>
-                <ScrollView style={styles.content}>
+
+                <KeyboardAwareScrollView style={styles.content}>
                     <Field name="status" component={StatusField} />
                     <FieldArray name="Contact" component={CustomerField} />
                     <View style={styles.titGeneral}>
@@ -116,8 +96,7 @@ export default class extends Component {
                     <DateTimeField name="datetime" />
                     <Field name="truck" component={TruckField} />
                     <TitleItem style={{ padding: 0 }} />
-                </ScrollView>
-                </View>
+                </KeyboardAwareScrollView>
                 <Button
                     //onPress={() => this.props.navigation.navigate('delivery_screen', 'aaaaa')}
                     onPress={handleSubmit(this.submitForm.bind(this))}
