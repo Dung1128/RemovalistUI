@@ -8,7 +8,8 @@ import {
     Modal,
     Alert,
     ListView,
-    ScrollView
+    ScrollView,
+    Keyboard,    
 } from 'react-native';
 import styles from './styles';
 import material from '~/theme/variables/material';
@@ -37,7 +38,7 @@ import {
 import { validate } from './utils'
 import * as jobSelectors from '~/store/selectors/job';
 
-const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6ImVvc29UR3FCMHZwNWlsS1dWMGcxclZmaVBFMGRaWnVGQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTAyNTA2MTM1LCJpYXQiOjE1MDI0MTk3MzUsInNjb3BlIjoiIn0.ReSNkSK_qln2Ose80tBJL11Y8A_-v4tlgHE3SUgqOUAdwh_9zcnO-YvYCSGlmy7MSUp7EbbmAAec6se5Rq6hl_sdC2oTaHod9qlR_pNy4Ht6AUcYGkBj2LUYNEADlynFEfqRAaPj0QOu23fKsm-keqxG-EGkzkGuLm2_6tXk5ILUzKLLsTXeN44z_pimmrbsmi3mlkAusDHBy7PcUeAHo6dhPHpkqM7u1bIbkh0JgMqkdUeNV0D6OdM_XMhCApWhJBBa8aqVUHPlDDSich9vMq7WUFHydpC30JwtT7ajVq0490Y8TvJjWksW-9CuL32n84frMr5M-lOggA9kNNEhLw'
+const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6InJRcXY0UTBRQXdnQkJwM0k2TlM0NTBhcFh1UWhwN3hHQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTAzMTM3MDU0LCJpYXQiOjE1MDMwNTA2NTQsInNjb3BlIjoiIn0.Jtcal4vmIuZa-nisdr_6oB9HZZdOXXKA1YhlpyYqjyY3laMFVS7dDDI0L_12BRh6fR3nqb3nWhVURLIMSqAIEW6XOwPxbOvKWoCTGkMyi7K0O0bHbYRKiWx-3D6mwMi6Ny9yjWtuFQHByIcE86E9IQtlMgpxEvBGk_PhDQmb-C6d5JBdfzJ9o2Kt-WOtXMAmSQ-DuiDrcZs53F6ZjxB38-wBPk4ZxJM_CR05TIRU_ouQspXQgFHfpQtewV5XOzQfzQhxrxA10jH5QtHnMyrCxfMrrHiJTuIjV4o51PmB6ErJTSGEk1uu1edOPm6Dw2qCfaAJY1vds1zDMBIxZRtz9A'
 
 @connect(
     state => ({
@@ -64,14 +65,36 @@ const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4Ump
             }
         }
     }), )
-@reduxForm({ form: 'CustomerInfo', validate })
+@reduxForm({ form: 'CustomerInfo', validate, destroyOnUnmount: !__DEV__  })
 export default class extends Component {
 
     constructor(props) {
         super(props);
-        this.state = ({
-        });
+        this.contentHeight = material.deviceHeight - material.toolbarHeight - 60
+        this.state = {
+            height: this.contentHeight,
+        };
+
+        this.keyboardWillShowSub = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+        this.keyboardWillHideSub = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
     }
+
+    componentWillUnmount() {
+    this.keyboardWillShowSub.remove();
+    this.keyboardWillHideSub.remove();
+  }
+
+  keyboardWillShow = (event) => {        
+    this.setState({
+        height: this.contentHeight - event.endCoordinates.height + 60
+    })
+  };
+
+  keyboardWillHide = (event) => {
+    this.setState({
+        height: this.contentHeight
+    })
+  };
 
 
     submitForm(values) {
@@ -83,6 +106,7 @@ export default class extends Component {
         return (
             <Container>
                 <Header title='General Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
+                <View style={{height:this.state.height}}>
                 <ScrollView style={styles.content}>
                     <Field name="status" component={StatusField} />
                     <FieldArray name="Contact" component={CustomerField} />
@@ -93,6 +117,7 @@ export default class extends Component {
                     <Field name="truck" component={TruckField} />
                     <TitleItem style={{ padding: 0 }} />
                 </ScrollView>
+                </View>
                 <Button
                     //onPress={() => this.props.navigation.navigate('delivery_screen', 'aaaaa')}
                     onPress={handleSubmit(this.submitForm.bind(this))}

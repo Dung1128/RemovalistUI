@@ -115,7 +115,7 @@ export const createRequestSaga = ({request, key, start, stop, success, failure, 
         } else {
           // call logout user because we do not have refresh token
           yield put(removeLoggedUser())
-          yield put(setAuthState(false))       
+          yield put(setAuthState(false))               
           // yield put(forwardTo('login'))   
         }
       }

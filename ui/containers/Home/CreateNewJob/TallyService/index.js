@@ -48,7 +48,7 @@ const selector = formValueSelector('TallyService')
         surcharge: selector(state, 'surcharge'),
 
     }), { ...materialActions, ...jobActions })
-@reduxForm({ form: 'TallyService', validate })
+@reduxForm({ form: 'TallyService', validate, destroyOnUnmount: !__DEV__ })
 export default class extends Component {
 
     constructor(props) {
@@ -84,9 +84,9 @@ export default class extends Component {
                     Alert.alert('Notify', data.Message);
                 }
             }
-            if (error) {
-                Alert.alert('Notify', error);
-            }
+            // if (error) {
+            //     Alert.alert('Notify', error);
+            // }
         })
     }
 
@@ -175,12 +175,12 @@ export default class extends Component {
 
     sumPrice() {
         const { servicetime, traveltime, fuel, material, surcharge } = this.props;
-        if (servicetime && traveltime && fuel && material && material[0].NumberOfMaterial) {
+        if (servicetime && traveltime && fuel && material && material[0] && material[0].NumberOfMaterial) {
             let materialvalue = material.map(input => (input.status && input.status.CategoryId ? (input.status.PricePerUnit * input.NumberOfMaterial) : 0))
                 .reduce((a, b) => a + b);
-            let price = (parseInt(servicetime.NumberOfMaterial) * (servicetime.status.PricePerUnit || 0))
-                + (parseInt(traveltime.NumberOfMaterial) * (traveltime.status.PricePerUnit || 0))
-                + (parseInt(fuel.NumberOfMaterial) * (fuel.status.PricePerUnit || 0))
+            let price = ((servicetime.NumberOfMaterial||0) * (servicetime.status.PricePerUnit || 0))
+                + ((traveltime.NumberOfMaterial||0) * (traveltime.status.PricePerUnit || 0))
+                + ((fuel.NumberOfMaterial||0) * (fuel.status.PricePerUnit || 0))
                 + materialvalue
 
             return surcharge ? price : price + surcharge.price
