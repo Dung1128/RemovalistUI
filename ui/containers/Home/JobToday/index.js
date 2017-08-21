@@ -32,9 +32,11 @@ import { areRequestsPending } from '~/store/selectors/common'
 import { accessToken } from '~/store/constants/api'
 
 @connect(
-  state => ({
-    isPending: areRequestsPending(state)
-  }), { ...jobActions }
+  // state => ({
+  //   isPending: areRequestsPending(state)
+  // }),
+  null,
+  { ...jobActions }
 )
 export default class extends Component {
   constructor(props) {
@@ -42,9 +44,9 @@ export default class extends Component {
     this.state = {
       calendar: true,
       basic: true,
+      date: new Date(),
       dataSource: {},
     };
-    this.date = new Date();
     this.dataSource = {};
     this.navigated = false
     this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'calendar'
@@ -52,7 +54,7 @@ export default class extends Component {
     this.selectedRefPage = null
     this.children = {
       'calendar': <CalendarView items={{}} />,
-      'list': <List date={this.date} />
+      'list': <List onItemRef={ref => this.list = ref} />
     }
 
     this.tabbarData = [
@@ -70,7 +72,7 @@ export default class extends Component {
     this.props.getMaterialCategoryList(accessToken, (error, data) => { })
     this.props.getTruckList(accessToken, (error, data) => { })
     this.props.getReferenceContactList(accessToken, (error, data) => { })
-    this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => { console.log(data) })
+    this.props.getJobByDate(this.renderDate(this.state.date), accessToken, (error, data) => { console.log(data) })
     this.navigateTab(this.selectedRoute)
   }
 
@@ -109,14 +111,23 @@ export default class extends Component {
   onDateSelect(date) {
     if (this.date && date.toString() === this.date.toString())
       return
-    this.date = date
+
+    this.list.date = date
+    // later
     this.props.getJobByDate(this.renderDate(date), accessToken, (error, data) => { })
+    // this.setState({
+    //   date
+    // })
+    // console.log('vai')
+    // this.list.setState({
+    //   date
+    // })
   }
 
 
 
   render() {
-
+    console.log('render all')
     return (
       <Container>
         <Header
@@ -148,7 +159,7 @@ export default class extends Component {
           />
 
           <Calendar style={{ width: '100%', marginHorizontal: 10 }}
-            currentMonth={this.date}
+            currentMonth={this.state.date}
             scrollEnabled={true}
             onDateSelect={date => this.onDateSelect(date)} />
         </View>

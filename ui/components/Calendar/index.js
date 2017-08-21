@@ -88,16 +88,17 @@ export default class extends Component {
   componentDidMount() {
     // fixes initial scrolling bug on Android
     setTimeout(() => this.scrollToItem(VIEW_INDEX), 0)
+
   }
 
   componentDidUpdate() {
     this.scrollToItem(VIEW_INDEX)
+    // console.log('scroll now', this.weekList, this.selectedWeekRow)
     this.weekList && this.weekList.scrollTo({
       x: 0,
       y: this.props.rowHeight * this.selectedWeekRow,
       animated: false,
     })
-    // console.log('scroll now', this.weekList, this.selectedWeekRow)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -216,7 +217,7 @@ export default class extends Component {
     do {
       const dayIndex = renderIndex - offset
       const isoWeekday = (renderIndex + weekStart) % 7
-      if (argMonthIsToday && dayIndex === todayIndex) {
+      if (argMonthIsToday && dayIndex === selectedIndex) {
         this.selectedWeekRow = weekRows.length
       }
       if (dayIndex >= 0 && dayIndex < argMonthDaysCount) {

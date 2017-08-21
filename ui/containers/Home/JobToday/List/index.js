@@ -25,8 +25,10 @@ import * as jobActions from '~/store/actions/job'
 import * as jobSelectors from '~/store/selectors/job'
 import { areRequestsPending } from '~/store/selectors/common'
 import { accessToken } from '~/store/constants/api'
+import Loading from '~/ui/components/Loading'
+
 @connect(state => ({
-    isPending: areRequestsPending(state),
+    // isPending: areRequestsPending(state),
     listStatus: jobSelectors.getStatusJobList(state),
     listJobByDate: jobSelectors.getJobByDate(state)
 }), { ...jobActions })
@@ -40,16 +42,23 @@ export default class extends Component {
             basic: true,
             dataSource: [],
             isRefreshing: false,
-            loading: false
+            loading: false,
+            // date: '',
         };
-        this.date = new Date();
-        console.log(this.props.date)
+        this.date = ''
+        // console.log(this.state.date)
+    }
+
+    componentDidMount() {
+        this.props.onItemRef && this.props.onItemRef(this)
     }
 
     componentWillReceiveProps({ listJobByDate }) {
-        this.setState({
-            dataSource: listJobByDate
-        })
+        if (listJobByDate != this.props.listJobByDate) {
+            this.setState({
+                dataSource: listJobByDate
+            })
+        }
     }
 
     renderStatus(id) {
@@ -129,47 +138,46 @@ export default class extends Component {
 
     render() {
         const { dataSource } = this.state;
-        const { isPending } = this.props;
-        const checkdate = dataSource.length > 0 && dataSource[0].TimeStart ? dataSource[0].TimeStart : 0
-
+        // const { isPending } = this.props;
+        const checkdate = dataSource.length > 0 && dataSource[0].TimeStart ? dataSource[0].TimeStart : this.date
+        console.log(checkdate)
         return (
-            !isPending
-                ?
-                <View style={{ flex: 1 }}>
-                    {
-                        this.renderDate(checkdate) == this.renderDate(new Date())
-                            ? <TitleItem title='Today' />
-                            : <TitleItem title={this.renderDateTit(checkdate)} />
-                    }
-                    {
-                        dataSource.length == 0 ?
-                            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
-                                <Text>Data not found</Text>
-                            </View>
-                            : null
-                    }
-                    {
-                        <List
-                            refreshControl={
-                                <RefreshControl
-                                    colors={['#039BE5']}
-                                    tintColor={material.redColor}
-                                    refreshing={this.state.isRefreshing}
-                                    onRefresh={this.refreshList.bind(this)}
-                                />
-                            }
-                            enableEmptySections
-                            removeClippedSubviews={false}
-                            style={{ flex: 1 }}
-                            dataArray={this.state.dataSource}
-                            renderRow={this.renderRow.bind(this)}
-                        />
 
-                    }
+            <View style={{ flex: 1 }}>
+                {
+                    this.renderDate(checkdate) == this.renderDate(new Date())
+                        ? <TitleItem title='Today' />
+                        : <TitleItem title={this.renderDateTit(checkdate)} />
+                }
+                {
+                    dataSource.length == 0 ?
+                        <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
+                            <Text>Data not found</Text>
+                        </View>
+                        : null
+                }
+                {
+                    <List
+                        refreshControl={
+                            <RefreshControl
+                                colors={['#039BE5']}
+                                tintColor={material.redColor}
+                                refreshing={this.state.isRefreshing}
+                                onRefresh={this.refreshList.bind(this)}
+                            />
+                        }
+                        enableEmptySections
+                        removeClippedSubviews={false}
+                        style={{ flex: 1 }}
+                        dataArray={this.state.dataSource}
+                        renderRow={this.renderRow.bind(this)}
+                    />
 
+                }
 
-                </View>
-                : <Spinner color={material.redColor} />
+                <Loading />
+            </View>
+
         );
     }
 }
