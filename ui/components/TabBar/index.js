@@ -6,8 +6,8 @@ import styles from './styles';
 
 export default class extends Component {
     static propTypes = {
-        dataArray: PropTypes.array.isRequired, 
-        selected: PropTypes.string,                  
+        dataArray: PropTypes.array.isRequired,
+        selected: PropTypes.string,
     }
 
     constructor(props) {
@@ -18,28 +18,30 @@ export default class extends Component {
     }
 
     render() {
-        const { 
+        const {
             onPress,
-            dataArray,            
-            ...props } = this.props; 
+            dataArray,
+            ...props } = this.props;
         return (
-            <View {...props} >
-                {dataArray.map((item, index)=> {     
-                    const isSelected = item.key === this.state.selected                
+            <View style={styles.wrapTabbar} {...props} >
+                {dataArray.map((item, index) => {
+                    const isSelected = item.key === this.state.selected
                     return (
-                            <TouchableOpacity key={item.key} onPress={() => { 
-                                onPress(item);
-                                (!isSelected) && this.setState({ selected: item.key });
-                            }}
-                             style={{...styles[isSelected ? 'itemMenuActive' : 'itemMenu'], 
-                                    ...styles.border,
-                                    ...styles[index == 0 ? 'borderRight' :  'borderLeft' ]  }}>
-                                <Text style={styles[isSelected ? 'textMenuActive' : 'textMenu']}>
-                                    {item.title}
-                                </Text>
-                            </TouchableOpacity> 
-                    )                                                 
-                })}                                            
+                        <TouchableOpacity key={item.key} onPress={() => {
+                            onPress(item);
+                            (!isSelected) && this.setState({ selected: item.key });
+                        }}
+                            style={{
+                                ...styles[isSelected ? 'itemMenuActive' : 'itemMenu'],
+                                ...styles.border,
+                                ...styles[index == 0 ? 'borderRight' : 'borderLeft']
+                            }}>
+                            <Text style={styles[isSelected ? 'textMenuActive' : 'textMenu']}>
+                                {item.title}
+                            </Text>
+                        </TouchableOpacity>
+                    )
+                })}
             </View>
         );
     }
