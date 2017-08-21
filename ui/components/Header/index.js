@@ -8,6 +8,7 @@ import {
     Title,
     Button
 } from 'native-base';
+import { TouchableOpacity } from 'react-native'
 import material from '~/theme/variables/material'
 import Icon from '~/ui/components/Icon';
 import styles from './styles'
@@ -56,7 +57,9 @@ export default class extends Component {
                         {right}
                     </Right>
                 }
-                <Text style={{ color: '#fff' }}>{textright}</Text>
+                <TouchableOpacity>
+                    <Text style={{ color: '#fff' }}>{textright}</Text>
+                </TouchableOpacity>
 
             </Header>
         )
