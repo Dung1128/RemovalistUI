@@ -54,18 +54,14 @@ export default {
 
     },
     border: {
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
         borderColor: 'white',
         borderRadius: 5,
     },
     borderLeft: {
-        borderRightWidth: 1,
         borderTopLeftRadius: 1,
         borderBottomLeftRadius: 1,
     },
     borderRight: {
-        borderLeftWidth: 1,
         borderTopRightRadius: 1,
         borderBottomRightRadius: 1,
     },
@@ -73,5 +69,8 @@ export default {
         marginHorizontal: 20, marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 6
     }
 };
