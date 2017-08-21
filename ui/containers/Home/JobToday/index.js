@@ -240,6 +240,9 @@ export default class extends Component {
               marginBottom: 10, 
               flexDirection:'row', 
               justifyContent:'space-between',
+              borderWidth: 1,
+              borderColor: '#fff',
+              borderRadius: 6
             }}
             selected={this.selectedRoute}
             dataArray={this.tabbarData}
