@@ -42,16 +42,15 @@ export default class extends Component {
     this.state = {
       calendar: true,
       basic: true,
-      dataSource: {},
+      dataSource: {},      
     };
     this.dataSource = {};
     this.navigated = false
-    this.items = {}
     this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'calendar'
     this.refChildren={}
     this.selectedRefPage = null    
     this.children = {
-      'calendar': this.renderChart(),
+      'calendar': <Calendar items={{}}  />,
       'list': <List navigation={this.props.navigation} dataSource={this.dataSource} />      
     }    
 
@@ -94,90 +93,8 @@ export default class extends Component {
     this.props.getReferenceContactList(accessToken, (error, data) => { })
 
     this.navigateTab(this.selectedRoute)
-  }
+  }  
 
-
-  drawBar(i, { nativeEvent }) {
-    const { locationX: x, locationY: y } = nativeEvent
-    let top = 40 * i + y
-    let left = x
-    console.log(i, y)
-    const offset = (y - 20)
-    const plusMinute = Math.round(30 * offset / 40)
-    const realMinute = i * 30 + plusMinute
-    let hours = Math.floor(realMinute / 60)
-    let minutes = realMinute - hours * 60
-    this.items[x + ':' + y] = (
-      <View key={x + ':' + y} style={{
-        backgroundColor: 'red',
-        height: 50,
-        width: 40,
-        top,
-        left,
-        position: 'absolute',
-        zIndex: 1,
-      }}>
-        <Text>{hours}:{minutes}</Text>
-      </View>
-    )
-
-    this.forceUpdate()
-
-  }
-
-  renderChart() {
-    const timeline = []
-    const labels = []
-    for (let i = 0; i <= 48; i++) {
-      let hours = Math.floor(i / 2);
-      // if(hours > 12) hours = hours - 12    
-      var minutes = (i % 2) === 0 ? '00' : '30';
-
-      labels.push(
-        <Text key={i} style={{
-          textAlign: 'right',
-          lineHeight: 40,
-          paddingRight: 10,
-        }}>{hours}:{minutes}</Text>
-      )
-
-      timeline.push(
-        <ListItem onPress={e => this.drawBar(i, e)} style={{
-          marginLeft: 0,
-          borderBottomWidth: 0,
-          paddingLeft: 0,
-          height: 40,
-          width: '100%',
-        }} key={i}>
-          <View style={{
-            height: 1,
-            width: '100%',
-            backgroundColor: 'black'
-          }} />
-        </ListItem>
-      )
-    }
-
-
-    return (
-      <ScrollView contentContainerStyle={{
-        flexDirection: 'row',
-      }}>
-        <View style={{
-          width: 60,
-        }}>
-          {labels}
-        </View>
-        <ScrollView horizontal contentContainerStyle={{
-          flexDirection: 'column',
-          width: Math.max(1000, 60 * 100),
-        }}>
-          {timeline}
-          {Object.values(this.items)}
-        </ScrollView>
-      </ScrollView>
-    )
-  }
 
   navigateTab(route){
     this.selectedRoute = route    
