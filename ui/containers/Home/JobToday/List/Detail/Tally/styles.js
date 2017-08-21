@@ -11,5 +11,26 @@ export default {
     },
     contentTally: {
         backgroundColor: material.grayTitle
+    },
+    Title: {
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        flexDirection: 'row',
+        padding: 10,
+        backgroundColor: material.grayTitle
+    },
+    total: {
+        fontSize: 20,
+    },
+    bottomAction: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+        paddingLeft: 30, 
+        paddingRight: 30
+    },
+    textBold: {
+        fontWeight: 'bold'
     }
 }
