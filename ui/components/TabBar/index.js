@@ -24,20 +24,20 @@ export default class extends Component {
             ...props } = this.props; 
         return (
             <View {...props} >
-                {dataArray.map(item=> {     
+                {dataArray.map((item, index)=> {     
                     const isSelected = item.key === this.state.selected                
                     return (
-                        <View key={item.key} style={styles.hdMenu}>
-                            <TouchableOpacity onPress={() => { 
+                            <TouchableOpacity key={item.key} onPress={() => { 
                                 onPress(item);
                                 (!isSelected) && this.setState({ selected: item.key });
                             }}
-                             style={styles[isSelected ? 'itemMenuActive' : 'itemMenu']}>
+                             style={{...styles[isSelected ? 'itemMenuActive' : 'itemMenu'], 
+                                    ...styles.border,
+                                    ...styles[index == 0 ? 'borderRight' :  'borderLeft' ]  }}>
                                 <Text style={styles[isSelected ? 'textMenuActive' : 'textMenu']}>
                                     {item.title}
                                 </Text>
-                            </TouchableOpacity>  
-                        </View> 
+                            </TouchableOpacity> 
                     )                                                 
                 })}                                            
             </View>

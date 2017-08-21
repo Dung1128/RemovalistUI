@@ -27,7 +27,7 @@ export default {
         backgroundColor: '#fff', 
         paddingHorizontal: 10, 
         justifyContent: 'space-between', 
-        borderTopWidth: 0.5, 
+        borderTopWidth: 1, 
         borderColor: material.grayTitle  
     }
 }

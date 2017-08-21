@@ -38,9 +38,7 @@ import {
 } from './components/Form'
 import { validate } from './utils'
 import * as jobSelectors from '~/store/selectors/job';
-
-const accessToken = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik9EZzFPVVF4UmpZelJEZzVSakUzT0RBME5UUkZRa1pHUkRJd016ZERPRFl4TmpRd09UaEdSUSJ9.eyJpc3MiOiJodHRwczovL3R1YW5wbDEuYXUuYXV0aDAuY29tLyIsInN1YiI6InJRcXY0UTBRQXdnQkJwM0k2TlM0NTBhcFh1UWhwN3hHQGNsaWVudHMiLCJhdWQiOiJodHRwczovL3R1YW5wbDF0ZXN0IiwiZXhwIjoxNTAzMTM3MDU0LCJpYXQiOjE1MDMwNTA2NTQsInNjb3BlIjoiIn0.Jtcal4vmIuZa-nisdr_6oB9HZZdOXXKA1YhlpyYqjyY3laMFVS7dDDI0L_12BRh6fR3nqb3nWhVURLIMSqAIEW6XOwPxbOvKWoCTGkMyi7K0O0bHbYRKiWx-3D6mwMi6Ny9yjWtuFQHByIcE86E9IQtlMgpxEvBGk_PhDQmb-C6d5JBdfzJ9o2Kt-WOtXMAmSQ-DuiDrcZs53F6ZjxB38-wBPk4ZxJM_CR05TIRU_ouQspXQgFHfpQtewV5XOzQfzQhxrxA10jH5QtHnMyrCxfMrrHiJTuIjV4o51PmB6ErJTSGEk1uu1edOPm6Dw2qCfaAJY1vds1zDMBIxZRtz9A'
-
+import { accessToken } from '~/store/constants/api'
 @connect(
     state => ({
         listStatus: jobSelectors.getStatusJobList(state),
@@ -86,7 +84,7 @@ export default class extends Component {
         const { handleSubmit, submitting } = this.props
         return (
             <Container>
-                <Header title='General Information' iconLeft='close' onPress={() => this.props.navigation.goBack()} />
+                <Header title='General Information' step={1} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
 
                 <KeyboardAwareScrollView style={styles.content}>
                     <Field name="status" component={StatusField} />
