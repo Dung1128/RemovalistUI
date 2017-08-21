@@ -42,21 +42,21 @@ export default class extends Component {
     this.state = {
       calendar: true,
       basic: true,
-      dataSource: {},      
+      dataSource: {},
     };
     this.dataSource = {};
     this.navigated = false
     this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'calendar'
-    this.refChildren={}
-    this.selectedRefPage = null    
+    this.refChildren = {}
+    this.selectedRefPage = null
     this.children = {
-      'calendar': <Calendar items={{}}  />,
-      'list': <List navigation={this.props.navigation} dataSource={this.dataSource} />      
-    }    
+      'calendar': <Calendar items={{}} />,
+      'list': <List navigation={this.props.navigation} dataSource={this.dataSource} />
+    }
 
     this.tabbarData = [
-      { key: 'calendar', title: 'Calendar'}, 
-      { key: 'list', title: 'List'},      
+      { key: 'calendar', title: 'Calendar' },
+      { key: 'list', title: 'List' },
     ]
   }
 
@@ -93,15 +93,15 @@ export default class extends Component {
     this.props.getReferenceContactList(accessToken, (error, data) => { })
 
     this.navigateTab(this.selectedRoute)
-  }  
+  }
 
 
-  navigateTab(route){
-    this.selectedRoute = route    
+  navigateTab(route) {
+    this.selectedRoute = route
     this.componentDidUpdate()
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
 
     // animate here
     this.selectedRefPage && this.selectedRefPage.setNativeProps({
@@ -110,14 +110,14 @@ export default class extends Component {
         zIndex: 0,
       }
     })
-    
+
     // this.refChildren[key]
     this.selectedRefPage = this.refChildren[this.selectedRoute]
     // console.log(this.selectedRoute)
     this.selectedRefPage && this.selectedRefPage.setNativeProps({
       style: {
         opacity: 1,
-          zIndex: 1,
+        zIndex: 1,
       }
     })
 
@@ -126,7 +126,7 @@ export default class extends Component {
 
 
   render() {
-    
+
     return (
       <Container>
         <Header
@@ -152,32 +152,23 @@ export default class extends Component {
         />
         <View style={{ backgroundColor: material.redColor }}>
           <TabBar
-            style={{ 
-              marginHorizontal: 20, 
-              marginBottom: 10, 
-              flexDirection:'row', 
-              justifyContent:'space-between',
-              borderWidth: 1,
-              borderColor: '#fff',
-              borderRadius: 6
-            }}
             selected={this.selectedRoute}
             dataArray={this.tabbarData}
-            onPress={(item) => { this.navigateTab(item.key) }}            
+            onPress={(item) => { this.navigateTab(item.key) }}
           />
 
         </View>
-        <View style={{flex:1,zIndex:0}}>
-        {
-          Object.keys(this.children).map(key=>(
-            <View style={{position: 'absolute', top: 0, right:0, left:0,bottom:0, opacity: 0, zIndex:0}} key={key} ref={ref=>this.refChildren[key]=ref}>
-              {this.children[key]}
-            </View>
-          ))
-        }
+        <View style={{ flex: 1, zIndex: 0 }}>
+          {
+            Object.keys(this.children).map(key => (
+              <View style={{ position: 'absolute', top: 0, right: 0, left: 0, bottom: 0, opacity: 0, zIndex: 0 }} key={key} ref={ref => this.refChildren[key] = ref}>
+                {this.children[key]}
+              </View>
+            ))
+          }
         </View>
         <Button
-          onPress={() => {            
+          onPress={() => {
             this.props.navigation.navigate('general_screen')
           }}
           style={{ backgroundColor: material.redColor, position: 'absolute', bottom: 20, right: 20, borderRadius: 50 / 2, width: 50, height: 50 }}>

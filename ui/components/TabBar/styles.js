@@ -5,19 +5,19 @@ export default {
     hdMenu: {
         // width: platform.fullWidth / 2,
         flex: 1,
-        height: 30,        
+        height: 30,
         // flexDirection: 'row',
         // alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-    },    
+    },
     itemMenu: {
         width: '100%',
         justifyContent: 'center',
         height: '100%',
         alignItems: 'center',
         flex: 1,
-        height: 30, 
+        height: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -54,19 +54,23 @@ export default {
 
     },
     border: {
-        borderTopWidth: 1,
-        borderBottomWidth: 1,
         borderColor: 'white',
         borderRadius: 5,
     },
     borderLeft: {
-        borderRightWidth: 1,
         borderTopLeftRadius: 1,
         borderBottomLeftRadius: 1,
     },
     borderRight: {
-        borderLeftWidth: 1,
         borderTopRightRadius: 1,
         borderBottomRightRadius: 1,
+    },
+    wrapTabbar: {
+        marginHorizontal: 20, marginBottom: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderWidth: 1,
+        borderColor: '#fff',
+        borderRadius: 6
     }
 };

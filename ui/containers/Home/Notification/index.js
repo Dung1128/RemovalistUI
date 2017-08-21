@@ -3,7 +3,7 @@ import {
   View,
   Alert,
   ListView,
-    RefreshControl
+  RefreshControl
 } from 'react-native';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 // import System from './ListSystem'
@@ -26,31 +26,31 @@ import ListSystem from './ListSystem'
 import ListAdmin from './ListAdmin'
 
 const dataNoti = [
-    {
-        content: 'notification',
-        status: '1',
-        time: '3 mins ago'
-    },
-    {
-        content: 'notification',
-        status: '1',
-        time: '3 mins ago'
-    },
-    {
-        content: 'notification',
-        status: '1',
-        time: '3 mins ago'
-    },
-    {
-        content: 'notification',
-        status: '1',
-        time: '3 mins ago'
-    },
-    {
-        content: 'notification',
-        status: '1',
-        time: '3 mins ago'
-    }
+  {
+    content: 'notification',
+    status: '1',
+    time: '3 mins ago'
+  },
+  {
+    content: 'notification',
+    status: '1',
+    time: '3 mins ago'
+  },
+  {
+    content: 'notification',
+    status: '1',
+    time: '3 mins ago'
+  },
+  {
+    content: 'notification',
+    status: '1',
+    time: '3 mins ago'
+  },
+  {
+    content: 'notification',
+    status: '1',
+    time: '3 mins ago'
+  }
 ]
 export default class extends Component {
   constructor(props) {
@@ -58,22 +58,56 @@ export default class extends Component {
     this.state = {
       calendar: true,
       basic: true,
-    //   dataSource: dataNoti,
-    //   isRefreshing: false
+      //   dataSource: dataNoti,
+      //   isRefreshing: false
     };
+    this.refChildren = {}
+    this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'system'
+    this.selectedRefPage = null
+    this.children = {
+      'system': <ListSystem items={{}} />,
+      'admin': <ListAdmin navigation={this.props.navigation} dataSource={this.dataSource} />
+    }
+    this.tabbarData = [
+      { key: 'system', title: 'System' },
+      { key: 'admin', title: 'Admin' },
+    ]
   }
 
-  /*renderRow(data) {
-        return (
-            <View style={styles.itemList}>
-                <Text>{data.content}</Text>
-                <View style={styles.bottom}>
-                    <Text style={styles.textbottom}>{data.status}</Text>
-                    <Text style={styles.textbottom}>{data.time}</Text>
-                </View>
-            </View>
-        ); 
-    }*/
+  componentDidMount() {
+    this.navigateTab(this.selectedRoute)
+  }
+
+  navigateTab(route) {
+    this.selectedRoute = route
+    this.componentDidUpdate()
+  }
+
+
+  componentDidUpdate() {
+
+    // animate here
+    this.selectedRefPage && this.selectedRefPage.setNativeProps({
+      style: {
+        opacity: 0,
+        zIndex: 0,
+      }
+    })
+
+    // this.refChildren[key]
+    this.selectedRefPage = this.refChildren[this.selectedRoute]
+    // console.log(this.selectedRoute)
+    this.selectedRefPage && this.selectedRefPage.setNativeProps({
+      style: {
+        opacity: 1,
+        zIndex: 1,
+      }
+    })
+
+    this.needUpdate = false
+  }
+
+
 
   render() {
     return (
@@ -85,20 +119,20 @@ export default class extends Component {
         />
         <View style={{ backgroundColor: material.redColor }}>
           <TabBar
-            style={{ marginHorizontal: 20, marginBottom: 10 }}
-            titleActive="System"
-            titleNonActive="Admin"
-            onPressActive={() => { this.setState({ calendar: !this.state.calendar }); }}
-            onPressNonActive={() => { this.setState({ calendar: !this.state.calendar }); }}
+            selected={this.selectedRoute}
+            dataArray={this.tabbarData}
+            onPress={(item) => { this.navigateTab(item.key) }}
           />
-
         </View>
-        {
-          this.state.calendar
-            ? <ListSystem navigation={this.props.navigation} />
-            : <ListAdmin navigation={this.props.navigation} />
-        }
-        
+        <View style={{ flex: 1 }}>
+          {
+            Object.keys(this.children).map(key => (
+              <View style={{ position: 'absolute', top: 0, right: 0, left: 0, bottom: 0, opacity: 0, zIndex: 0 }} key={key} ref={ref => this.refChildren[key] = ref}>
+                {this.children[key]}
+              </View>
+            ))
+          }
+        </View>
       </Container>
     );
   }
