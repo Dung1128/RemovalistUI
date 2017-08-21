@@ -10,6 +10,8 @@ import {
     saveMaterialCategoryList,
     saveTruckList,
     saveReferenceContactList,
+    saveJobByDate,
+    getJobByDate,
     getJobById,
     getMaterialList,
     getMaterialCategoryList,
@@ -75,7 +77,7 @@ const requestGetJobByDate = createRequestSaga({
     request: api.job.getJobByDate,
     key: 'getJobByDate',
     success: [
-
+        data => saveJobByDate(data.JobListItemObjects)
     ],
     failure: [(error) => setToast('Couldn\'t get job', 'error')]
 });
@@ -123,6 +125,7 @@ const requestPostNewJob = createRequestSaga({
     ],
     failure: [(error) => setToast('Couldn\'t post delivery update job', 'error')]
 });
+
 
 // root saga reducer
 export default [

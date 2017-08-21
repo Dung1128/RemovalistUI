@@ -23,9 +23,12 @@ import Calendar from '~/ui/components/Calendar';
 import moment from 'moment'
 import * as jobActions from '~/store/actions/job'
 import * as jobSelectors from '~/store/selectors/job'
+import { areRequestsPending } from '~/store/selectors/common'
 import { accessToken } from '~/store/constants/api'
 @connect(state => ({
-    listStatus: jobSelectors.getStatusJobList(state)
+    isPending: areRequestsPending(state),
+    listStatus: jobSelectors.getStatusJobList(state),
+    listJobByDate: jobSelectors.getJobByDate(state)
 }), { ...jobActions })
 
 export default class extends Component {
@@ -36,12 +39,17 @@ export default class extends Component {
             ready: false,
             basic: true,
             dataSource: [],
-            listByDate: 'init',
             isRefreshing: false,
             loading: false
         };
-        this.date = new Date(),
-            this.navigated = false
+        this.date = new Date();
+        console.log(this.props.date)
+    }
+
+    componentWillReceiveProps({ listJobByDate }) {
+        this.setState({
+            dataSource: listJobByDate
+        })
     }
 
     renderStatus(id) {
@@ -54,41 +62,6 @@ export default class extends Component {
                 })
             }
         }
-    }
-
-    componentWillMount() {
-        this.setState({
-            listByDate: this.renderDate(this.date)
-        })
-        InteractionManager.runAfterInteractions(() => {
-            this.setState({ ready: true });
-        });
-    }
-    componentDidMount() {
-        this.props.getJobByDate(this.renderDate(new Date()), accessToken, (error, data) => {
-            if (data) {
-                this.setState({
-                    dataSource: data.JobListItemObjects,
-
-                })
-            }
-        })
-
-    }
-
-
-    updateList(date, dateTit) {
-
-        this.props.getJobByDate(date, accessToken, (error, data) => {
-            if (data) {
-                this.setState({
-                    listByDate: this.renderDate(dateTit),
-                    dateTitle: this.renderDateTit(dateTit),
-                    dataSource: data.JobListItemObjects,
-                    loading: false,
-                })
-            }
-        })
     }
 
     refreshList() {
@@ -123,21 +96,10 @@ export default class extends Component {
         }
     }
 
-    navigate(data) {
-        if (!this.navigated) {
-            this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })
-            this.navigated = true
-            setTimeout(() => {
-                this.navigated = false
-            }, 2000)
-        }
-
-    }
-
     renderRow(data) {
         return (
             <View>
-                <TouchableOpacity style={styles.itemList} onPress={() => this.navigate(data)}>
+                <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })}>
                     <View style={{
                         width: 5,
                         backgroundColor: this.renderColorStatus(data.StatusId),
@@ -157,82 +119,57 @@ export default class extends Component {
         );
     }
 
-    renderDate(d) {
-        const date = new Date(d);
-        const month = (date.getMonth() + 1).toString();
-        const day = date.getDate().toString();
-        const year = date.getFullYear().toString();
-        const dayNow = `${year}${month < 10 ? `0${month}` : `${month}`}${day < 10 ? `0${day}` : `${day}`}`
-        return dayNow
+    renderDate(day) {
+        return moment(day).format("YYYYMMDD")
     }
 
-    renderDateTit(d) {
-        const date = new Date(d);
-        const month = (date.getMonth() + 1).toString();
-        const day = date.getDate().toString();
-        const year = date.getFullYear().toString();
-        const dayNow = `${year}-${month < 10 ? `0${month}` : `${month}`}-${day < 10 ? `0${day}` : `${day}`}`
-        return dayNow
-    }
-
-
-    renderDay(day, item) {
-        return (
-            <ListView enableEmptySections navigation={this.props.navigation} day={day} item={item} />
-        )
-    }
-
-    onDateSelect(date) {
-        if (this.date && date.toString() === this.date.toString())
-            return
-        this.date = date
-        this.setState({
-            loading: true,
-        })
-        this.updateList(this.renderDate(date), date);
+    renderDateTit(day) {
+        return moment(day).format("YYYY-MM-DD")
     }
 
     render() {
-        const { loading } = this.state;
-        this.navigated = false
-        return (
-            <View style={{ flex: 1 }}>
-                <Calendar style={{ width: '100%', marginHorizontal: 10 }}
-                    currentMonth={this.date}
-                    scrollEnabled={true}
-                    onDateSelect={date => this.onDateSelect(date)} />
-                {
-                    this.state.listByDate == this.renderDate(new Date()) ? <TitleItem title='Today' /> : <TitleItem title={this.state.dateTitle} />
-                }
-                {
-                    this.state.dataSource.length == 0 ?
-                        <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
-                            <Text>Data not found</Text>
-                        </View>
-                        : null
-                }
-                {
-                    !loading 
-                    ? <List
-                    refreshControl={
-                        <RefreshControl
-                            colors={['#039BE5']}
-                            tintColor={material.redColor}
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this.refreshList.bind(this)}
-                        />
-                    }
-                    enableEmptySections
-                    removeClippedSubviews={false}
-                    style={{ flex: 1 }}
-                    dataArray={this.state.dataSource}
-                    renderRow={this.renderRow.bind(this)}
-                />
-                : <Spinner color={material.redColor} />
-                }
-                
+        const { dataSource } = this.state;
+        const { isPending } = this.props;
+        const checkdate = dataSource.length > 0 && dataSource[0].TimeStart ? dataSource[0].TimeStart : 0
 
-            </View>
+        return (
+            !isPending
+                ?
+                <View style={{ flex: 1 }}>
+                    {
+                        this.renderDate(checkdate) == this.renderDate(new Date())
+                            ? <TitleItem title='Today' />
+                            : <TitleItem title={this.renderDateTit(checkdate)} />
+                    }
+                    {
+                        dataSource.length == 0 ?
+                            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
+                                <Text>Data not found</Text>
+                            </View>
+                            : null
+                    }
+                    {
+                        <List
+                            refreshControl={
+                                <RefreshControl
+                                    colors={['#039BE5']}
+                                    tintColor={material.redColor}
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this.refreshList.bind(this)}
+                                />
+                            }
+                            enableEmptySections
+                            removeClippedSubviews={false}
+                            style={{ flex: 1 }}
+                            dataArray={this.state.dataSource}
+                            renderRow={this.renderRow.bind(this)}
+                        />
+
+                    }
+
+
+                </View>
+                : <Spinner color={material.redColor} />
         );
     }
 }

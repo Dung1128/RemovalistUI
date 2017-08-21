@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux'
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import List from './List'
-import Calendar from './Calendar'
+import CalendarView from './Calendar'
 import material from '~/theme/variables/material'
 import {
   Container,
@@ -20,8 +20,8 @@ import {
   Content,
   Fab
 } from 'native-base';
-
-
+import moment from 'moment'
+import Calendar from '~/ui/components/Calendar';
 import TabBar from '~/ui/components/TabBar';
 import Icon from '~/ui/components/Icon';
 import Header from '~/ui/components/Header';
@@ -44,14 +44,15 @@ export default class extends Component {
       basic: true,
       dataSource: {},
     };
+    this.date = new Date();
     this.dataSource = {};
     this.navigated = false
     this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'calendar'
     this.refChildren = {}
     this.selectedRefPage = null
     this.children = {
-      'calendar': <Calendar items={{}} />,
-      'list': <List navigation={this.props.navigation} dataSource={this.dataSource} />
+      'calendar': <CalendarView items={{}} />,
+      'list': <List date={this.date} />
     }
 
     this.tabbarData = [
@@ -61,28 +62,6 @@ export default class extends Component {
   }
 
   componentWillMount() {
-    // this.getData();    
-  }
-
-  async getData() {
-    try {
-      const res = await api.job.getListJob(11, accessToken)
-      this.dataSource = res;
-      if (res != null) {
-        this.setState({
-          status: false,
-          loading: false,
-          dataSource: JSON.stringify(res),
-          offline: false,
-        });
-      }
-    } catch (error) {
-      this.setState({
-        status: false,
-        loading: false,
-        offline: true,
-      });
-    }
   }
 
   componentDidMount() {
@@ -91,8 +70,13 @@ export default class extends Component {
     this.props.getMaterialCategoryList(accessToken, (error, data) => { })
     this.props.getTruckList(accessToken, (error, data) => { })
     this.props.getReferenceContactList(accessToken, (error, data) => { })
-
+    this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => { console.log(data) })
     this.navigateTab(this.selectedRoute)
+  }
+
+
+  renderDate(day) {
+    return moment(day).format("YYYYMMDD")
   }
 
 
@@ -111,18 +95,24 @@ export default class extends Component {
       }
     })
 
-    // this.refChildren[key]
     this.selectedRefPage = this.refChildren[this.selectedRoute]
-    // console.log(this.selectedRoute)
     this.selectedRefPage && this.selectedRefPage.setNativeProps({
       style: {
         opacity: 1,
         zIndex: 1,
       }
     })
-
     this.needUpdate = false
   }
+
+
+  onDateSelect(date) {
+    if (this.date && date.toString() === this.date.toString())
+      return
+    this.date = date
+    this.props.getJobByDate(this.renderDate(date), accessToken, (error, data) => { })
+  }
+
 
 
   render() {
@@ -157,6 +147,10 @@ export default class extends Component {
             onPress={(item) => { this.navigateTab(item.key) }}
           />
 
+          <Calendar style={{ width: '100%', marginHorizontal: 10 }}
+            currentMonth={this.date}
+            scrollEnabled={true}
+            onDateSelect={date => this.onDateSelect(date)} />
         </View>
         <View style={{ flex: 1, zIndex: 0 }}>
           {

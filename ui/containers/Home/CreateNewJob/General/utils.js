@@ -27,7 +27,7 @@ export const validate = values => {
             if (!Contact || !Contact.Email) {
                 ContactErrors.Email = 'Required'
                 ContactArrayErrors[ContactIndex] = ContactErrors
-            } else if (!Contact || !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(Contact.Email)) {
+            } else if (!Contact || !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i.test(Contact.Email)) {
                 ContactErrors.Email = 'Invalid Email address'
                 ContactArrayErrors[ContactIndex] = ContactErrors
             }
