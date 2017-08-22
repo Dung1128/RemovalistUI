@@ -28,6 +28,7 @@
 		2B8C46DCBDC206E64039FCF1 /* libPods-Removalist.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E3EEEE38A478DC4D9DD35E3 /* libPods-Removalist.a */; };
 		30C174540196430280D61A7B /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DCCB70C3901146B684137688 /* Roboto.ttf */; };
 		3EE782ECBB0D4401976FFA2D /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 293F159930784428AAB80601 /* Octicons.ttf */; };
+		450D21FCFC7A4A44A4B795F2 /* libRCTTwilioChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 558E8C2B59304E3F9B98F955 /* libRCTTwilioChat.a */; };
 		499D21C092994C8A9F7B0B05 /* vanman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC005ACC504C4F288C93EBC9 /* vanman.ttf */; };
 		4A4FE57D4F2D455096768014 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C9693099C4044B9ADF313FC /* Zocial.ttf */; };
 		545010DA1F824A5E81FE5735 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DADE5EC7787F46E699EE9E21 /* Foundation.ttf */; };
@@ -129,6 +130,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
+		};
+		243E99DA1F4A918800C77A8D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = E7390A8F9A2B45AABDA7FA5F /* RCTTwilioChat.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1DAE2D1E1D086CD600D3FE06;
+			remoteInfo = RCTTwilioChat;
 		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -276,6 +284,7 @@
 		322CC7D8EB6C4784AC7800B1 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		3885EFD66DE844B09AFF499B /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		47C4B0CA22354EA38B257C9C /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
+		558E8C2B59304E3F9B98F955 /* libRCTTwilioChat.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTTwilioChat.a; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		63108B2DF15C4A18BF19BDFE /* rubicon-icon-font.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "rubicon-icon-font.ttf"; path = "../node_modules/native-base/Fonts/rubicon-icon-font.ttf"; sourceTree = "<group>"; };
 		640B10BE78B14AC085496AF8 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -303,6 +312,7 @@
 		DC005ACC504C4F288C93EBC9 /* vanman.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = vanman.ttf; path = ../assets/fonts/vanman.ttf; sourceTree = "<group>"; };
 		DCCB70C3901146B684137688 /* Roboto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto.ttf; path = "../node_modules/native-base/Fonts/Roboto.ttf"; sourceTree = "<group>"; };
 		E1410F2D825244858E92892B /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		E7390A8F9A2B45AABDA7FA5F /* RCTTwilioChat.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTTwilioChat.xcodeproj; path = "../node_modules/react-native-twilio-chat/ios/RCTTwilioChat.xcodeproj"; sourceTree = "<group>"; };
 		EEA696CDC510461FAF895AE0 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -333,6 +343,7 @@
 				1730BF45C5284497A6019572 /* libA0Auth0.a in Frameworks */,
 				A345F628E4DD42AC9B01DB3D /* libRNVectorIcons.a in Frameworks */,
 				2B8C46DCBDC206E64039FCF1 /* libPods-Removalist.a in Frameworks */,
+				450D21FCFC7A4A44A4B795F2 /* libRCTTwilioChat.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,6 +480,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		243E99C81F4A918800C77A8D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				243E99DB1F4A918800C77A8D /* libRCTTwilioChat.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		2EC6FAC366A50968D22047DA /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -542,6 +561,7 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				B5636642FA04433FAFF18DCA /* A0Auth0.xcodeproj */,
 				7654E36773F9479E96D80090 /* RNVectorIcons.xcodeproj */,
+				E7390A8F9A2B45AABDA7FA5F /* RCTTwilioChat.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -689,6 +709,10 @@
 					ProjectRef = 832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */;
 				},
 				{
+					ProductGroup = 243E99C81F4A918800C77A8D /* Products */;
+					ProjectRef = E7390A8F9A2B45AABDA7FA5F /* RCTTwilioChat.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302E01ABCB9EE00DB3ED1 /* Products */;
 					ProjectRef = 00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */;
 				},
@@ -782,6 +806,13 @@
 			fileType = archive.ar;
 			path = libRNVectorIcons.a;
 			remoteRef = 15A5ACFB1F330AF700D017DD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		243E99DB1F4A918800C77A8D /* libRCTTwilioChat.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTTwilioChat.a;
+			remoteRef = 243E99DA1F4A918800C77A8D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
@@ -977,7 +1008,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		7F9A59FBB6765C4D332F4CC4 /* [CP] Copy Pods Resources */ = {
@@ -1074,11 +1105,15 @@
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
 					"$(SRCROOT)..\node_modules\neact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-twilio-chat/ios/RCTTwilioChat/**",
 				);
 				INFOPLIST_FILE = RemovalistTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1097,11 +1132,15 @@
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
 					"$(SRCROOT)..\node_modules\neact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-twilio-chat/ios/RCTTwilioChat/**",
 				);
 				INFOPLIST_FILE = RemovalistTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
@@ -1124,6 +1163,7 @@
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
 					"$(SRCROOT)..\node_modules\neact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-twilio-chat/ios/RCTTwilioChat/**",
 				);
 				INFOPLIST_FILE = Removalist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1153,6 +1193,7 @@
 					"$(inherited)",
 					"$(SRCROOT)..\node_modules\neact-native-auth0ios",
 					"$(SRCROOT)..\node_modules\neact-native-vector-iconsRNVectorIconsManager",
+					"$(SRCROOT)/../node_modules/react-native-twilio-chat/ios/RCTTwilioChat/**",
 				);
 				INFOPLIST_FILE = Removalist/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

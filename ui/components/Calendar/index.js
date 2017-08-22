@@ -265,7 +265,7 @@ export default class extends Component {
     const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)    
     return (
       <ScrollView   
-            ref={ref=>argMonthIsToday && (this.weekList=ref) && console.log(ref)}            
+            ref={ref=>argMonthIsToday && (this.weekList=ref)}            
             key={argMoment.month()}                     
             scrollEnabled
             pagingEnabled

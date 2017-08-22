@@ -57,7 +57,6 @@ export default class extends Component {
       const {items} = this.state
       const timeline = []
       const labels = []
-      console.log(items)
       for (let i = 0; i <= 48; i++) {
         let hours = Math.floor(i / 2);
         // if(hours > 12) hours = hours - 12    
