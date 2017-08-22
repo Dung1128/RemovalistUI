@@ -7,6 +7,7 @@ import Header from '~/ui/components/Header';
 import TitleItem from '~/ui/components/TitleItem';
 import InputRow from '~/ui/elements/InputRow';
 import InfoTally from './components/InfoTally'
+import Button from '~/ui/components/Button'
 import Icon from '~/ui/components/Icon';
 import { TouchableOpacity } from 'react-native'
 import Communications from 'react-native-communications';
@@ -245,6 +246,9 @@ export default class extends Component {
                             }) 
                         }}/>*/}
                         <View style={styles.Title}>
+                            <Text style={styles.txtBold}>Payment Method</Text>                      
+                        </View>
+                        <View style={styles.Title}>
                             <Text style={styles.txtBold}>Service Time</Text>
                             {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
                         </View>
@@ -328,6 +332,12 @@ export default class extends Component {
                         <Icon name='send-invoice' size={22} color={material.bgColor}/>
                     </TouchableOpacity>
                 </View>*/}
+                <Button
+                    //onPress={() => this.props.navigation.navigate('tallyservice_screen')}
+                    full
+                    text='SEND INVOICE TO CLIENT'
+                    color={'blue'}
+                    />
             </Container>
         )
     }

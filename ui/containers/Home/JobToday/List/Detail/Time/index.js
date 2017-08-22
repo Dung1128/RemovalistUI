@@ -213,11 +213,12 @@ export default class extends Component {
                         <View style={styles.itemTime}>
                             <Text style={styles.txttitledate}>Date</Text>
                             <Text style={styles.date}>{date}</Text>
-                            <Text style={styles.txttitledate}>Today</Text>
+                 
                         </View>
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
                         <View style={styles.itemTime}>
-                            <Text style={styles.txttitledate}>Time</Text>
+                            <Text style={styles.txttitledate}>Time: </Text>
+                            <Text style={styles.date}>{time}</Text>
                             <Text style={styles.txttitledate}>{durationStart}</Text>
                         </View>
                     </View>
