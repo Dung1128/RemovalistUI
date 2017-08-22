@@ -81,7 +81,12 @@ export const saveTruckList = (data) => ({
     payload: data,
 })
 
-export const saveReferenceContactList = (...args) => ({
+export const saveReferenceContactList = (data) => ({
     type: 'job/saveReferenceContactList',
-    args
+    payload: data,
+})
+
+export const saveJobByDate = (data) => ({
+    type: 'job/saveJobByDate',
+    payload: data,
 })

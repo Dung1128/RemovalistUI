@@ -73,7 +73,8 @@ export default class extends Component {
 
     componentDidMount() {
         this.props.getJobById(this.state.id, accessToken, (error, data) => {
-            this.renderStatus(data.JobDetails.StatusId);
+            if(data) {
+                this.renderStatus(data.JobDetails.StatusId);
             this.renderTruck(data.JobDetails.TruckId)
             this.setState({
                 JobDetails: data.JobDetails,
@@ -85,6 +86,7 @@ export default class extends Component {
                 })
             })
             this.renderTime(data.JobDetails.TimeStart, data.JobDetails.TimeEnd);
+            } 
         })
     }
 
@@ -249,7 +251,7 @@ export default class extends Component {
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
                                     if (!this.navigated) {
-                                        this.props.navigation.navigate('tally_screen')
+                                        this.props.navigation.navigate('tally_screen', {JobDetails: this.state.JobDetails})
                                     }
                                     this.navigated = true
                                     setTimeout(() => {

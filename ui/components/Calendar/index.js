@@ -88,16 +88,17 @@ export default class extends Component {
   componentDidMount() {
     // fixes initial scrolling bug on Android
     setTimeout(() => this.scrollToItem(VIEW_INDEX), 0)
+
   }
 
   componentDidUpdate() {
     this.scrollToItem(VIEW_INDEX)
-    this.weekList &&  this.weekList.scrollTo({
+    // console.log('scroll now', this.weekList, this.selectedWeekRow)
+    this.weekList && this.weekList.scrollTo({
       x: 0,
       y: this.props.rowHeight * this.selectedWeekRow,
       animated: false,
     })
-    // console.log('scroll now', this.weekList, this.selectedWeekRow)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -212,11 +213,11 @@ export default class extends Component {
     const events = (eventsMap !== null)
       ? eventsMap[argMoment.startOf('month').format()]
       : null
-        
+
     do {
       const dayIndex = renderIndex - offset
       const isoWeekday = (renderIndex + weekStart) % 7
-      if (argMonthIsToday && dayIndex === todayIndex){
+      if (argMonthIsToday && dayIndex === selectedIndex) {
         this.selectedWeekRow = weekRows.length
       }
       if (dayIndex >= 0 && dayIndex < argMonthDaysCount) {
@@ -246,7 +247,7 @@ export default class extends Component {
             key={weekRows.length}
             // onLayout={weekRows.length ? undefined : this.onWeekRowLayout}
             style={[styles.weekRow, this.props.customStyle.weekRow, {
-              height: this.props.rowHeight,              
+              height: this.props.rowHeight,
             }]}
           >
             {days}
@@ -262,27 +263,23 @@ export default class extends Component {
 
     // console.log(weekRows.slice(myindex, myindex + 2));
     const containerStyle = [styles.monthContainer, this.props.customStyle.monthContainer]
-    const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)    
+    const numOfWeeks = getNumberOfWeeks(this.state.currentMonthMoment, this.props.weekStart)
     return (
-      <ScrollView   
-            ref={ref=>argMonthIsToday && (this.weekList=ref)}            
-            key={argMoment.month()}                     
-            scrollEnabled
-            pagingEnabled
-            snapToAlignment="center"            
-            removeClippedSubviews={false}
-            scrollEventThrottle={1000}
-            showsVerticalScrollIndicator={false}
-            automaticallyAdjustContentInsets
-            style={containerStyle}
-            // contentOffset={{
-            //   x: 0,
-            //   y: this.props.rowHeight * selectedWeekRow,
-            // }}
-            contentContainerStyle={{
-              height: this.props.rowHeight * numOfWeeks,                             
-            }}
-          >
+      <ScrollView
+        ref={ref => argMonthIsToday && (this.weekList = ref)}
+        key={argMoment.month()}
+        scrollEnabled
+        pagingEnabled
+        snapToAlignment="center"
+        removeClippedSubviews={false}
+        scrollEventThrottle={1000}
+        showsVerticalScrollIndicator={false}
+        automaticallyAdjustContentInsets
+        style={containerStyle}
+        contentContainerStyle={{
+          height: this.props.rowHeight * numOfWeeks,
+        }}
+      >
         {weekRows}
       </ScrollView>
     )
@@ -310,7 +307,7 @@ export default class extends Component {
       </View>
     )
   }
-  fullDataTime (d) {
+  fullDataTime(d) {
     return d;
   }
 
@@ -370,7 +367,7 @@ export default class extends Component {
             automaticallyAdjustContentInsets
             onMomentumScrollEnd={(event) => this.scrollEnded(event)}
             style={{
-              height: rowHeight * weekRowsVisible,                
+              height: rowHeight * weekRowsVisible,
             }}
           >
             {calendarDates.map((date) => this.renderMonthView(moment(date), eventDatesMap))}

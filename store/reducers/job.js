@@ -5,7 +5,12 @@
 // Takes care of changing the application state
 // state is previous state,
 export const initialState = {
-    listStatus: []
+    listStatus: [],
+    listMaterial: [],
+    listMaterialCategory: [],
+    listTruck: [],
+    listReferenceContact: [],
+    listJobByDate: [],
 }
 export const job = (state = initialState, { type, payload }) => {
     switch (type) {
@@ -19,6 +24,8 @@ export const job = (state = initialState, { type, payload }) => {
             return { ...state, listTruck: payload };
         case 'job/saveReferenceContactList':
             return { ...state, listReferenceContact: payload };
+        case 'job/saveJobByDate':
+            return { ...state, listJobByDate: payload };
         default:
             return state;
     }
