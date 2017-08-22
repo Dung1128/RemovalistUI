@@ -153,7 +153,6 @@ export default class extends Component {
 
                         this.props.postDeliveryCreate(this.dataDeliveryCreate, accessToken, (error, data) => {
                             this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) => {
-                                this.props.navigation.navigate('jobtoday_screen')
                             })
 
                         })

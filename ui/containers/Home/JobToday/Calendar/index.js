@@ -12,7 +12,7 @@ import { accessToken } from '~/store/constants/api'
 import * as jobSelectors from '~/store/selectors/job'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import LineTimeNow from './components/LineTimeNow'
+// import LineTimeNow from './components/LineTimeNow'
 @connect(
   state => ({
     listJobByDate: jobSelectors.getJobByDate(state)
@@ -142,7 +142,7 @@ export default class extends Component {
           width: Math.max(1000, 60 * 100),
         }}>
           {timeline}
-          <LineTimeNow />
+          {/*<LineTimeNow />*/}
           {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height, id }) =>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('detail_screen', { id })}
