@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, TouchableOpacity } from 'react-native'
 import {
   Container, Spinner, Text, View,
   ListItem,
@@ -12,6 +12,7 @@ import { accessToken } from '~/store/constants/api'
 import * as jobSelectors from '~/store/selectors/job'
 import { connect } from 'react-redux'
 import moment from 'moment'
+import LineTimeNow from './components/LineTimeNow'
 @connect(
   state => ({
     listJobByDate: jobSelectors.getJobByDate(state)
@@ -88,9 +89,7 @@ export default class extends Component {
     const realMinute = i * 30 + plusMinute
     let hours = Math.floor(realMinute / 60)
     let minutes = realMinute - hours * 60
-    this.props.onPress && this.props.onPress(hours, minutes)
-    // this.forceUpdate()
-    // this.setState({ items })
+    this.props.navigation && this.props.navigation.navigate('general_screen', { hours, minutes })
   }
 
 
@@ -143,21 +142,24 @@ export default class extends Component {
           width: Math.max(1000, 60 * 100),
         }}>
           {timeline}
-          {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height }) =>
-            <View key={top + ':' + left} style={{
-              backgroundColor: this.renderColorStatus(statusId),
-              height: height,
-              width: 80,
-              top,
-              left,
-              position: 'absolute',
-              borderRadius: 10,
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 2,
-            }}>
+          <LineTimeNow />
+          {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height, id }) =>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('detail_screen', { id })}
+              key={top + ':' + left} style={{
+                backgroundColor: this.renderColorStatus(statusId),
+                height: height,
+                width: 80,
+                top,
+                left,
+                position: 'absolute',
+                borderRadius: 10,
+                justifyContent: 'center',
+                alignItems: 'center',
+                zIndex: 2,
+              }}>
               <Text white>{name}</Text>
-            </View>
+            </TouchableOpacity>
           )}
         </ScrollView>
       </ScrollView>

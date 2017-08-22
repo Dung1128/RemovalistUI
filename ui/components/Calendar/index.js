@@ -88,7 +88,11 @@ export default class extends Component {
   componentDidMount() {
     // fixes initial scrolling bug on Android
     setTimeout(() => this.scrollToItem(VIEW_INDEX), 0)
-
+    this.weekList && this.weekList.scrollTo({
+      x: 0,
+      y: this.props.rowHeight * this.selectedWeekRow,
+      animated: false,
+    })
   }
 
   componentDidUpdate() {

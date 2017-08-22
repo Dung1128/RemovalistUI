@@ -24,6 +24,7 @@ import Header from '~/ui/components/Header';
 import Preload from '~/ui/components/Preload';
 import TitleItem from '~/ui/components/TitleItem';
 import Truck from './components/Truck';
+import moment from 'moment'
 import { connect } from 'react-redux'
 import {
     Field,
@@ -39,9 +40,17 @@ import {
 import { validate } from './utils'
 import * as jobSelectors from '~/store/selectors/job';
 import { accessToken } from '~/store/constants/api'
+
+const pad = num =>
+    num ? (num > 9 ? '' : '0') + num : ''
+
+const formatHM = ({ hours: h, minutes: m }) =>
+    '2017-08-22 ' + (h ? pad(h) + ':' : '') + pad(m)
+
 @connect(
     state => ({
         listStatus: jobSelectors.getStatusJobList(state),
+    }), null, (stateProps, dispatch, ownProps) => ({
         initialValues: {
             Contact: [{
                 CompanyName: '',
@@ -56,14 +65,15 @@ import { accessToken } from '~/store/constants/api'
                 TruckId: 0,
                 TruckName: 'Select Truck'
             },
-            status: jobSelectors.getStatusJobList(state)[0],
+            status: stateProps.listStatus[0],
             datetime: {
                 date: new Date(),
-                timeStart: '',
+                timeStart: formatHM(ownProps.navigation.state.params || {}),
                 timeEnd: ''
             }
-        }
-    }), )
+        },
+        ...ownProps
+    }))
 @reduxForm({ form: 'CustomerInfo', validate, destroyOnUnmount: !__DEV__ })
 export default class extends Component {
 
@@ -71,13 +81,11 @@ export default class extends Component {
         super(props);
         this.state = {
         };
-
     }
 
 
     submitForm(values) {
         this.props.navigation.navigate('delivery_screen', values)
-        // this.props.navigation.navigate('jobtoday_screen', {defaultRoute:'list'})
     }
 
     render() {
@@ -97,7 +105,6 @@ export default class extends Component {
                     <TitleItem style={{ padding: 0 }} />
                 </KeyboardAwareScrollView>
                 <Button
-                    //onPress={() => this.props.navigation.navigate('delivery_screen', 'aaaaa')}
                     onPress={handleSubmit(this.submitForm.bind(this))}
                     full iconRight='arrow-right' text='DELIVERY INFO' />
 
