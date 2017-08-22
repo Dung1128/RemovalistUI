@@ -23,12 +23,10 @@ import Calendar from '~/ui/components/Calendar';
 import moment from 'moment'
 import * as jobActions from '~/store/actions/job'
 import * as jobSelectors from '~/store/selectors/job'
-import { areRequestsPending } from '~/store/selectors/common'
 import { accessToken } from '~/store/constants/api'
 import Loading from '~/ui/components/Loading'
 
 @connect(state => ({
-    // isPending: areRequestsPending(state),
     listStatus: jobSelectors.getStatusJobList(state),
     listJobByDate: jobSelectors.getJobByDate(state)
 }), { ...jobActions })
@@ -43,10 +41,8 @@ export default class extends Component {
             dataSource: [],
             isRefreshing: false,
             loading: false,
-            // date: '',
         };
         this.date = ''
-        // console.log(this.state.date)
     }
 
     componentDidMount() {
@@ -95,7 +91,7 @@ export default class extends Component {
             case 3:
                 return '#4E91DF';
             case 4:
-                return '#00D74A';
+                return '#52D549';
             case 5:
                 return '#BB0DDD';
             case 6:
@@ -138,9 +134,7 @@ export default class extends Component {
 
     render() {
         const { dataSource } = this.state;
-        // const { isPending } = this.props;
         const checkdate = dataSource.length > 0 && dataSource[0].TimeStart ? dataSource[0].TimeStart : this.date
-        console.log(checkdate)
         return (
 
             <View style={{ flex: 1 }}>
@@ -174,7 +168,6 @@ export default class extends Component {
                     />
 
                 }
-
                 <Loading />
             </View>
 
