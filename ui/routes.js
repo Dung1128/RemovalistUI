@@ -24,7 +24,6 @@ import TallyService from '~/ui/containers/Home/CreateNewJob/TallyService'
 import material from '~/theme/variables/material';
 import Notifications from './containers/Home/Notification';
 import ChatAdmin from './containers/Home/Chat';
-import DetailChat from '~/ui/containers/Home/Chat/DetailChat';
 import Filter from './containers/Home/Filter';
 
 export const initialRouteName = 'jobtoday'
@@ -72,9 +71,6 @@ const JobStackNavigator = StackNavigator(
         },
         listchat_screen: {
             screen: ChatAdmin
-        },
-        detail_chat_screen: {
-            screen: DetailChat
         },
         filter_screen: {
             screen: Filter
