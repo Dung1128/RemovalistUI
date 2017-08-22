@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Container, Spinner, Text, View, Content } from 'native-base'
 import material from '~/theme/variables/material'
 import styles from './styles'
-
+import { Modal } from 'react-native'
 import Header from '~/ui/components/Header';
 import TitleItem from '~/ui/components/TitleItem';
 import InputRow from '~/ui/elements/InputRow';
@@ -30,7 +30,8 @@ export default class extends Component {
            JobDetails: this.props.navigation.state.params.JobDetails,
            cash: 0,
            eftpos: 0,
-           credit: 0
+           credit: 0,
+           modalVisible: false,
         }
     
     }
@@ -180,6 +181,18 @@ export default class extends Component {
             nameIcon={this.renderIcon(this.renderCategotyId(item.MaterialId))}
             unit={this.renderUnit(item.MaterialId, item.NumberOfMaterial)}
         />)
+    }
+
+    setModalVisible() {
+        if(this.state.modalVisible){
+            this.setState({modalVisible: false});
+        }else{
+            this.setState({modalVisible: true});
+        }
+    }
+        
+    showAction() {
+        this.setModalVisible();
     }
 
 
@@ -332,11 +345,60 @@ export default class extends Component {
                         <Icon name='send-invoice' size={22} color={material.bgColor}/>
                     </TouchableOpacity>
                 </View>*/}
+
+                <Modal
+                    animationType="fade"
+                    transparent={true}
+                    visible={this.state.modalVisible}
+                    onRequestClose={()=>this.setModalVisible()}
+                >
+                    <TouchableOpacity activeOpacity={1}
+                        onPress={() => {
+                                this.setModalVisible()
+                            }}
+                        style={{backgroundColor: 'rgba(0,0,0,0.3)',flex:1,alignItems:'center',justifyContent:'flex-end',}} >
+                    <View
+                        style={{
+                        overflow: 'hidden',
+                        padding:10,
+                        width:material.deviceWidth,
+                        backgroundColor:'white',
+                        }}>
+                        <Text style={{ fontSize: 14, color: material.grayColor}}>Select Invoice method to client</Text>
+                        <Text style={styles.txtBold}>{this.state.JobDetails.Contact[0].CompanyName}</Text>
+                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
+                        <TouchableOpacity style={styles.itemAction}>
+                            <TouchableOpacity style={styles.buttonAction}>
+                                <Icon name='sms' size={22} color={material.whiteColor}/>
+                            </TouchableOpacity>
+                            <Text style={styles.txtAction}>SMS</Text>
+                        </TouchableOpacity>
+
+                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
+                        <TouchableOpacity style={styles.itemAction}>
+                            <TouchableOpacity style={styles.buttonAction}>
+                                <Icon name='send-email' size={22} color={material.whiteColor}/>
+                            </TouchableOpacity>
+                            <Text style={styles.txtAction}>Email</Text>
+                        </TouchableOpacity>
+
+                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
+                        <TouchableOpacity style={styles.itemAction}>
+                            <TouchableOpacity style={styles.buttonAction}>
+                                <Icon name='send-invoice' size={22} color={material.whiteColor}/>
+                            </TouchableOpacity>
+                            <Text style={styles.txtAction}>Postcode</Text>
+                        </TouchableOpacity>
+                    </View>
+                    </TouchableOpacity>
+
+                    </Modal>
+
                 <Button
-                    //onPress={() => this.props.navigation.navigate('tallyservice_screen')}
+                    onPress={() => this.showAction()}
                     full
                     text='SEND INVOICE TO CLIENT'
-                    color={'blue'}
+                    color={material.greenColor}
                     />
             </Container>
         )

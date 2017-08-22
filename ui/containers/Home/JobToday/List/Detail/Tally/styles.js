@@ -32,5 +32,20 @@ export default {
     },
     txtBold: {
         fontWeight: 'bold'
+    },
+    itemAction: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    buttonAction: {
+        width: 40, 
+        height: 40,
+        backgroundColor: material.bgColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 5,
+    },
+    txtAction: {
+        paddingLeft: 20
     }
 }
