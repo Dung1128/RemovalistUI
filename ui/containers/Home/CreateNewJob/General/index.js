@@ -45,7 +45,7 @@ const pad = num =>
     num ? (num > 9 ? '' : '0') + num : ''
 
 const formatHM = ({ hours: h, minutes: m }) =>
-    '2017-08-22 ' + (h ? pad(h) + ':' : '') + pad(m)
+    h && m ? '2017-08-22 ' + (h ? pad(h) + ':' : '') + pad(m) : ''
 
 @connect(
     state => ({
@@ -68,7 +68,7 @@ const formatHM = ({ hours: h, minutes: m }) =>
             status: stateProps.listStatus[0],
             datetime: {
                 date: new Date(),
-                timeStart: formatHM(ownProps.navigation.state.params || {}),
+                timeStart: formatHM(ownProps.navigation.state.params || ''),
                 timeEnd: ''
             }
         },

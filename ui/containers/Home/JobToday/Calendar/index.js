@@ -13,6 +13,7 @@ import * as jobSelectors from '~/store/selectors/job'
 import { connect } from 'react-redux'
 import moment from 'moment'
 // import LineTimeNow from './components/LineTimeNow'
+import Loading from '~/ui/components/Loading';
 @connect(
   state => ({
     listJobByDate: jobSelectors.getJobByDate(state)
@@ -58,6 +59,9 @@ export default class extends Component {
   }
 
   getData(data) {
+    if(data && data.length == 0)
+      return;
+
     let left = 20;
     const items = {};
     if(data) {
@@ -129,40 +133,44 @@ export default class extends Component {
     }
 
     return (
-      <ScrollView contentContainerStyle={{
-        flexDirection: 'row',
-      }}>
-        <View style={{
-          width: 60,
+      <View>
+        <Loading />
+        <ScrollView contentContainerStyle={{
+          flexDirection: 'row',
         }}>
-          {labels}
-        </View>
-        <ScrollView horizontal contentContainerStyle={{
-          flexDirection: 'column',
-          width: Math.max(1000, 60 * 100),
-        }}>
-          {timeline}
-          {/*<LineTimeNow />*/}
-          {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height, id }) =>
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('detail_screen', { id })}
-              key={top + ':' + left} style={{
-                backgroundColor: this.renderColorStatus(statusId),
-                height: height,
-                width: 80,
-                top,
-                left,
-                position: 'absolute',
-                borderRadius: 10,
-                justifyContent: 'center',
-                alignItems: 'center',
-                zIndex: 2,
-              }}>
-              <Text white>{name}</Text>
-            </TouchableOpacity>
-          )}
+          <View style={{
+            width: 60,
+          }}>
+            {labels}
+          </View>
+          <ScrollView horizontal contentContainerStyle={{
+            flexDirection: 'column',
+            width: Math.max(1000, 60 * 100),
+          }}>
+            {timeline}
+            
+            {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height, id }) =>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('detail_screen', { id })}
+                key={top + ':' + left} style={{
+                  backgroundColor: this.renderColorStatus(statusId),
+                  height: height,
+                  width: 80,
+                  top,
+                  left,
+                  position: 'absolute',
+                  borderRadius: 10,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  zIndex: 2,
+                }}>
+                <Text white>{name}</Text>
+              </TouchableOpacity>
+            )}
+          </ScrollView>
+
         </ScrollView>
-      </ScrollView>
+      </View>
     )
 
   }
