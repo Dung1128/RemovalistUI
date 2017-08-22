@@ -39,7 +39,12 @@ export default class extends Component {
         const listTravelTime = [];
         const listFuel = [];
         const listMaterial = [];
+        const dataServiceTime = []
+        const dataTravelTime = []
+        const dataFuel = []
+        const dataMaterial = []
         const data = this.props.listMaterial
+        const dataJobDetailMaterial = this.props.navigation.state.params.JobDetails.JobDetailsMaterials
         for (const i = 0; i < data.length; i++) {
             switch (data[i].CategoryId) {
                 case 1:
@@ -58,12 +63,36 @@ export default class extends Component {
                     break;
             }
         }
+
+        for (const i = 0; i < dataJobDetailMaterial.length; i++) {
+            switch (this.renderCategotyId(dataJobDetailMaterial[i].MaterialId)) {
+                case 1:
+                    dataServiceTime.push(dataJobDetailMaterial[i])
+                    break;
+                case 2:
+                    dataTravelTime.push(dataJobDetailMaterial[i])
+                    break;
+                case 3:
+                    dataFuel.push(dataJobDetailMaterial[i])
+                    break;
+                case 4:
+                    dataMaterial.push(dataJobDetailMaterial[i])
+                    break;
+                default:
+                    break;
+            }
+        }
+
         this.setState({
             listServiceTime,
             listTravelTime,
             listFuel,
-            listMaterial
-        });
+            listMaterial,
+            dataServiceTime,
+            dataTravelTime,
+            dataFuel,
+            dataMaterial
+        }, ()=> console.log(this.state.dataMaterial));
     }
 
     renderName(id) {
@@ -140,11 +169,23 @@ export default class extends Component {
         />)
     }
 
+    renderDataMaterial(item, index) {
+        return (<InfoTally 
+            key={index} 
+            NumberOfMaterial={item.NumberOfMaterial}
+            Type={this.renderName(item.MaterialId)}
+            description={false}
+            PricePerUnit={this.renderPrice(item.MaterialId)}
+            nameIcon={this.renderIcon(this.renderCategotyId(item.MaterialId))}
+            unit={this.renderUnit(item.MaterialId, item.NumberOfMaterial)}
+        />)
+    }
+
 
     render() {
         console.log(this.state.JobDetails.JobDetailsMaterials)
         console.log(this.props.MaterialCategories)
-        console.log('tong tien: ' + this.state.totalPaid)
+        console.log(this.state.dataFuel)
         return (
             <Container>
                 <Header title='Tally' textright='EDIT' size={20} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
@@ -153,6 +194,7 @@ export default class extends Component {
                             <Text>Status</Text>
                             <Text>Unpaid</Text>
                         </View>
+                        {/*
                         <TitleItem title='Payment Method' />
                         <InputRow hint='Cash' nameIcon='cash' onChangeText={(val) =>{   
                             this.setState({
@@ -201,20 +243,51 @@ export default class extends Component {
                                     })
                                 }
                             }) 
-                        }}/>
-                        
+                        }}/>*/}
+                        <View style={styles.Title}>
+                            <Text style={styles.txtBold}>Service Time</Text>
+                            {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                        </View>
                         {
-                            this.state.JobDetails.JobDetailsMaterials.map((item, index) => this.renderMaterial(item, index))
+                            this.state.dataServiceTime && this.state.dataServiceTime.map((item, index) => this.renderDataMaterial(item, index))
                         }
 
                         <View style={styles.Title}>
-                            <Text style={styles.textBold}>GST</Text>
-                            <Text style={styles.textBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
+                            <Text style={styles.txtBold}>Travel Time</Text>
+                            {/*<Text style={styles.txtBold}>$ {this.} </Text>*/}
                         </View>
+                        {
+                            this.state.dataTravelTime && this.state.dataTravelTime.map((item, index) => this.renderDataMaterial(item, index))
+                        }
 
                         <View style={styles.Title}>
-                            <Text style={styles.textBold}>Surcharge</Text>
-                            <Text style={styles.textBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
+                            <Text style={styles.txtBold}>Fuel/RUCS</Text>
+                            {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                        </View>
+                        {
+                            this.state.dataFuel && this.state.dataFuel.map((item, index) => this.renderDataMaterial(item, index))
+                        }
+
+                        <View style={styles.Title}>
+                            <Text style={styles.txtBold}>Materials</Text>
+                            {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                        </View>
+                        {
+                            this.state.dataMaterial && this.state.dataMaterial.map((item, index) => this.renderDataMaterial(item, index))
+                        }
+                        
+                        {/*{
+                            this.state.JobDetails.JobDetailsMaterials.map((item, index) => this.renderMaterial(item, index))
+                        }*/}
+
+                        <View style={{...styles.Title, paddingRight: 50}}>
+                            <Text style={styles.txtBold}>GST</Text>
+                            <Text style={styles.txtBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
+                        </View>
+
+                        <View style={{...styles.Title, paddingRight: 50}}>
+                            <Text style={styles.txtBold}>Surcharge</Text>
+                            <Text style={styles.txtBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
                         </View>
                       
                         <View style={{...styles.Title, backgroundColor: '#fff'}}>
@@ -223,7 +296,7 @@ export default class extends Component {
                         </View>
                         <View style={{...styles.Title, backgroundColor: '#e9edf0', height: 10}} />
                 </Content>
-                <View style={styles.bottomAction}>
+                {/*<View style={styles.bottomAction}>
                     <TouchableOpacity
                     onPress={() => Communications.text('0868867596','Removalist announces that your goods has been delivered ad here is the invoice:'+
                                    ' The total amount is $1000 including:'+
@@ -254,7 +327,7 @@ export default class extends Component {
                     <TouchableOpacity>
                         <Icon name='send-invoice' size={22} color={material.bgColor}/>
                     </TouchableOpacity>
-                </View>
+                </View>*/}
             </Container>
         )
     }

@@ -17,7 +17,7 @@ export default {
         alignItems: 'center',
         flexDirection: 'row',
         padding: 10,
-        backgroundColor: material.grayTitle
+        backgroundColor: material.grayTitle,
     },
     total: {
         fontSize: 20,
@@ -30,7 +30,7 @@ export default {
         paddingLeft: 30, 
         paddingRight: 30
     },
-    textBold: {
+    txtBold: {
         fontWeight: 'bold'
     }
 }

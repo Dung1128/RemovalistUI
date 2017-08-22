@@ -1,0 +1,13 @@
+{
+  "chatClient": {
+    "options": {
+      "logLevel": "info"
+    }
+  },
+  "tokenGenerator": {
+    "accountSid": "AC62b553b789c60d129c92982750969f74",
+    "signingKeySid": "SK199b76b25026df9136d966fea08558dc",
+    "signingKeySecret": "fIUcQRaUEw8NCmyvlgShZl6yBZV8lO0G",
+    "serviceSid": "IS4f743b055a37456b8fb5e59e34a85721"
+  }
+}

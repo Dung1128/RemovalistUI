@@ -85,7 +85,8 @@ export default class extends Component {
     let hours = Math.floor(realMinute / 60)
     let minutes = realMinute - hours * 60
     this.props.onPress && this.props.onPress(hours, minutes)
-
+    // this.forceUpdate()
+    // this.setState({ items })
   }
 
 
