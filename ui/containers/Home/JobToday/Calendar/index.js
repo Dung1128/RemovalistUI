@@ -75,7 +75,8 @@ export default class extends Component {
         const height = bottom - top
         const name = data[i].Name
         const statusId = data[i].StatusId
-        items[top + ':' + left] = { top, left, hours: HourTimeStart, minutes: MinuteTimeStart, name, statusId, height }
+        const id = data[i].JobDetailsId
+        items[top + ':' + left] = { top, left, hours: HourTimeStart, minutes: MinuteTimeStart, name, statusId, height, id }
         left += 90
       }
       this.setState({ items })
