@@ -54,7 +54,7 @@ export default class extends Component {
     this.selectedRefPage = null
     this.children = {
       'calendar': <CalendarView items={{}} />,
-      'list': <List onItemRef={ref => this.list = ref} />
+      'list': <List navigation={this.props.navigation} onItemRef={ref => this.list = ref} />
     }
 
     this.tabbarData = [
