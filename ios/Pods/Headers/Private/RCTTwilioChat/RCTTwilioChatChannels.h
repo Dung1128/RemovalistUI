@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-twilio-chat/ios/RCTTwilioChat/RCTTwilioChatChannels.h

@@ -76,12 +76,17 @@ export default class extends Component {
     super(props);
     this.state = {
         dataSource: dataNoti,
+        isRefreshing: false,
     };
+  }
+
+  chatWithUser(username){
+    this.props.navigation.navigate('detail_chat_screen', {username})
   }
 
    renderRow(data) {
         return (
-            <TouchableOpacity style={styles.itemList}>
+            <TouchableOpacity style={styles.itemList} onPress={e=>this.chatWithUser('tupt')}>
                 <Text>{data.content}</Text>
                 <View style={styles.bottom}>
                     <Text style={styles.textbottom}>{data.status}</Text>
@@ -111,8 +116,9 @@ export default class extends Component {
           </View>
         </View>
 
-        <Content style={styles.containers}>
-            <List
+        
+            <List         
+            style={styles.containers}   
             refreshControl={
                 <RefreshControl
                     colors={['#039BE5']}
@@ -125,7 +131,7 @@ export default class extends Component {
             dataArray={dataNoti}
             renderRow={this.renderRow.bind(this)}
         />
-        </Content>
+        
 
         
       </Container>

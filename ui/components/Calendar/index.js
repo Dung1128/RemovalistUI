@@ -276,10 +276,6 @@ export default class extends Component {
         showsVerticalScrollIndicator={false}
         automaticallyAdjustContentInsets
         style={containerStyle}
-        // contentOffset={{
-        //   x: 0,
-        //   y: this.props.rowHeight * selectedWeekRow,
-        // }}
         contentContainerStyle={{
           height: this.props.rowHeight * numOfWeeks,
         }}

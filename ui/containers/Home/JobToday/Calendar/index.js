@@ -58,7 +58,6 @@ export default class extends Component {
     this.props.onPress && this.props.onPress(hours, minutes)
     // this.forceUpdate()
     this.setState({ items })
-
   }
 
 

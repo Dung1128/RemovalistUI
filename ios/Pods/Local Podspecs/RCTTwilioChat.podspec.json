@@ -1,0 +1,28 @@
+{
+  "name": "RCTTwilioChat",
+  "version": "0.1.1",
+  "summary": "React Native wrapper for Twilio Programable Chat SDKs",
+  "homepage": "https://github.com/ccm-innovation/react-native-twilio-chat",
+  "license": "MIT",
+  "authors": {
+    "Brad Bumbalough": "bradley.bumbalough@gmail.com"
+  },
+  "platforms": {
+    "ios": "8.1"
+  },
+  "source": {
+    "git": "https://github.com/ccm-innovation/react-native-twilio-chat.git"
+  },
+  "source_files": "RCTTwilioChat/*.{h,m}",
+  "dependencies": {
+    "React": [
+
+    ],
+    "TwilioChatClient": [
+
+    ],
+    "TwilioAccessManager": [
+
+    ]
+  }
+}
