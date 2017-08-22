@@ -10,7 +10,7 @@ import material from '~/theme/variables/material'
 export default class extends Component {
     render() {
         return (
-            this.props.isPending ? <Spinner color={material.redColor} /> : null
+            this.props.isPending ? <Spinner style={{ position: 'absolute', top: '50%', left: '50%' }} color={material.redColor} /> : null
         )
     }
 }
