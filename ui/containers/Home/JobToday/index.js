@@ -53,7 +53,7 @@ export default class extends Component {
     this.refChildren = {}
     this.selectedRefPage = null
     this.children = {
-      'calendar': <CalendarView items={{}} />,
+      'calendar': <CalendarView navigation={this.props.navigation} items={{}} />,
       'list': <List navigation={this.props.navigation} onItemRef={ref => this.list = ref} />
     }
 
@@ -115,19 +115,11 @@ export default class extends Component {
     this.list.date = date
     // later
     this.props.getJobByDate(this.renderDate(date), accessToken, (error, data) => { })
-    // this.setState({
-    //   date
-    // })
-    // console.log('vai')
-    // this.list.setState({
-    //   date
-    // })
   }
 
 
 
   render() {
-    console.log('render all')
     return (
       <Container>
         <Header

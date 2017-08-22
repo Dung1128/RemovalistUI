@@ -27,9 +27,9 @@ import { accessToken } from '~/store/constants/api'
 
 
 export default class extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
+        this.state = {
             done: false,
             JobDetails: this.props.navigation.state.params.JobDetails,
             time: this.props.navigation.state.params.time,
@@ -57,25 +57,25 @@ export default class extends Component {
             Task: [],
         }
 
-       
+
     }
 
     componentDidMount() {
         // console.log('dammmmme'+this.state.Delivery.DeliveryId)
-         if(this.state.Delivery) {
+        if (this.state.Delivery) {
             this.setState({
-             done: true,
-             starttime: (new Date(this.state.Delivery.StartTime).getHours() - 14) + ':' +new Date(this.state.Delivery.StartTime).getMinutes(),
-             start: new Date(this.state.Delivery.StartTime),
+                done: true,
+                starttime: (new Date(this.state.Delivery.StartTime).getHours() - 14) + ':' + new Date(this.state.Delivery.StartTime).getMinutes(),
+                start: new Date(this.state.Delivery.StartTime),
             })
-         } 
+        }
 
-         if(this.state.Delivery && this.state.Delivery.FinishTime){
+        if (this.state.Delivery && this.state.Delivery.FinishTime) {
             this.setState({
-             disable: true,
-             finish: (new Date(this.state.Delivery.FinishTime).getHours() - 14) + ':' +new Date(this.state.Delivery.FinishTime).getMinutes(),
+                disable: true,
+                finish: (new Date(this.state.Delivery.FinishTime).getHours() - 14) + ':' + new Date(this.state.Delivery.FinishTime).getMinutes(),
             })
-         } 
+        }
     }
 
     duration() {
@@ -90,15 +90,12 @@ export default class extends Component {
         //     duration: duration
         // })
         let minutesStart = (new Date(this.state.start).getHours() - 7) * 60 + new Date(this.state.start).getMinutes();
-        let minutesEnd = (new Date(this.state.end).getHours()-7) * 60 + new Date(this.state.end).getMinutes();
-        
+        let minutesEnd = (new Date(this.state.end).getHours() - 7) * 60 + new Date(this.state.end).getMinutes();
+
         let sub = minutesEnd - minutesStart;
-        let hour = Math.floor(sub/60);
-        console.log(hour)
+        let hour = Math.floor(sub / 60);
 
         let minutes = sub - hour * 60;
-
-        console.log(hour+':'+minutes);
 
         let showHours = hour > 10 ? hour : '0' + hour;
         let showMinutes = minutes > 10 ? minutes : '0' + minutes;
@@ -114,22 +111,20 @@ export default class extends Component {
             FinishTime: this.state.end,
             DeliveryId: 8
         }
-        console.log('cai dinh menh: ' + this.dataDeliveryUpdate.DeliveryId)
         this.updateStaus = {
-                JobDetailsId: this.state.JobDetails.JobDetailsId,
-                StatusId: 5
-            }
+            JobDetailsId: this.state.JobDetails.JobDetailsId,
+            StatusId: 5
+        }
 
         this.props.postDeliveryUpdate(this.dataDeliveryUpdate, accessToken, (error, data) => {
-                            console.log(data)
-                            this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) =>{
-                                this.props.navigation.navigate('jobtoday_screen')
-                            })
-                            
-                        })
+            this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) => {
+                this.props.navigation.navigate('jobtoday_screen')
+            })
+
+        })
 
 
-        
+
     }
 
     actionStart() {
@@ -140,13 +135,11 @@ export default class extends Component {
                     text: 'OK', onPress: () => {
                         let starttime = moment(new Date()).format("HH:mm");
                         let start = new Date()
-                        this.setState({ 
+                        this.setState({
                             done: !this.state.done,
                             starttime: starttime,
                             start: start
                         })
-                        console.log('Ok Pressed');
-                        console.log(starttime)
                         this.dataDeliveryCreate = {
                             TruckId: this.state.JobDetails.TruckId,
                             StartTime: start,
@@ -157,13 +150,12 @@ export default class extends Component {
                             JobDetailsId: this.state.JobDetails.JobDetailsId,
                             StatusId: 4
                         }
-                        
+
                         this.props.postDeliveryCreate(this.dataDeliveryCreate, accessToken, (error, data) => {
-                            console.log(data)
-                            this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) =>{
+                            this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) => {
                                 this.props.navigation.navigate('jobtoday_screen')
                             })
-                            
+
                         })
                     }
                 },
@@ -178,16 +170,15 @@ export default class extends Component {
                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 {
                     text: 'OK', onPress: () => {
-                        console.log('Cancel Pressed');
                         let end = new Date();
                         let finish = moment(new Date()).format("HH:mm");
-                        this.setState({ 
+                        this.setState({
                             done: !this.state.done,
                             finish: finish,
                             end: end,
-                            Delivery:{FinishTime: finish}
-                        }, ()=>{this.duration()})
-                        
+                            Delivery: { FinishTime: finish }
+                        }, () => { this.duration() })
+
                     }
                 },
             ],
@@ -195,14 +186,11 @@ export default class extends Component {
         );
     }
 
-    onPress(){
+    onPress() {
         !this.state.done ? this.actionStart() : this.actionComplete()
     }
 
     render() {
-        console.log(this.state.Delivery)
-        console.log(this.state.JobDetails)
-        console.log(this.state.time)
         const { done, time, date, starttime, finish, duration, durationStart } = this.state;
         return (
             <Container>
@@ -246,22 +234,22 @@ export default class extends Component {
                     <TitleItem title='Your tasks' />
                     <Tasks />
                     <TitleItem title='Pick Up' />
-                        <RowItem icon='map' title={this.state.JobDetails.JobLocations[0].AddressLine1} />
+                    <RowItem icon='map' title={this.state.JobDetails.JobLocations[0].AddressLine1} />
                     <TitleItem title='Drop Off' />
                     <RowItem icon='map' title={this.state.JobDetails.JobLocations[1].AddressLine1} />
                 </Content>
                 {
-                    this.state.JobDetails.StatusId > 2 ? 
-                    <Button 
-                        text={!done ? 'START' : 'COMPLETE'} 
-                    style={{ width: '100%', height: 60, backgroundColor: !done ? material.redColor : material.greenColor }} 
+                    this.state.JobDetails.StatusId > 2 ?
+                        <Button
+                            text={!done ? 'START' : 'COMPLETE'}
+                            style={{ width: '100%', height: 60, backgroundColor: !done ? material.redColor : material.greenColor }}
 
-                    onPress={()=>this.onPress()}
-                    />
-                    :
-                    <View />
+                            onPress={() => this.onPress()}
+                        />
+                        :
+                        <View />
                 }
-                
+
             </Container>
         )
     }
