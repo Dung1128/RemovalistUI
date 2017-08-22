@@ -70,12 +70,12 @@ export default class extends Component {
     }
 
     refreshList() {
-        this.setState({ isRefreshing: true });
+        // this.setState({ isRefreshing: true });
         this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
             if (data) {
                 this.setState({
                     dataSource: data.JobListItemObjects,
-                    isRefreshing: false
+                    // isRefreshing: false
 
                 })
             }
@@ -143,6 +143,7 @@ export default class extends Component {
                         ? <TitleItem title='Today' />
                         : <TitleItem title={this.renderDateTit(checkdate)} />
                 }
+                <Loading />
                 {
                     dataSource.length == 0 ?
                         <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
@@ -168,7 +169,7 @@ export default class extends Component {
                     />
 
                 }
-                <Loading />
+                
             </View>
 
         );

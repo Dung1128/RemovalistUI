@@ -112,7 +112,7 @@ export default class extends Component {
             "TimeStart": `${date} ${timeStart}`,
             "TimeEnd": `${date} ${timeEnd}`,
             "TotalCost": this.sumPrice(),
-            "AssignedTruckId": (delivery.general.truck.TruckId || ''),
+            "TruckId": (delivery.general.truck.TruckId || ''),
             "AdjustmentMatrix": (values.surcharge.price || 0),
             "StatusId": delivery.general.status.JobStatusId,
             "JobLocations": delivery.delivery,

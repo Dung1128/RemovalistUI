@@ -12,7 +12,7 @@ import { accessToken } from '~/store/constants/api'
 import * as jobSelectors from '~/store/selectors/job'
 import { connect } from 'react-redux'
 import moment from 'moment'
-import LineTimeNow from './components/LineTimeNow'
+// import LineTimeNow from './components/LineTimeNow'
 import Loading from '~/ui/components/Loading';
 @connect(
   state => ({
@@ -64,22 +64,25 @@ export default class extends Component {
 
     let left = 20;
     const items = {};
-    for (const i = 0; i < data.length; i++) {
-      let HourTimeStart = moment(data[i].TimeStart).get('hour');
-      let MinuteTimeStart = moment(data[i].TimeStart).get('minute');
-      let HourTimeEnd = moment(data[i].TimeEnd).get('hour');
-      let MinuteTimeEnd = moment(data[i].TimeEnd).get('minute');
-      const top = Math.round((HourTimeStart + MinuteTimeStart / 60) * 80) + 20
-      const bottom = Math.round((HourTimeEnd + MinuteTimeEnd / 60) * 80) + 20
-      const height = bottom - top
-      const name = data[i].Name
-      const statusId = data[i].StatusId
-      const id = data[i].JobDetailsId
-      items[top + ':' + left] = { top, left, hours: HourTimeStart, minutes: MinuteTimeStart, name, statusId, height, id }
-      left += 90
+    if(data) {
+        for (const i = 0; i < data.length; i++) {
+        let HourTimeStart = moment(data[i].TimeStart).get('hour');
+        let MinuteTimeStart = moment(data[i].TimeStart).get('minute');
+        let HourTimeEnd = moment(data[i].TimeEnd).get('hour');
+        let MinuteTimeEnd = moment(data[i].TimeEnd).get('minute');
+        const top = Math.round((HourTimeStart + MinuteTimeStart / 60) * 80) + 20
+        const bottom = Math.round((HourTimeEnd + MinuteTimeEnd / 60) * 80) + 20
+        const height = bottom - top
+        const name = data[i].Name
+        const statusId = data[i].StatusId
+        items[top + ':' + left] = { top, left, hours: HourTimeStart, minutes: MinuteTimeStart, name, statusId, height }
+        left += 90
+      }
+      this.setState({ items })
     }
+    
 
-    this.setState({ items })
+    
   }
 
 
@@ -135,7 +138,6 @@ export default class extends Component {
         <ScrollView contentContainerStyle={{
           flexDirection: 'row',
         }}>
-
           <View style={{
             width: 60,
           }}>
@@ -146,7 +148,7 @@ export default class extends Component {
             width: Math.max(1000, 60 * 100),
           }}>
             {timeline}
-            <LineTimeNow />
+            
             {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height, id }) =>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('detail_screen', { id })}
@@ -166,6 +168,7 @@ export default class extends Component {
               </TouchableOpacity>
             )}
           </ScrollView>
+
         </ScrollView>
       </View>
     )
