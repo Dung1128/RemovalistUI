@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-    TouchableOpacity
+    TouchableOpacity,
+    Linking
 } from 'react-native';
 import {
     Container,
@@ -14,7 +15,6 @@ import {
     Spinner
 } from 'native-base';
 import { connect } from 'react-redux'
-
 import material from '~/theme/variables/material'
 import Icon from '~/ui/components/Icon';
 import Header from '~/ui/components/Header';
@@ -105,6 +105,17 @@ export default class extends Component {
             }
         />)
     }
+    getLocation (lat, lon) {
+        const url = `https://www.google.com/maps/place/`+lat+`,`+lon
+            return Linking.canOpenURL(url).then(supported => {
+                if (!supported) {
+                return Promise.reject(new Error(`Could not open the url: ${url}`))
+                } else {
+                return Linking.openURL(url)
+                }
+            })
+        }
+
     renderJobLocation(item, index) {
         return (
             <Info
@@ -114,6 +125,7 @@ export default class extends Component {
                 address1={item.AddressLine1}
                 address2={item.AddressLine2}
                 note={item.Notes}
+                onPress={()=>this.getLocation(-33.1604285,151.6230669)}
             />
 
         )
@@ -154,7 +166,7 @@ export default class extends Component {
             
             <Container>
                 <Header title='Job details' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
-                        <Container>
+                        
                             <Content style={{ backgroundColor: material.grayBackgroundColor }}>
                             
                                 <TitleItem title='Status' />
@@ -186,12 +198,11 @@ export default class extends Component {
                                         :
                                         <TitleItem title='Start Time' />
                                 }
-
+                                
                                 <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
                                     <View style={styles.itemTime}>
                                         <Text style={styles.txttitledate}>Date</Text>
-                                        <Text style={styles.date}>{new Date(date).toDateString()}</Text>
-                                        <Text style={styles.txttitledate}>Today</Text>
+                                        <Text style={styles.date}>{moment(date).format("ddd, MMM DD")}</Text>
                                     </View>
 
                                     <View style={styles.itemTime}>
@@ -227,7 +238,6 @@ export default class extends Component {
                                 </TouchableOpacity>
                             </View>
                             <Loading />
-                        </Container>
             </Container>
         )
     }
