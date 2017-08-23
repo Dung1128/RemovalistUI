@@ -19,11 +19,13 @@ export default class extends Component {
       <TouchableOpacity
         { ...props }
         onPress={onPress}
-        style={full ? { ...styles.paymentButton, 
-        backgroundColor: color,
-        width: '100%', height: 60, flexDirection: 'row', justifyContent: iconRight 
-        ? 'space-between' : 'center', padding: 10, ...this.props.style } 
-        : { ...styles.paymentButton, ...this.props.style }}
+        style={full ? {
+          ...styles.paymentButton,
+          backgroundColor: color,
+          width: '100%', height: 60, flexDirection: 'row', justifyContent: iconRight
+            ? 'space-between' : 'center', padding: 10, ...this.props.style
+        }
+          : { ...styles.paymentButton, ...this.props.style, backgroundColor: color, }}
       >
         {full && iconRight && <View style={{ width: '15%' }}></View>}
         {loading && <Spinner color='#fff' />}

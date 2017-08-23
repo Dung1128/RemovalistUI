@@ -44,7 +44,6 @@ const selector = formValueSelector('TallyService')
         traveltime: selector(state, 'traveltime'),
         fuel: selector(state, 'fuel'),
         material: selector(state, 'material'),
-        surcharge: selector(state, 'surcharge'),
 
     }), { ...materialActions, ...jobActions })
 @reduxForm({ form: 'TallyService', validate, destroyOnUnmount: !__DEV__ })
@@ -75,26 +74,30 @@ export default class extends Component {
                     const resetAction = NavigationActions.reset({
                         index: 0,
                         actions: [
-                            NavigationActions.navigate({ 
-                                routeName: 'jobtoday_screen', 
+                            NavigationActions.navigate({
+                                routeName: 'jobtoday_screen',
                                 params: {
-                                    defaultRoute: 'list' 
-                                }                                
+                                    defaultRoute: 'list'
+                                }
                             })
                         ]
                     })
-                    Alert.alert('Notify', 'Create job successfully', [
-                        { text: 'OK', onPress: () => this.props.navigation.dispatch(resetAction) },
-                    ], )
                     this.props.navigation.dispatch(resetAction)
+                    Alert.alert('Notify', 'Create job successfully')
                 }
                 if (data.Status == 2) {
+                    this.setState({
+                        loading: false
+                    })
                     Alert.alert('Notify', data.Message);
                 }
             }
-            // if (error) {
-            //     Alert.alert('Notify', error);
-            // }
+            if (error) {
+                this.setState({
+                    loading: false
+                })
+                Alert.alert('Notify', 'Error');
+            }
         })
     }
 
@@ -108,12 +111,12 @@ export default class extends Component {
         const timeStart = moment(delivery.general.datetime.timeStart).format("HH:mm");
         const timeEnd = moment(delivery.general.datetime.timeEnd).format("HH:mm");
         const obj = {
-            "Notes": (values.surcharge.note || ''),
+            "Notes": '',
             "TimeStart": `${date} ${timeStart}`,
             "TimeEnd": `${date} ${timeEnd}`,
             "TotalCost": this.sumPrice(),
             "TruckId": (delivery.general.truck.TruckId || ''),
-            "AdjustmentMatrix": (values.surcharge.price || 0),
+            "AdjustmentMatrix": 0,
             "StatusId": delivery.general.status.JobStatusId,
             "JobLocations": delivery.delivery,
             "Contact": delivery.general.Contact,
@@ -182,7 +185,7 @@ export default class extends Component {
 
 
     sumPrice() {
-        const { servicetime, traveltime, fuel, material, surcharge } = this.props;
+        const { servicetime, traveltime, fuel, material } = this.props;
         if (servicetime && traveltime && fuel && material && material[0] && material[0].NumberOfMaterial) {
             let materialvalue = material.map(input => (input.status && input.status.CategoryId ? (input.status.PricePerUnit * input.NumberOfMaterial) : 0))
                 .reduce((a, b) => a + b);
@@ -191,7 +194,7 @@ export default class extends Component {
                 + ((fuel.NumberOfMaterial || 0) * (fuel.status.PricePerUnit || 0))
                 + materialvalue
 
-            return surcharge ? price : price + surcharge.price
+            return price
         }
         return 0
     }
@@ -229,7 +232,6 @@ export default class extends Component {
                         listItems={listMaterial}
                         title='Material'
                     />
-                    <Field name='surcharge' member='surcharge' component={InputSurcharge} />
                     <TitleItem title='GST'
                         right={
                             <View row style={styles.money}>

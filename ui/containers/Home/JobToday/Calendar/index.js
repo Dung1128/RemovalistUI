@@ -12,7 +12,7 @@ import { accessToken } from '~/store/constants/api'
 import * as jobSelectors from '~/store/selectors/job'
 import { connect } from 'react-redux'
 import moment from 'moment'
-// import LineTimeNow from './components/LineTimeNow'
+import LineTimeNow from './components/LineTimeNow'
 import Loading from '~/ui/components/Loading';
 @connect(
   state => ({
@@ -59,13 +59,13 @@ export default class extends Component {
   }
 
   getData(data) {
-    if(data && data.length == 0)
+    if (data && data.length == 0)
       return;
 
     let left = 20;
     const items = {};
-    if(data) {
-        for (const i = 0; i < data.length; i++) {
+    if (data) {
+      for (const i = 0; i < data.length; i++) {
         let HourTimeStart = moment(data[i].TimeStart).get('hour');
         let MinuteTimeStart = moment(data[i].TimeStart).get('minute');
         let HourTimeEnd = moment(data[i].TimeEnd).get('hour');
@@ -81,9 +81,9 @@ export default class extends Component {
       }
       this.setState({ items })
     }
-    
 
-    
+
+
   }
 
 
@@ -149,7 +149,7 @@ export default class extends Component {
             width: Math.max(1000, 60 * 100),
           }}>
             {timeline}
-            
+            <LineTimeNow />
             {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height, id }) =>
               <TouchableOpacity
                 onPress={() => this.props.navigation.navigate('detail_screen', { id })}
@@ -163,7 +163,6 @@ export default class extends Component {
                   borderRadius: 10,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  zIndex: 2,
                 }}>
                 <Text white>{name}</Text>
               </TouchableOpacity>

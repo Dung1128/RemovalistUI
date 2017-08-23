@@ -112,7 +112,6 @@ export const InputServiceField = ({ name, nameIcon, measure, listItems, title })
 
 
 const renderMaterial = (name, index, fields, listItems, measure, nameIcon, title) => {
-    console.log(index)
     return (
         <View key={index} style={{paddingRight: 30,backgroundColor:'#fff'}}>
             <Field name={name} member={name} component={StatusInputField} nameIcon={nameIcon} measure={measure} listItems={listItems} title={title} />

@@ -29,7 +29,7 @@ export default class extends Component {
                     onChangeText={onChange}
                     placeholder={placeholder}
                     underlineColorAndroid="transparent"
-                    style={{ width: 60, lineHeight: 25 }}
+                    style={{ width: '60%', lineHeight: 25 }}
                 />
                 <Text>{measure}</Text>
             </View>

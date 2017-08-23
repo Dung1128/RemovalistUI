@@ -27,10 +27,6 @@ export const initialValues = {
         },
         NumberOfMaterial: '',
     }],
-    surcharge: {
-        note: '',
-        price: '',
-    }
 }
 export const validate = (values, { navigation }) => {
     const errors = {}

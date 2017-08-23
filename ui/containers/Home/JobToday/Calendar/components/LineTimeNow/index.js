@@ -12,16 +12,27 @@ export default class extends Component {
     }
 
     componentWillMount() {
-        setInterval(() => this.getTop())
+        // setInterval(() => this.getTop())
+        this.getTop()
+    }
+
+    getHoursMinutes() {
+        const hours = new Date().getHours()
+        const minutes = new Date().getMinutes()
+        return { hours, minutes }
     }
 
     getTop() {
-        const top = Math.round((new Date().getHours() + new Date().getMinutes() / 60) * 80) + 20
-        this.setState({
-            top
-        })
+        const { hours, minutes } = this.getHoursMinutes()
+        const top = Math.round((hours + minutes / 60) * 80) + 20
+        setTimeout(() => {
+            this.setState({
+                top
+            })
+        }, 0)
     }
     render() {
+        const { hours, minutes } = this.getHoursMinutes()
         return (
             <View style={{
                 position: 'absolute',
@@ -37,7 +48,7 @@ export default class extends Component {
                     width: '100%'
                 }} />
                 <Text style={{ fontSize: 12, color: material.redColor, marginTop: -20, backgroundColor: 'transparent' }}>
-                    {new Date().getHours() + ":" + new Date().getMinutes()}
+                    {hours + ":" + minutes}
                 </Text>
             </View>
         )
