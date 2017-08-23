@@ -128,7 +128,7 @@ export default class extends Component {
     }
 
     actionStart() {
-        Alert.alert('Notify', 'Are you sure start job?',
+        Alert.alert('Notify', 'Are you sure to start this job?',
             [
                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 {
@@ -164,7 +164,7 @@ export default class extends Component {
     }
 
     actionComplete() {
-        Alert.alert('Notify', 'Are you sure complete job?',
+        Alert.alert('Notify', 'Are you sure to complete this job?',
             [
                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 {
@@ -199,7 +199,7 @@ export default class extends Component {
                     <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
                         <View style={styles.itemTime}>
                             <Text style={styles.txttitledate}>Date</Text>
-                            <Text style={styles.date}>{date}</Text>
+                            <Text style={styles.date}>{moment(date).format("ddd, MMM DD")}</Text>
                  
                         </View>
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
@@ -226,7 +226,7 @@ export default class extends Component {
                         <Text style={styles.time}>{duration}</Text>
                         <View style={{ width: '15%' }}></View>
                     </View>
-                    <Button style={{ flexDirection: 'row', borderRadius: 5, marginTop: 10, justifyContent: 'space-around', width: 250 }}>
+                    <Button style={{ flexDirection: 'row', backgroundColor: material.redColor, borderRadius: 5, marginTop: 10, justifyContent: 'space-around', width: 250 }}>
                         <View style={{ width: '15%' }}></View>
                         <Text white>CHAT TO ADMIN</Text>
                         <Icon name='chat' size={18} color='#fff' />

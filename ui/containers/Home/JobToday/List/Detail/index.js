@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-    TouchableOpacity
+    TouchableOpacity,
+    Linking
 } from 'react-native';
 import {
     Container,
@@ -14,7 +15,6 @@ import {
     Spinner
 } from 'native-base';
 import { connect } from 'react-redux'
-
 import material from '~/theme/variables/material'
 import Icon from '~/ui/components/Icon';
 import Header from '~/ui/components/Header';
@@ -105,6 +105,17 @@ export default class extends Component {
             }
         />)
     }
+    getLocation(lat, lon) {
+        const url = `https://www.google.com/maps/place/` + lat + `,` + lon
+        return Linking.canOpenURL(url).then(supported => {
+            if (!supported) {
+                return Promise.reject(new Error(`Could not open the url: ${url}`))
+            } else {
+                return Linking.openURL(url)
+            }
+        })
+    }
+
     renderJobLocation(item, index) {
         return (
             <Info
@@ -114,6 +125,7 @@ export default class extends Component {
                 address1={item.AddressLine1}
                 address2={item.AddressLine2}
                 note={item.Notes}
+                onPress={() => this.getLocation(-33.1604285, 151.6230669)}
             />
 
         )
@@ -154,80 +166,78 @@ export default class extends Component {
 
             <Container>
                 <Header title='Job details' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
-                <Container>
-                    <Content style={{ backgroundColor: material.grayBackgroundColor }}>
 
-                        <TitleItem title='Status' />
-                        <View onPress={() => this.showDetail()} activeOpacity={1} style={styles.wrapItems} >
-                            <StatusItem color={`#${JobStatusColor}`} />
-                            <View centerVertical style={styles.item}>
-                                <Text>{StatusName}</Text>
-                            </View>
+                <Content style={{ backgroundColor: material.grayBackgroundColor }}>
+
+                    <TitleItem title='Status' />
+                    <View onPress={() => this.showDetail()} activeOpacity={1} style={styles.wrapItems} >
+                        <StatusItem color={`#${JobStatusColor}`} />
+                        <View centerVertical style={styles.item}>
+                            <Text>{StatusName}</Text>
                         </View>
-                        <TitleItem title='Customer Info' />
-                        <View white style={{ paddingHorizontal: 5 }}>
-                            <RowItem icon='user' title={CompanyName} />
-
-                            {
-                                Phone && Phone.map((item, index) => this.renderPhone(item, index))
-                            }
-
-                            <RowItem icon='email' title={Email} />
-                        </View>
-                        {
-                            JobDetails.StatusId == 3 ? <TitleItem title='Start Time'
-                                right={
-                                    <View row style={{ justifyContent: 'space-between', width: '25%' }}>
-                                        <ButtonIcon icon='direction' size={18} color='#fff' onPress={() => this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })} />
-                                        <Text style={styles.textUp}>START</Text>
-                                    </View>
-                                }
-                            />
-                                :
-                                <TitleItem title='Start Time' />
-                        }
-
-                        <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
-                            <View style={styles.itemTime}>
-                                <Text style={styles.txttitledate}>Date</Text>
-                                <Text style={styles.date}>{new Date(date).toDateString()}</Text>
-                                <Text style={styles.txttitledate}>Today</Text>
-                            </View>
-
-                            <View style={styles.itemTime}>
-                                <Text style={styles.txttitledate}>Time</Text>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <Text style={styles.date}>{time}</Text>
-                                </View>
-                                <Text style={styles.txttitledate}>{this.state.duration}</Text>
-                            </View>
-                        </View>
-                        <TitleItem title='Truck' />
-                        <View white style={{ paddingHorizontal: 5 }}>
-                            <RowItem icon='truck' title={this.state.TruckName} />
-                        </View>
-                        {
-                            JobDetails ? JobDetails.JobLocations.map((item, index) => this.renderJobLocation(item, index)) : null
-                        }
-                    </Content>
-
-                    <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })}>
-                            <Icon name='time' size={22} color={material.grayIconColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen', { dataCall: JobDetails })}>
-                            <Icon name='call' size={22} color={material.grayIconColor} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('chat_screen')}>
-                            <Icon name='chat' size={22} color={material.grayIconColor} />
-                            <View style={{ backgroundColor: 'red', width: 4, height: 4, borderRadius: 4 / 2, position: 'absolute', top: -5, right: -8 }} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('tally_screen', { JobDetails: this.state.JobDetails })}>
-                            <Icon name='tally' size={22} color={material.grayIconColor} />
-                        </TouchableOpacity>
                     </View>
-                    <Loading />
-                </Container>
+                    <TitleItem title='Customer Info' />
+                    <View white style={{ paddingHorizontal: 5 }}>
+                        <RowItem icon='user' title={CompanyName} />
+
+                        {
+                            Phone && Phone.map((item, index) => this.renderPhone(item, index))
+                        }
+
+                        <RowItem icon='email' title={Email} />
+                    </View>
+                    {
+                        JobDetails.StatusId == 3 ? <TitleItem title='Start Time'
+                            right={
+                                <View row style={{ justifyContent: 'space-between', width: '25%' }}>
+                                    <ButtonIcon icon='direction' size={18} color='#fff' onPress={() => this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })} />
+                                    <Text style={styles.textUp}>START</Text>
+                                </View>
+                            }
+                        />
+                            :
+                            <TitleItem title='Start Time' />
+                    }
+
+                    <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
+                        <View style={styles.itemTime}>
+                            <Text style={styles.txttitledate}>Date</Text>
+                            <Text style={styles.date}>{moment(date).format("ddd, MMM DD")}</Text>
+                        </View>
+
+                        <View style={styles.itemTime}>
+                            <Text style={styles.txttitledate}>Time</Text>
+                            <View style={{ flexDirection: 'row' }}>
+                                <Text style={styles.date}>{time}</Text>
+                            </View>
+                            <Text style={styles.txttitledate}>{this.state.duration}</Text>
+                        </View>
+                    </View>
+                    <TitleItem title='Truck' />
+                    <View white style={{ paddingHorizontal: 5 }}>
+                        <RowItem icon='truck' title={this.state.TruckName} />
+                    </View>
+                    {
+                        JobDetails ? JobDetails.JobLocations.map((item, index) => this.renderJobLocation(item, index)) : null
+                    }
+                </Content>
+
+                <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })}>
+                        <Icon name='time' size={22} color={material.grayIconColor} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen', { dataCall: JobDetails })}>
+                        <Icon name='call' size={22} color={material.grayIconColor} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('chat_screen')}>
+                        <Icon name='chat' size={22} color={material.grayIconColor} />
+                        <View style={{ backgroundColor: 'red', width: 4, height: 4, borderRadius: 4 / 2, position: 'absolute', top: -5, right: -8 }} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('tally_screen', { JobDetails: this.state.JobDetails })}>
+                        <Icon name='tally' size={22} color={material.grayIconColor} />
+                    </TouchableOpacity>
+                </View>
+                <Loading />
             </Container>
         )
     }
