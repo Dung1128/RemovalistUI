@@ -12,8 +12,7 @@ export default class extends Component {
     }
 
     componentWillMount() {
-        // setInterval(() => this.getTop())
-        this.getTop()
+        setInterval(() => this.getTop())
     }
 
     getHoursMinutes() {
@@ -48,7 +47,7 @@ export default class extends Component {
                     width: '100%'
                 }} />
                 <Text style={{ fontSize: 12, color: material.redColor, marginTop: -20, backgroundColor: 'transparent' }}>
-                    {hours + ":" + minutes}
+                    {hours}:{minutes < 9 ? "0" + minutes : minutes}
                 </Text>
             </View>
         )

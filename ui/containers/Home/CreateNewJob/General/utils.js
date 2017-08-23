@@ -1,7 +1,6 @@
 export const validate = values => {
 
     const errors = {}
-    return errors
     if (values.Contact) {
         const ContactArrayErrors = []
         values.Contact.forEach((Contact, ContactIndex) => {
