@@ -9,7 +9,7 @@ export default {
         return apiPost(`/api/jobdetails`, data, accessToken);
     },
     getJobByDate(data, accessToken) {
-        return apiGetNoKey('/api/jobdetails/JobItemListByDate/', data, accessToken)
+        return apiGetNoKey('/api/jobdetails/JobItemListByDayFilter/', data, accessToken)
     },
 
     getStatusJobList(accessToken) {

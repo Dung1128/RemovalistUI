@@ -30,52 +30,25 @@ import * as jobSelectors from '~/store/selectors/job'
 import { accessToken } from '~/store/constants/api'
 import Communications from 'react-native-communications'
 import moment from 'moment';
-@connect(state => ({
-    listStatus: jobSelectors.getStatusJobList(state),
-    listTruck: jobSelectors.getTruckList(state),
-}), { ...jobActions })
+@connect(state => ({}), { ...jobActions })
 export default class extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            StatusName: '',
-            JobStatusColor: 'fff',
             JobDetails: '',
             Delivery: '',
             ready: false,
-            id: this.props.navigation.state.params.id
+            data: this.props.navigation.state.params
         }
         this.navigated = false
     }
 
-    renderStatus(id) {
-        const arr = this.props.listStatus
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].JobStatusId == id) {
-                this.setState({
-                    StatusName: arr[i].StatusName,
-                    JobStatusColor: arr[i].JobStatusColor
-                })
-            }
-        }
-    }
-
-    renderTruck(id) {
-        const arr = this.props.listTruck
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].TruckId == id) {
-                this.setState({
-                    TruckName: arr[i].TruckName,
-                })
-            }
-        }
-    }
 
     componentDidMount() {
-        this.props.getJobById(this.state.id, accessToken, (error, data) => {
+        const obj = this.state.data
+        this.renderTime(obj.TimeStart, obj.TimeEnd);
+        this.props.getJobById(this.state.data.JobDetailsId, accessToken, (error, data) => {
             if (data) {
-                this.renderStatus(data.JobDetails.StatusId);
-                this.renderTruck(data.JobDetails.TruckId)
                 this.setState({
                     JobDetails: data.JobDetails,
                     ready: true
@@ -85,7 +58,7 @@ export default class extends Component {
                         Delivery: data.Delivery
                     })
                 })
-                this.renderTime(data.JobDetails.TimeStart, data.JobDetails.TimeEnd);
+
             }
         })
     }
@@ -158,7 +131,7 @@ export default class extends Component {
     }
 
     render() {
-        const { StatusName, JobStatusColor, JobDetails, date, time, duration } = this.state;
+        const { JobDetails, date, time, duration, data, Delivery } = this.state;
         const { CompanyName, Phone, Email } = JobDetails && JobDetails.Contact[0] ? JobDetails.Contact[0] : {};
 
 
@@ -171,9 +144,9 @@ export default class extends Component {
 
                     <TitleItem title='Status' />
                     <View onPress={() => this.showDetail()} activeOpacity={1} style={styles.wrapItems} >
-                        <StatusItem color={`#${JobStatusColor}`} />
+                        <StatusItem color={`#${data.StatusColor}`} />
                         <View centerVertical style={styles.item}>
-                            <Text>{StatusName}</Text>
+                            <Text>{data.StatusName}</Text>
                         </View>
                     </View>
                     <TitleItem title='Customer Info' />
@@ -190,7 +163,8 @@ export default class extends Component {
                         JobDetails.StatusId == 3 ? <TitleItem title='Start Time'
                             right={
                                 <View row style={{ justifyContent: 'space-between', width: '25%' }}>
-                                    <ButtonIcon icon='direction' size={18} color='#fff' onPress={() => this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })} />
+                                    <ButtonIcon icon='direction' size={18} color='#fff'
+                                        onPress={() => this.props.navigation.navigate('time_screen', { JobDetails, time, date: new Date(date).toDateString(), durationStart: duration, Delivery })} />
                                     <Text style={styles.textUp}>START</Text>
                                 </View>
                             }
@@ -210,12 +184,12 @@ export default class extends Component {
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={styles.date}>{time}</Text>
                             </View>
-                            <Text style={styles.txttitledate}>{this.state.duration}</Text>
+                            <Text style={styles.txttitledate}>{duration}</Text>
                         </View>
                     </View>
                     <TitleItem title='Truck' />
                     <View white style={{ paddingHorizontal: 5 }}>
-                        <RowItem icon='truck' title={this.state.TruckName} />
+                        <RowItem icon='truck' title={data.TruckName} />
                     </View>
                     {
                         JobDetails ? JobDetails.JobLocations.map((item, index) => this.renderJobLocation(item, index)) : null
@@ -223,7 +197,9 @@ export default class extends Component {
                 </Content>
 
                 <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen', { JobDetails: this.state.JobDetails, time: time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })}>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen',
+                        { JobDetails, time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })}
+                    >
                         <Icon name='time' size={22} color={material.grayIconColor} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen', { dataCall: JobDetails })}>

@@ -47,6 +47,7 @@ export default class extends Component {
         return (
             <View {...props}>
                 <DateTimePicker
+                    is24Hour={true}
                     mode={mode ? mode : 'date'}
                     isVisible={this.state.visible}
                     onConfirm={this.handleSelect.bind(this)}

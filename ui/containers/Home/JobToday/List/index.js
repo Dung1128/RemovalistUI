@@ -27,7 +27,6 @@ import { accessToken } from '~/store/constants/api'
 import Loading from '~/ui/components/Loading'
 
 @connect(state => ({
-    listStatus: jobSelectors.getStatusJobList(state),
     listJobByDate: jobSelectors.getJobByDate(state)
 }), { ...jobActions })
 
@@ -57,17 +56,6 @@ export default class extends Component {
         }
     }
 
-    renderStatus(id) {
-        const arr = this.props.listStatus
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i].JobStatusId == id) {
-                this.setState({
-                    StatusName: arr[i].StatusName,
-                    JobStatusColor: arr[i].JobStatusColor
-                })
-            }
-        }
-    }
 
     refreshList() {
         // this.setState({ isRefreshing: true });
@@ -82,32 +70,13 @@ export default class extends Component {
         })
     }
 
-    renderColorStatus(key) {
-        switch (key) {
-            case 1:
-                return '#EB4E34';
-            case 2:
-                return '#FEDB31';
-            case 3:
-                return '#4E91DF';
-            case 4:
-                return '#52D549';
-            case 5:
-                return '#BB0DDD';
-            case 6:
-                return '#BDC4CB';
-            default:
-                break;
-        }
-    }
-
     renderRow(data) {
         return (
             <View>
-                <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', { id: data.JobDetailsId })}>
+                <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', data)}>
                     <View style={{
                         width: 5,
-                        backgroundColor: this.renderColorStatus(data.StatusId),
+                        backgroundColor: `#${data.StatusColor}`,
                         borderRadius: 5
                     }} />
                     <View style={styles.itemsJob}>
@@ -169,7 +138,7 @@ export default class extends Component {
                     />
 
                 }
-                
+
             </View>
 
         );

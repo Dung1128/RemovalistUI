@@ -122,7 +122,7 @@ export default class extends Component {
                         </View>
                         <TitleItem style={{ padding: 0, backgroundColor: material.grayBackgroundColor }} />
 
-                        <List dataArray={arrSearch.length > 0 ? arrSearch : [{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]}
+                        <List dataArray={arrSearch.length > 0 ? [{ TruckId: 0, TruckName: 'Select Truck' }, ...arrSearch] : [{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]}
                             renderRow={(item) => this.renderRow(item)}>
                         </List>
                     </View>

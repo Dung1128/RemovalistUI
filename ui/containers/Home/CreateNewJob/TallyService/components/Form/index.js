@@ -76,12 +76,12 @@ export const InputSurcharge = ({ input, meta: { touched, error, warning }, membe
     )
 }
 
-const StatusInputField = ({ input, meta: { touched, error, warning }, member, nameIcon, measure, listItems, title }) => {
+const StatusInputField = ({ input, meta: { touched, error, warning, submitFailed }, member, nameIcon, measure, listItems, title }) => {
 
     const price = (input.value && input.value.status && input.value.status.CategoryId ? (input.value.status.PricePerUnit * input.value.NumberOfMaterial) : 0).toFixed(2);
     const hrs = input.value.NumberOfMaterial > 1 ? 'hrs' : 'hr'
     return (
-        <View>
+        <View white>
             {
                 title != 'Material' && <TitleItem
                     title={title}
@@ -93,15 +93,20 @@ const StatusInputField = ({ input, meta: { touched, error, warning }, member, na
                 />
             }
 
-            <View style={styles.wrapItem}>
+            <View style={{
+                ...styles.wrapItem,
+                borderBottomColor: error ? material.redColor : material.grayTitle,
+            }}>
                 <Field name={`${member}.status`} component={DropDownField} nameIcon={nameIcon} listItems={listItems} />
-                <View style={styles.border} />                
-                <Field name={`${member}.NumberOfMaterial`} component={InputField} measure={measure == 'hr' ? hrs : measure} />                
+                <View style={styles.border} />
+                <Field name={`${member}.NumberOfMaterial`} component={InputField} measure={measure == 'hr' ? hrs : measure} />
                 <View style={styles.border} />
                 <View style={styles.Item}>
                     <Text style={styles.content}> ${price}</Text>
                 </View>
+
             </View>
+            {touched && error && <Text style={{ marginLeft: 10 }} wraning>{error}</Text>}
         </View>
     )
 }
@@ -113,9 +118,9 @@ export const InputServiceField = ({ name, nameIcon, measure, listItems, title })
 
 const renderMaterial = (name, index, fields, listItems, measure, nameIcon, title) => {
     return (
-        <View key={index} style={{paddingRight: 30,backgroundColor:'#fff'}}>
+        <View key={index} style={{ paddingRight: 30, backgroundColor: '#fff' }}>
             <Field name={name} member={name} component={StatusInputField} nameIcon={nameIcon} measure={measure} listItems={listItems} title={title} />
-            {index > 0 && <ButtonIcon style={styles.button} onPress={() => fields.remove(index)} iconRemove size={18} color='#fff' />            }
+            {index > 0 && <ButtonIcon style={styles.button} onPress={() => fields.remove(index)} iconRemove size={18} color='#fff' />}
         </View>
     )
 }
@@ -137,12 +142,12 @@ export const MaterialArray = connect((state) => ({
                         <Text style={styles.titPrice}>${price}</Text>
 
                         <ButtonIcon style={{}} onPress={() => fields.push({
-                        status: {
-                            Name: 'Select Type',
-                            CategoryId: 0
-                        },
-                        NumberOfMaterial: '',
-                    })} icon='add' size={16} color='#fff' />
+                            status: {
+                                Name: 'Select Type',
+                                CategoryId: 0
+                            },
+                            NumberOfMaterial: '',
+                        })} icon='add' size={16} color='#fff' />
 
                     </View>
                 }

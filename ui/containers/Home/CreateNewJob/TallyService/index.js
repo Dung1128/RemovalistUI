@@ -16,6 +16,7 @@ import Button from '~/ui/components/Button';
 import Header from '~/ui/components/Header';
 import TitleItem from '~/ui/components/TitleItem';
 import ButtonIcon from '~/ui/components/ButtonIcon';
+import ToastModal from '~/ui/components/ToastModal';
 import { connect } from 'react-redux'
 import {
     Field,
@@ -57,7 +58,8 @@ export default class extends Component {
             listFuel: '',
             listMaterial: '',
             delivery: this.props.navigation.state.params,
-            loading: false
+            loading: false,
+            showToast: false
         });
         this.sumPrice = this.sumPrice.bind(this);
 
@@ -83,7 +85,14 @@ export default class extends Component {
                         ]
                     })
                     this.props.navigation.dispatch(resetAction)
-                    Alert.alert('Notify', 'Create job successfully')
+                    this.setState({
+                        showToast: true
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            showToast: false
+                        })
+                    }, 2000)
                 }
                 if (data.Status == 2) {
                     this.setState({
@@ -201,7 +210,7 @@ export default class extends Component {
 
     render() {
         const { handleSubmit, submitting } = this.props
-        const { listServiceTime, listTravelTime, listFuel, listMaterial, loading } = this.state;
+        const { listServiceTime, listTravelTime, listFuel, listMaterial, loading, showToast } = this.state;
 
         return (
             <Container>
@@ -251,6 +260,7 @@ export default class extends Component {
                     full
                     text='DONE'
                 />
+                <ToastModal message='Create job successfully' show={showToast} />
             </Container>
         );
     }

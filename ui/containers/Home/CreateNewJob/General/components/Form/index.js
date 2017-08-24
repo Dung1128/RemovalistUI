@@ -101,17 +101,20 @@ export const CustomerField = ({ fields, meta: { error, submitFailed }, ...custom
             }
         />
         {fields.map((member, index) => renderCustomer(member, index, fields))}
-        {submitFailed && error && <Text>{error}</Text>}
+        {submitFailed && error && <Text wraning>{error}</Text>}
     </View>
 )
 
 
-export const TruckField = ({ input, meta: { touched, error, warning }, ...custom }) => (
-    <Truck
-        error={touched && error}
-        {...input}
-        {...custom}
-    />
+export const TruckField = ({ input, meta: { touched, error, warning, submitFailed }, ...custom }) => (
+    <View white>
+        <Truck
+            error={touched && error}
+            {...input}
+            {...custom}
+        />
+        {submitFailed && error && <Text style={{ marginLeft: 10 }} wraning>{error}</Text>}
+    </View>
 )
 
 
@@ -124,13 +127,14 @@ export const StatusField = ({ input, meta: { touched, error, warning }, ...custo
 )
 
 
-const DateField = ({ input, label, meta: { touched, error, warning }, ...custom }) => (
+const DateField = ({ input, label, meta: { touched, error, warning, submitFailed }, mode }) => (
     <View>
         <DateTime
             error={touched && error}
             {...input}
-            {...custom}
+            mode={mode}
         />
+        {!mode && (submitFailed || touched) && error && <Text wraning>{error}</Text>}
     </View>
 )
 

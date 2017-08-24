@@ -21,7 +21,7 @@ export default class extends Component {
     }
     render() {
         const { stepArr } = this.state;
-        const { title, onPress, iconLeft, right, size = 24, textright, step, ...props } = this.props;
+        const { title, onPress, iconLeft, right, onPressRight, size = 24, textright, step, ...props } = this.props;
         return (
             <Header
                 noShadow={true}
@@ -33,15 +33,15 @@ export default class extends Component {
                     </Button>
                     <View>
                         <Title style={{ fontSize: 18, width: '100%', textAlign: 'left', marginLeft: 10 }}>{title}</Title>
-                        { step && <View row style={{ marginLeft: 10 }}>
+                        {step && <View row style={{ marginLeft: 10 }}>
                             {
                                 stepArr.map((item, index) => {
                                     return (
                                         <View key={index} row center>
-                                        <View style={{...styles.step, backgroundColor: item == step ? '#fff' : 'transparent', }}>
-                                            <Text style={{...styles.textStep, color: item == step ? material.redColor : '#fff' }} >{item}</Text>
-                                        </View>
-                                            { item != 3 && <View style={{ width: 10, height: 2, backgroundColor: '#fff' }} /> }
+                                            <View style={{ ...styles.step, backgroundColor: item == step ? '#fff' : 'transparent', }}>
+                                                <Text style={{ ...styles.textStep, color: item == step ? material.redColor : '#fff' }} >{item}</Text>
+                                            </View>
+                                            {item != 3 && <View style={{ width: 10, height: 2, backgroundColor: '#fff' }} />}
                                         </View>
                                     )
                                 })
@@ -57,7 +57,7 @@ export default class extends Component {
                         {right}
                     </Right>
                 }
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onPressRight}>
                     <Text style={{ color: '#fff' }}>{textright}</Text>
                 </TouchableOpacity>
 

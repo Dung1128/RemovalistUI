@@ -6,6 +6,7 @@ import { auth } from './auth';
 // import { nav, navBook } from './nav'
 import { account } from './account';
 import { job } from './job';
+import { filter } from './filter';
 
 // a rootReducer is like a single state, key is function return a sub state value
 const rootReducer = combineReducers({
@@ -19,7 +20,7 @@ const rootReducer = combineReducers({
   auth,
   account,
   job,
-  // personal,
+  filter,
   // nav,
   // navBook
 });

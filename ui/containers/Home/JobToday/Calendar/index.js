@@ -30,24 +30,6 @@ export default class extends Component {
   }
 
 
-  renderColorStatus(key) {
-    switch (key) {
-      case 1:
-        return '#EB4E34';
-      case 2:
-        return '#FEDB31';
-      case 3:
-        return '#4E91DF';
-      case 4:
-        return '#52D549';
-      case 5:
-        return '#BB0DDD';
-      case 6:
-        return '#BDC4CB';
-      default:
-        break;
-    }
-  }
 
   componentWillReceiveProps({ listJobByDate }) {
     this.getData(listJobByDate)
@@ -59,11 +41,14 @@ export default class extends Component {
   }
 
   getData(data) {
-    if (data && data.length == 0)
+    const items = {};
+    if (data && data.length == 0) {
+      this.setState({ items })
       return;
+    }
 
     let left = 20;
-    const items = {};
+
     if (data) {
       for (const i = 0; i < data.length; i++) {
         let HourTimeStart = moment(data[i].TimeStart).get('hour');
@@ -74,9 +59,11 @@ export default class extends Component {
         const bottom = Math.round((HourTimeEnd + MinuteTimeEnd / 60) * 80) + 20
         const height = bottom - top
         const name = data[i].Name
-        const statusId = data[i].StatusId
+        const StatusColor = data[i].StatusColor
         const id = data[i].JobDetailsId
-        items[top + ':' + left] = { top, left, hours: HourTimeStart, minutes: MinuteTimeStart, name, statusId, height, id }
+        const obj = data[i]
+        const valueCheck = data[i].StatusId < 2 ? data[i].StatusName : data[i].TruckName
+        items[top + ':' + left] = { top, left, hours: HourTimeStart, minutes: MinuteTimeStart, name, StatusColor, height, obj, valueCheck }
         left += 90
       }
       this.setState({ items })
@@ -150,21 +137,22 @@ export default class extends Component {
           }}>
             {timeline}
             <LineTimeNow />
-            {Object.values(items).map(({ top, left, hours, minutes, name, statusId, height, id }) =>
+            {Object.values(items).map(({ top, left, hours, minutes, name, StatusColor, height, obj, valueCheck }) =>
               <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('detail_screen', { id })}
+                onPress={() => this.props.navigation.navigate('detail_screen', obj)}
                 key={top + ':' + left} style={{
-                  backgroundColor: this.renderColorStatus(statusId),
+                  backgroundColor: `#${StatusColor}`,
                   height: height,
                   width: 80,
                   top,
                   left,
                   position: 'absolute',
                   borderRadius: 10,
-                  justifyContent: 'center',
                   alignItems: 'center',
+                  padding: 10
                 }}>
-                <Text white>{name}</Text>
+                <Text white style={{ fontSize: 14 }}>{name.toUpperCase()}</Text>
+                <Text white style={{ fontSize: 11 }}>{valueCheck}</Text>
               </TouchableOpacity>
             )}
           </ScrollView>

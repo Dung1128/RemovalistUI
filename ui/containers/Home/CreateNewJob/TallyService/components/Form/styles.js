@@ -9,13 +9,12 @@ export default {
         backgroundColor: '#fff',
         flexDirection: 'row',
         height: 60,
-        borderBottomColor: material.grayTitle,
-        borderBottomWidth: 0.5
+        borderBottomWidth: 1
     },
     wrapContent: {
         flexDirection: 'row',
         borderBottomColor: material.grayTitle,
-        borderBottomWidth: 0.5,
+        borderBottomWidth: 1,
         paddingLeft: 10,
         justifyContent: 'space-between',
         backgroundColor: '#fff',
@@ -28,7 +27,7 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: 0,
-        justifyContent: 'center',        
+        justifyContent: 'center',
     },
     borderLeft: {
         flex: 0.5,

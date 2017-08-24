@@ -67,12 +67,11 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    this.props.getStatusJobList(accessToken, (error, data) => { });
     this.props.getMaterialList(accessToken, (error, data) => { })
     this.props.getMaterialCategoryList(accessToken, (error, data) => { })
     this.props.getTruckList(accessToken, (error, data) => { })
     this.props.getReferenceContactList(accessToken, (error, data) => { })
-    this.props.getJobByDate(this.renderDate(this.state.date), accessToken, (error, data) => { console.log(data) })
+    this.props.getJobByDate(this.renderDate(this.state.date) + "/1", accessToken, (error, data) => { console.log(data) })
     this.navigateTab(this.selectedRoute)
   }
 
@@ -114,7 +113,7 @@ export default class extends Component {
 
     this.list.date = date
     // later
-    this.props.getJobByDate(this.renderDate(date), accessToken, (error, data) => { })
+    this.props.getJobByDate(this.renderDate(date) + "/1", accessToken, (error, data) => { })
   }
 
 
