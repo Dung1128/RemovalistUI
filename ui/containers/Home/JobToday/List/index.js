@@ -41,12 +41,13 @@ export default class extends Component {
             isRefreshing: false,
             loading: false,
         };
-        this.date = ''
+        this.date = new Date();
+        this.checkday = '';
+        this.keyDayFilter = '';
     }
 
     componentDidMount() {
         this.props.onItemRef && this.props.onItemRef(this)
-        console.log(this.props.onItemRef(this))
     }
 
     componentWillReceiveProps({ listJobByDate }) {
@@ -59,21 +60,30 @@ export default class extends Component {
 
 
     refreshList() {
-        // this.setState({ isRefreshing: true });
-        // this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
-        //     if (data) {
-        //         this.setState({
-        //             dataSource: data.JobListItemObjects,
-        //             // isRefreshing: false
-
-        //         })
-        //     }
-        // })
+        this.setState({ isRefreshing: true });
+        this.props.getJobByDate(this.renderDate(this.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => {
+            if (data) {
+                this.setState({
+                    dataSource: data.JobListItemObjects,
+                    isRefreshing: false
+                })
+            }
+        })
     }
 
-    renderRow(data) {
+    renderRow(data, sectionID, rowID, highlightRow) {
+        const check = this.renderDate(this.checkday) != this.renderDate(data.TimeStart)
+        this.checkday = data.TimeStart
         return (
-            <View>
+            <View style={{ flex: 1 }}>
+                {
+                    check || rowID == 0
+                        ? (this.renderDate(data.TimeStart) == this.renderDate(new Date())
+                            ? <TitleItem title='Today' />
+                            : <TitleItem title={this.renderDateTit(data.TimeStart)} />)
+                        : null
+
+                }
                 <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', data)}>
                     <View style={{
                         width: 5,
@@ -92,6 +102,7 @@ export default class extends Component {
                 <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
             </View>
         );
+
     }
 
     renderDate(day) {
@@ -104,15 +115,9 @@ export default class extends Component {
 
     render() {
         const { dataSource } = this.state;
-        const checkdate = dataSource.length > 0 && dataSource[0].TimeStart ? dataSource[0].TimeStart : this.date
         return (
 
             <View style={{ flex: 1 }}>
-                {
-                    this.renderDate(checkdate) == this.renderDate(new Date())
-                        ? <TitleItem title='Today' />
-                        : <TitleItem title={this.renderDateTit(checkdate)} />
-                }
                 <Loading />
                 {
                     dataSource.length == 0 ?

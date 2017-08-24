@@ -30,12 +30,12 @@ import api from '~/store/api';
 import * as jobActions from '~/store/actions/job'
 import { areRequestsPending } from '~/store/selectors/common'
 import { accessToken } from '~/store/constants/api'
+import * as filterSelectors from '~/store/selectors/filter';
 
 @connect(
-  // state => ({
-  //   isPending: areRequestsPending(state)
-  // }),
-  null,
+  state => ({
+    dayFilterSelected: filterSelectors.getDayFilterSelected(state),
+  }),
   { ...jobActions }
 )
 export default class extends Component {
@@ -47,6 +47,7 @@ export default class extends Component {
       date: new Date(),
       dataSource: {},
     };
+    this.keyDayFilter = this.props.dayFilterSelected.key || 1
     this.dataSource = {};
     this.navigated = false
     this.selectedRoute = props.navigation.state.params ? props.navigation.state.params.defaultRoute : 'calendar'
@@ -63,7 +64,9 @@ export default class extends Component {
     ]
   }
 
-  componentWillMount() {
+  componentWillReceiveProps({ dayFilterSelected }) {
+    this.keyDayFilter = dayFilterSelected.key || 1
+    this.props.getJobByDate(this.renderDate(this.state.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { })
   }
 
   componentDidMount() {
@@ -72,7 +75,7 @@ export default class extends Component {
     this.props.getMaterialCategoryList(accessToken, (error, data) => { })
     this.props.getTruckList(accessToken, (error, data) => { })
     this.props.getReferenceContactList(accessToken, (error, data) => { })
-    this.props.getJobByDate(this.renderDate(this.state.date) + "/1", accessToken, (error, data) => { console.log(data) })
+    this.props.getJobByDate(this.renderDate(this.state.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { console.log(data) })
     this.navigateTab(this.selectedRoute)
   }
 
@@ -88,7 +91,7 @@ export default class extends Component {
   }
 
   componentDidUpdate() {
-
+    this.list.keyDayFilter = this.keyDayFilter
     // animate here
     this.selectedRefPage && this.selectedRefPage.setNativeProps({
       style: {
@@ -114,7 +117,7 @@ export default class extends Component {
 
     this.list.date = date
     // later
-    this.props.getJobByDate(this.renderDate(date) + "/1", accessToken, (error, data) => { })
+    this.props.getJobByDate(this.renderDate(date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { })
   }
 
 

@@ -1,11 +1,11 @@
 import material from '~/theme/variables/material'
 
 export default {
-    wrapItems: { 
-        width: '100%', 
-        flexDirection: 'row', 
-        backgroundColor: '#fff', 
-        borderBottomColor: material.grayHideColor, 
+    wrapItems: {
+        width: '100%',
+        flexDirection: 'row',
+        backgroundColor: '#fff',
+        borderBottomColor: material.grayHideColor,
         borderBottomWidth: 1,
         height: 70,
     },
@@ -32,7 +32,7 @@ export default {
         borderRadius: 5
     },
     address: {
-        
+
     },
     itemsJob: {
         paddingHorizontal: 10,
@@ -42,11 +42,11 @@ export default {
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingTop: 10,
-        width: '85%',
-        alignItems: 'center'
+        width: material.deviceWidth - 15,
+        alignItems: 'center',
+        paddingRight: 10
     },
     textbottom: {
         fontSize: 14,
-        flex: 1,
     }
 }
