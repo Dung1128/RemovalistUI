@@ -10,11 +10,7 @@ import styles from './styles'
 export default class extends Component {
     render() {
         return (
-            this.props.isPending ?
-                <View style={styles.container}>
-                    <Spinner color={material.redColor} />
-                </View>
-                : null
+            this.props.isPending ? <Spinner style={styles.container} color={material.redColor} /> : null
         )
     }
 }
