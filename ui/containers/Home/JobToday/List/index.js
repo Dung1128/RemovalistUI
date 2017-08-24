@@ -46,6 +46,7 @@ export default class extends Component {
 
     componentDidMount() {
         this.props.onItemRef && this.props.onItemRef(this)
+        console.log(this.props.onItemRef(this))
     }
 
     componentWillReceiveProps({ listJobByDate }) {
@@ -59,15 +60,15 @@ export default class extends Component {
 
     refreshList() {
         // this.setState({ isRefreshing: true });
-        this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
-            if (data) {
-                this.setState({
-                    dataSource: data.JobListItemObjects,
-                    // isRefreshing: false
+        // this.props.getJobByDate(this.renderDate(this.date), accessToken, (error, data) => {
+        //     if (data) {
+        //         this.setState({
+        //             dataSource: data.JobListItemObjects,
+        //             // isRefreshing: false
 
-                })
-            }
-        })
+        //         })
+        //     }
+        // })
     }
 
     renderRow(data) {

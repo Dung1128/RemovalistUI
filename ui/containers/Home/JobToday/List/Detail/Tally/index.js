@@ -203,7 +203,7 @@ export default class extends Component {
         return (
             <Container>
                 <Header title='Tally Service' textright='EDIT' size={20} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
-                    <Content>
+                    <Content style={{ backgroundColor :material.grayTitle}}>
                         <View style={{...styles.status, backgroundColor: this.state.colorStatus }}>
                             <Text>Status</Text>
                             <Text>Unpaid</Text>
