@@ -28,19 +28,23 @@ export default class extends Component {
         this.arrNumber = [
             {
                 id: 0,
-                name: 'Today'
+                name: 'Today',
+                key: 1,
             },
             {
                 id: 1,
-                name: '3 days'
+                name: '3 days',
+                key: 3
             },
             {
                 id: 2,
-                name: 'This week'
+                name: 'This week',
+                key: 7
             },
             {
                 id: 3,
-                name: 'This month'
+                name: 'This month',
+                key: 30
             },
         ]
     }

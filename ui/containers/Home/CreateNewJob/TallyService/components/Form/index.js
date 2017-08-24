@@ -95,7 +95,7 @@ const StatusInputField = ({ input, meta: { touched, error, warning, submitFailed
 
             <View style={{
                 ...styles.wrapItem,
-                borderBottomColor: error ? material.redColor : material.grayTitle,
+                borderBottomColor: touched && error ? material.redColor : material.grayTitle,
             }}>
                 <Field name={`${member}.status`} component={DropDownField} nameIcon={nameIcon} listItems={listItems} />
                 <View style={styles.border} />

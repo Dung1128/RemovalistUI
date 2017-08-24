@@ -67,6 +67,7 @@ export default class extends Component {
   }
 
   componentDidMount() {
+    this.props.getStatusJobList(accessToken, (error, data) => { })
     this.props.getMaterialList(accessToken, (error, data) => { })
     this.props.getMaterialCategoryList(accessToken, (error, data) => { })
     this.props.getTruckList(accessToken, (error, data) => { })

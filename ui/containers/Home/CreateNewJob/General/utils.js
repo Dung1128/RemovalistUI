@@ -64,7 +64,7 @@ export const validate = values => {
 
     }
     // check status
-    if (values.status.JobStatusId != 1) {
+    if (values.status && values.status.JobStatusId != 1) {
         if (values.truck.TruckId == 0) {
             errors.truck = 'Required'
         }
