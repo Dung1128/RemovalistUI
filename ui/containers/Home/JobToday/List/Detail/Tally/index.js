@@ -202,7 +202,7 @@ export default class extends Component {
         console.log(this.state.dataFuel)
         return (
             <Container>
-                <Header title='Tally' textright='EDIT' size={20} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
+                <Header title='Tally Service' textright='EDIT' size={20} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
                     <Content>
                         <View style={{...styles.status, backgroundColor: this.state.colorStatus }}>
                             <Text>Status</Text>
@@ -258,9 +258,9 @@ export default class extends Component {
                                 }
                             }) 
                         }}/>*/}
-                        <View style={styles.Title}>
+                        {/*<View style={styles.Title}>
                             <Text style={styles.txtBold}>Payment Method</Text>                      
-                        </View>
+                        </View>*/}
                         <View style={styles.Title}>
                             <Text style={styles.txtBold}>Service Time</Text>
                             {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
@@ -302,10 +302,10 @@ export default class extends Component {
                             <Text style={styles.txtBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
                         </View>
 
-                        <View style={{...styles.Title, paddingRight: 50}}>
+                        {/*<View style={{...styles.Title, paddingRight: 50}}>
                             <Text style={styles.txtBold}>Surcharge</Text>
                             <Text style={styles.txtBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
-                        </View>
+                        </View>*/}
                       
                         <View style={{...styles.Title, backgroundColor: '#fff'}}>
                             <Text style={styles.total}>Total</Text>
@@ -364,7 +364,7 @@ export default class extends Component {
                         width:material.deviceWidth,
                         backgroundColor:'white',
                         }}>
-                        <Text style={{ fontSize: 14, color: material.grayColor}}>Select Invoice method to client</Text>
+                        <Text style={{ fontSize: 14, color: material.grayColor}}>Select Invoice method for client</Text>
                         <Text style={styles.txtBold}>{this.state.JobDetails.Contact[0].CompanyName}</Text>
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
                         <TouchableOpacity style={styles.itemAction}>

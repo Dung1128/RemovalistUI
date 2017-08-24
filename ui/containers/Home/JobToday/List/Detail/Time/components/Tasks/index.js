@@ -1,24 +1,81 @@
 import React, { Component } from 'react';
-import {
-    Header,
-    Left,
-    Right,
-    Text,
-    View,
-    Title,
-    Button,
-    Input
-} from 'native-base';
-import material from '~/theme/variables/material'
-import Icon from '~/ui/components/Icon';
-import ButtonIcon from '~/ui/components/ButtonIcon';
+import { Text } from 'react-native';
+import { View, Input } from 'native-base';
+
+import InputRow from '~/ui/elements/InputRow';
+
+const rowTask = [];
+rowTask.push({
+    hint: 'Task desciption',
+    nameIcon: 'note',
+    add: 'true',
+    addIcon:'add'
+})
+
 export default class extends Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.state = ({
+            listTask: rowTask,
+        });
+
+    }
+
+    addTask() {
+
+        let newList = this.state.listTask
+        newList.push({
+            hint: 'Task desciption',
+            nameIcon: 'note',
+            add: 'true',
+            addIcon:'delete'
+        })
+
+        console.log(newList)
+
+        this.setState({
+            listTask: newList
+        })
+    }
+
+    deleteTask() {
+        let newList = this.state.listTask
+        newList.pop({
+            hint: 'Task desciption',
+            nameIcon: 'note',
+            add: 'true',
+            addIcon:'delete'
+        })
+
+        console.log(newList)
+
+        this.setState({
+            listTask: newList
+        })
+    }
+
+    renderRow(item,index) {
         return (
-            <View  style={{ backgroundColor: '#fff', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10}}>
-                <Icon name='note' size={20} color={material.grayIconColor} />
-                <Input placeholder='Tasks description' />
+            <View key={index}>
+                <InputRow
+                    hint='Task desciption'
+                    nameIcon='note'
+                    add='true'
+                    addIcon={index == 0 ? 'add' : 'delete'}
+                    onPress={() => index == 0 ? this.addTask() : this.deleteTask()}
+                />
             </View>
         )
     }
-}
+
+
+    render() {
+        return (
+            <View collapsable={false}>
+                {
+                    this.state.listTask.map((item, index) => this.renderRow(item, index))
+                }
+            </View>
+        );
+    }
+} 

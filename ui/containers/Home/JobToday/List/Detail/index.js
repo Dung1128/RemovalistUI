@@ -138,7 +138,7 @@ export default class extends Component {
         return (
 
             <Container>
-                <Header title='Job details' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
+                <Header title='Job details' textright='EDIT' iconLeft='back' onPress={() => this.props.navigation.goBack()} />
 
                 <Content style={{ backgroundColor: material.grayBackgroundColor }}>
 
