@@ -234,16 +234,16 @@ export default class extends Component {
                     <TitleItem title='Your tasks' />
                     <Tasks />
                     <TitleItem title='Pick Up' />
-                    <RowItem icon='map' title={this.state.JobDetails.JobLocations[0].AddressLine1} />
+                    <RowItem icon='map' title={this.state.JobDetails.JobLocations[0].AddressLine2} />
                     <TitleItem title='Drop Off' />
-                    <RowItem icon='map' title={this.state.JobDetails.JobLocations[1].AddressLine1} />
+                    <RowItem icon='map' title={this.state.JobDetails.JobLocations[1].AddressLine2} />
                 </Content>
                 {
                     this.state.JobDetails.StatusId > 2 ?
                         <Button
                             text={!done ? 'START' : 'COMPLETE'}
-                            style={{ width: '100%', height: 60, backgroundColor: !done ? material.redColor : material.greenColor }}
-
+                            style={{ width: '100%', height: 60 }}
+                            color={ !done ? material.redColor : material.greenColor}
                             onPress={() => this.onPress()}
                         />
                         :

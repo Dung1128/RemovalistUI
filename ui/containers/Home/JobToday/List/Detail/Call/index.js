@@ -60,12 +60,11 @@ export default class extends Component {
                     <TitleItem title='Customer Info' />
                         <View white style={{ paddingHorizontal: 5 }}>
                             <RowItem icon='user' title={JobDetails.Contact[0].CompanyName} />
-                            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
                             {
                                 JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
                             }
          
-                        </View>
+                            </View>
                  
                     <TitleItem title='Self Storage' />
                         {
