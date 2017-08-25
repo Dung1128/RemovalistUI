@@ -202,9 +202,9 @@ export default class extends Component {
                 {
                     text: 'OK', onPress: () => {
                         console.log('send invoice' + type)
-                        this.props.getSendInvoice(this.state.JobDetails.JobDetailsId, type, accessToken, (error, data) => {
+                        // this.props.getSendInvoice(this.state.JobDetails.JobDetailsId, type, accessToken, (error, data) => {
                             Alert.alert('Notify', 'Send invoice susscess!')
-                        })
+                        // })
                         this.setModalVisible()
                     }
                 },
