@@ -56,6 +56,17 @@ export default class extends Component {
             JobDetailsId: '',
             Task: [],
         }
+        this.arrayPickup =[]
+        this.arrayDropOff =[]
+
+        for (const i = 0; i < this.props.navigation.state.params.JobDetails.JobLocations.length; i++) {
+            if(this.props.navigation.state.params.JobDetails.JobLocations[i].IsPickUp == true) {
+                this.arrayPickup.push(this.props.navigation.state.params.JobDetails.JobLocations[i])
+            }
+            else {
+                this.arrayDropOff.push(this.props.navigation.state.params.JobDetails.JobLocations[i])
+            }
+        }
 
 
     }
@@ -76,6 +87,10 @@ export default class extends Component {
                 finish: (new Date(this.state.Delivery.FinishTime).getHours() - 14) + ':' + new Date(this.state.Delivery.FinishTime).getMinutes(),
             })
         }
+
+        console.log(this.arrayPickup)
+        console.log('hihi')
+        console.log(this.arrayDropOff)
     }
 
     duration() {
@@ -188,6 +203,13 @@ export default class extends Component {
     onPress() {
         !this.state.done ? this.actionStart() : this.actionComplete()
     }
+    renderJobLocation(item, index) {
+        return (
+            <View white style={{ paddingHorizontal: 5 }}>             
+                <RowItem icon='map' title={item.AddressLine2} />                 
+            </View>
+        )
+    }
 
     render() {
         const { done, time, date, starttime, finish, duration, durationStart } = this.state;
@@ -234,9 +256,13 @@ export default class extends Component {
                     <TitleItem title='Your tasks' />
                     <Tasks />
                     <TitleItem title='Pick Up' />
-                    <RowItem icon='map' title={this.state.JobDetails.JobLocations[0].AddressLine2} />
+                        {
+                            this.arrayPickup.map((item, index) => this.renderJobLocation(item, index))
+                        }
                     <TitleItem title='Drop Off' />
-                    <RowItem icon='map' title={this.state.JobDetails.JobLocations[1].AddressLine2} />
+                        {
+                            this.arrayDropOff.map((item, index) => this.renderJobLocation(item, index))
+                        }
                 </Content>
                 {
                     this.state.JobDetails.StatusId > 2 ?

@@ -108,25 +108,33 @@ export default class extends Component {
         const day = new Date(start).toLocaleDateString()
         // const month = new Date(start).getMonth() + 1;
         // const day = new Date(start).getDate();
-        const hourStart = (new Date(start).getHours());
-        const hourEnd = (new Date(end).getHours());
-        const minutesStart = new Date(start).getMinutes();
-        const minutesEnd = new Date(end).getMinutes();
-        var diff = Math.abs(start - end);
+        // const hourStart = (new Date(start).getHours());
+        // const hourEnd = (new Date(end).getHours());
+        // const minutesStart = new Date(start).getMinutes();
+        // const minutesEnd = new Date(end).getMinutes();
+        // var diff = Math.abs(start - end);
 
-        let minutesStartValue = new Date(start).getHours() * 60 + new Date(start).getMinutes();
-        let minutesEndValue = new Date(end).getHours() * 60 + new Date(end).getMinutes();
-        let sub = minutesEndValue - minutesStartValue;
-        let hour = Math.floor(sub / 60);
-        let minutes = sub - hour * 60;
+        // let minutesStartValue = new Date(start).getHours() * 60 + new Date(start).getMinutes();
+        // let minutesEndValue = new Date(end).getHours() * 60 + new Date(end).getMinutes();
+        // let sub = minutesEndValue - minutesStartValue;
+        // let hour = Math.floor(sub / 60);
+        // let minutes = sub - hour * 60;
 
-        let showHours = hour > 10 ? hour : '0' + hour;
-        let showMinutes = minutes > 10 ? minutes : '0' + minutes;
+        // let showHours = hour > 10 ? hour : '0' + hour;
+        // let showMinutes = minutes > 10 ? minutes : '0' + minutes;
+        
+
+        // duration
+
+        let hour = end && start ? moment(end).diff(start, 'hour') : 0;
+        let minutes = end && start ? moment(end).diff(start, 'minutes') : 0;
+        let checkMinutes = minutes % 60;
+        let duration = `${hour}h ${checkMinutes != 0 ? checkMinutes : ''}`;
 
         this.setState({
             date: day,
             time: `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`,
-            duration: 'Duration: ' + showHours + ':' + showMinutes + ' h'
+            duration: 'Duration: ' + duration
         })
     }
 
