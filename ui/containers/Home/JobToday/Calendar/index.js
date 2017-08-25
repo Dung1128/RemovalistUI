@@ -47,7 +47,7 @@ export default class extends Component {
       return;
     }
 
-    let left = 20;
+    let left = 30;
 
     if (data) {
       for (const i = 0; i < data.length; i++) {
@@ -128,6 +128,7 @@ export default class extends Component {
         }}>
           <View style={{
             width: 60,
+            marginTop: material.platform == 'ios' ? 0 : -10
           }}>
             {labels}
           </View>

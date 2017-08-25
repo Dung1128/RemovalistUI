@@ -68,7 +68,7 @@ const formatHM = ({ hours: h, minutes: m }) =>
             status: stateProps.listStatus[0],
             datetime: {
                 date: new Date(),
-                timeStart: formatHM(ownProps.navigation.state.params || ''),
+                timeStart: formatHM(ownProps.navigation.state.params || moment(new Date()).format('HH:m')),
                 timeEnd: ''
             }
         },

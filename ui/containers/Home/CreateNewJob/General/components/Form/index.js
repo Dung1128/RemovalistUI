@@ -140,8 +140,9 @@ const DateField = ({ input, label, meta: { touched, error, warning, submitFailed
 
 
 const StartEndField = ({ input, label, meta: { touched, error, warning }, member }) => {
-    let hour = input.value.timeEnd && input.value.timeStart ? moment(input.value.timeEnd).diff(input.value.timeStart, 'hour') : 0;
-    let minutes = input.value.timeEnd && input.value.timeStart ? moment(input.value.timeEnd).diff(input.value.timeStart, 'minutes') : 0;
+    const checktimeStart = input.value.timeStart ? input.value.timeStart : moment(new Date()).format("YYYY-MM-DD HH:mm")
+    let hour = input.value.timeEnd ? moment(input.value.timeEnd).diff(checktimeStart, 'hour') : 0;
+    let minutes = input.value.timeEnd ? moment(input.value.timeEnd).diff(checktimeStart, 'minutes') : 0;
     let checkMinutes = minutes % 60;
     let duration = `${hour}h ${checkMinutes != 0 ? checkMinutes : ''}`;
     return (

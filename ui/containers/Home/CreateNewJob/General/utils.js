@@ -52,7 +52,7 @@ export const validate = values => {
         if (new Date(values.datetime.timeStart).toTimeString() < new Date().toTimeString()) {
             datetimeErrors.timeEnd = "Time is can't be less than time now";
         }
-        if (!values.datetime.timeStart || !values.datetime.timeEnd) {
+        if (!values.datetime.timeEnd) {
             datetimeErrors.timeEnd = 'Required';
         }
         if (values.datetime.timeStart > values.datetime.timeEnd) {
