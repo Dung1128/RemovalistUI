@@ -19,11 +19,12 @@ import Icon from '~/ui/components/Icon';
 import Button from '~/ui/components/Button';
 import Header from '~/ui/components/Header';
 import TitleItem from '~/ui/components/TitleItem';
+import SearchBar from '~/ui/components/SearchBar';
 import IconIonicons from 'react-native-vector-icons/dist/Ionicons';
 
 import { connect } from 'react-redux'
 import * as jobSelectors from '~/store/selectors/job';
-import { levenSearch } from '~/ui/utils'
+
 
 @connect(
     state => ({
@@ -39,7 +40,7 @@ export default class extends Component {
                 TruckId: 0,
                 TruckName: 'Select Truck'
             },
-            arrSearch: []
+            arrSearch: [{ TruckId: 0, TruckName: 'Select Truck' }, ...props.listTruck]
         });
 
     }
@@ -59,9 +60,10 @@ export default class extends Component {
     }
 
     search(value, myArray) {
+        const { listTruck } = this.props;
         const arrSearch = levenSearch(value.trim(), myArray, item => item.TruckName)
         this.setState({
-            arrSearch
+            arrSearch: value != 0 ? arrSearch : [{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]
         })
     }
 
@@ -107,22 +109,15 @@ export default class extends Component {
                     onRequestClose={() => this.setModalVisible()}>
                     <View container white>
                         <Header title='Select item' iconLeft='close' onPress={() => this.setModalVisible()} />
-                        <View full style={{ backgroundColor: material.redColor, paddingHorizontal: 15, paddingBottom: 10 }}>
-                            <View row white style={{ borderRadius: 5 }}>
-                                <IconIonicons name='ios-search' size={24} color={material.grayIconColor} style={{ paddingHorizontal: 10 }} />
-                                <Input
-                                    autoCapitalize={'none'}
-                                    autoCorrect={false}
-                                    onChangeText={(value) => this.search(value, listTruck)}
-                                    placeholder='Search'
-                                    placeholderTextColor={material.grayColor}
-                                    style={{ height: 40 }} />
-                            </View>
 
-                        </View>
+                        <SearchBar
+                            dataArray={[{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]}
+                            onChange={(value) => this.setState({ arrSearch: value })}
+                            searchByName='TruckName'
+                        />
                         <TitleItem style={{ padding: 0, backgroundColor: material.grayBackgroundColor }} />
 
-                        <List dataArray={arrSearch.length > 0 ? [{ TruckId: 0, TruckName: 'Select Truck' }, ...arrSearch] : [{ TruckId: 0, TruckName: 'Select Truck' }, ...listTruck]}
+                        <List dataArray={arrSearch}
                             renderRow={(item) => this.renderRow(item)}>
                         </List>
                     </View>
