@@ -47,13 +47,14 @@ export const validate = values => {
     }
     if (values.datetime) {
         let datetimeErrors = {};
-        if (new Date(values.datetime.timeStart).toTimeString() < new Date().toTimeString()) {
+        console.log(moment(values.datetime.timeStart).format('HH:mm') < moment(new Date()).format('HH:mm'))
+        if (moment(values.datetime.timeStart).format('HH:mm') < moment(new Date()).format('HH:mm')) {
             datetimeErrors.timeEnd = "It's not allowed to choose time in the past";
         }
         if (!values.datetime.timeEnd) {
-            datetimeErrors.timeEnd = 'Required';
+            datetimeErrors.timeEnd = 'End time is required';
         }
-        if (values.datetime.timeStart >= values.datetime.timeEnd) {
+        if (values.datetime.timeEnd && values.datetime.timeStart > values.datetime.timeEnd) {
             datetimeErrors.timeEnd = 'Start time is required to be less than end time'
         }
         if (datetimeErrors && datetimeErrors.timeEnd) {
