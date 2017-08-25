@@ -57,6 +57,10 @@ export const postNewJob = (...args) => ({
     args
 })
 
+export const getSendInvoice = (...args) => ({
+    type: 'job/getSendInvoice',
+    args
+})
 
 
 // actions called by sagas

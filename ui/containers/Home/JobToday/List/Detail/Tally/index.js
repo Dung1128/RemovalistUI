@@ -9,7 +9,7 @@ import InputRow from '~/ui/elements/InputRow';
 import InfoTally from './components/InfoTally'
 import Button from '~/ui/components/Button'
 import Icon from '~/ui/components/Icon';
-import { TouchableOpacity } from 'react-native'
+import { TouchableOpacity, Alert } from 'react-native'
 import Communications from 'react-native-communications';
 import { connect } from 'react-redux'
 
@@ -195,6 +195,23 @@ export default class extends Component {
         this.setModalVisible();
     }
 
+    sendInvoice(type, text) {
+        Alert.alert('Notify', 'Are you sure to send invoice '+text + ' ?',
+            [
+                { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+                {
+                    text: 'OK', onPress: () => {
+                        console.log('send invoice' + type)
+                        // this.props.getSendInvoice(this.state.JobDetails.JobDetailsId, type, accessToken, (error, data) => {
+                            Alert.alert('Notify', 'Send invoice susscess!')
+                        // })
+                        this.setModalVisible()
+                    }
+                },
+            ],
+            { cancelable: false }
+        );
+    }
 
     render() {
         console.log(this.state.JobDetails.JobDetailsMaterials)
@@ -367,24 +384,30 @@ export default class extends Component {
                         <Text style={{ fontSize: 14, color: material.grayColor}}>Select Invoice method for client</Text>
                         <Text style={styles.txtBold}>{this.state.JobDetails.Contact[0].CompanyName}</Text>
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
-                        <TouchableOpacity style={styles.itemAction}>
-                            <TouchableOpacity style={styles.buttonAction}>
+                        <TouchableOpacity style={styles.itemAction}
+                            onPress={() => this.sendInvoice(1,'to SMS')}>
+                            <TouchableOpacity style={styles.buttonAction}
+                                onPress={() => this.sendInvoice(1, 'to SMS')}>
                                 <Icon name='sms' size={22} color={material.whiteColor}/>
                             </TouchableOpacity>
                             <Text style={styles.txtAction}>SMS</Text>
                         </TouchableOpacity>
 
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
-                        <TouchableOpacity style={styles.itemAction}>
-                            <TouchableOpacity style={styles.buttonAction}>
+                        <TouchableOpacity style={styles.itemAction}
+                            onPress={() => this.sendInvoice(2, 'to Email')}>
+                            <TouchableOpacity style={styles.buttonAction}
+                                onPress={() => this.sendInvoice(2, 'to Email')}>
                                 <Icon name='send-email' size={22} color={material.whiteColor}/>
                             </TouchableOpacity>
                             <Text style={styles.txtAction}>Email</Text>
                         </TouchableOpacity>
 
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
-                        <TouchableOpacity style={styles.itemAction}>
-                            <TouchableOpacity style={styles.buttonAction}>
+                        <TouchableOpacity style={styles.itemAction}
+                            onPress={() => this.sendInvoice(3, 'to Postcode')}>
+                            <TouchableOpacity style={styles.buttonAction}
+                                onPress={() => this.sendInvoice(3, 'to Postcode')}>
                                 <Icon name='send-invoice' size={22} color={material.whiteColor}/>
                             </TouchableOpacity>
                             <Text style={styles.txtAction}>Postcode</Text>
