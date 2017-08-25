@@ -94,16 +94,6 @@ export default class extends Component {
     }
 
     duration() {
-        // let hour = moment(finish).diff(start, 'hour');
-        // console.log(hour);
-        // let minutes = moment(finish).diff(start, 'minutes');
-        // console.log(minutes)
-        // let checkMinutes = minutes % 60;
-        // let duration = `${hour}: ${checkMinutes != 0 ? checkMinutes : '00'}`;
-        // console.log(duration)
-        // this.setState({
-        //     duration: duration
-        // })
         let minutesStart = (new Date(this.state.start).getHours() - 7) * 60 + new Date(this.state.start).getMinutes();
         let minutesEnd = (new Date(this.state.end).getHours() - 7) * 60 + new Date(this.state.end).getMinutes();
 

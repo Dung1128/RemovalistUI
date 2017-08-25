@@ -48,6 +48,8 @@ export default {
     },
     updateStatusJob(data, accessToken) {
         return apiPost(`/api/JobDetails/UpdateJobDetailsStatus`, data, accessToken)
-    }
-
+    },
+    getSendInvoice(id, type, accessToken) {
+        return apiGetNoKey('api/invoice/'+`${id}/${type}`, accessToken)
+    },
 }

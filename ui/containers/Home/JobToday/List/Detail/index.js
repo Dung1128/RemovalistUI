@@ -68,7 +68,7 @@ export default class extends Component {
             right={
                 <View row style={{ justifyContent: 'space-between', width: '20%' }}>
                     <ButtonIcon icon='sms' size={18} color='#fff'
-                        onPress={() => Communications.text(item, 'hello, im dung')}
+                        onPress={() => Communications.text(item)}
                     />
                     <ButtonIcon icon='call' size={18} color='#fff'
                         onPress={() => Communications.phonecall(item, true)}
@@ -106,24 +106,6 @@ export default class extends Component {
 
     renderTime(start, end) {
         const day = new Date(start).toLocaleDateString()
-        // const month = new Date(start).getMonth() + 1;
-        // const day = new Date(start).getDate();
-        // const hourStart = (new Date(start).getHours());
-        // const hourEnd = (new Date(end).getHours());
-        // const minutesStart = new Date(start).getMinutes();
-        // const minutesEnd = new Date(end).getMinutes();
-        // var diff = Math.abs(start - end);
-
-        // let minutesStartValue = new Date(start).getHours() * 60 + new Date(start).getMinutes();
-        // let minutesEndValue = new Date(end).getHours() * 60 + new Date(end).getMinutes();
-        // let sub = minutesEndValue - minutesStartValue;
-        // let hour = Math.floor(sub / 60);
-        // let minutes = sub - hour * 60;
-
-        // let showHours = hour > 10 ? hour : '0' + hour;
-        // let showMinutes = minutes > 10 ? minutes : '0' + minutes;
-        
-
         // duration
 
         let hour = end && start ? moment(end).diff(start, 'hour') : 0;

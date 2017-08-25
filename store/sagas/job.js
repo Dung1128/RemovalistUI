@@ -127,6 +127,15 @@ const requestPostNewJob = createRequestSaga({
 });
 
 
+const requestgetSendInvoice = createRequestSaga({
+    request: api.job.getSendInvoice,
+    key: 'getSendInvoice',
+    success: [
+
+    ],
+    failure: [(error) => setToast('Couldn\'t send invoice', 'error')]
+});
+
 // root saga reducer
 export default [
     // like case return, this is take => call
@@ -147,6 +156,7 @@ export default [
             takeLatest('job/postDeliveryCreate', requestPostDeliveryCreate),
             takeLatest('job/updateStatusJob', requestUpdateStatusJob),
             takeLatest('job/postNewJob', requestPostNewJob),
+            takeLatest('job/getSendInvoice', requestgetSendInvoice),
         ]);
     }
 ];
