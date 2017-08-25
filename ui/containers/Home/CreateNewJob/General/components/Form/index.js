@@ -154,7 +154,7 @@ const StartEndField = ({ input, label, meta: { dirty, touched, error, warning },
                 <Field name={`${member}.timeEnd`} component={DateField} mode='time' />
             </View>
             <Text style={styles.txttitledate}>Duration: {duration}</Text>
-            {dirty && error && <Text wraning>{error.timeEnd}</Text>}
+            {(dirty || touched) && error && <Text wraning>{error.timeEnd}</Text>}
         </View>
     )
 }

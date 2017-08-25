@@ -168,6 +168,7 @@ export default class extends Component {
     }
 
     renderForm(values) {
+        let arr = [];
         const { delivery } = this.state;
         const { servicetime, traveltime, fuel, material } = values;
         servicetime.MaterialId = servicetime.status.MaterialId;
@@ -177,17 +178,32 @@ export default class extends Component {
         for (const i = 0; i < material.length; i++) {
             material[i].MaterialId = material[i].status.MaterialId;
         }
-        if (servicetime.NumberOfMaterial && traveltime.NumberOfMaterial
-            && fuel.NumberOfMaterial && material[0].NumberOfMaterial) {
-            return [
-                servicetime,
-                traveltime,
-                fuel,
-                ...material
-            ]
-        } else {
-            return ""
+
+
+        if (servicetime.NumberOfMaterial) {
+            arr.push(servicetime)
         }
+        if (traveltime.NumberOfMaterial) {
+            arr.push(traveltime)
+        }
+        if (fuel.NumberOfMaterial) {
+            arr.push(fuel)
+        }
+
+        return material && material[0].NumberOfMaterial ? [...arr, ...material] : arr
+
+
+        // if (servicetime.NumberOfMaterial && traveltime.NumberOfMaterial
+        //     && fuel.NumberOfMaterial && material[0].NumberOfMaterial) {
+        //     return [
+        //         servicetime,
+        //         traveltime,
+        //         fuel,
+        //         ...material
+        //     ]
+        // } else {
+        //     return ""
+        // }
 
 
     }

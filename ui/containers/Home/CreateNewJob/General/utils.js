@@ -47,7 +47,6 @@ export const validate = values => {
     }
     if (values.datetime) {
         let datetimeErrors = {};
-        console.log(moment(values.datetime.timeStart).format('HH:mm') < moment(new Date()).format('HH:mm'))
         if (moment(values.datetime.timeStart).format('HH:mm') < moment(new Date()).format('HH:mm')) {
             datetimeErrors.timeEnd = "It's not allowed to choose time in the past";
         }
