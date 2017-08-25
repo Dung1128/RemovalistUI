@@ -134,7 +134,7 @@ const DateField = ({ input, label, meta: { touched, error, warning, submitFailed
             {...input}
             mode={mode}
         />
-        {mode != 'time' && touched && error && <Text wraning>{error}</Text>}
+
     </View>
 )
 
@@ -165,13 +165,15 @@ const selector = formValueSelector('CustomerInfo')
 export const DateTimeField = connect((state) => ({
     datetime: selector(state, 'datetime'),
 }))(({ name, datetime }) => {
-    const checkdate = moment(new Date()).format("YYYY-MM-DD")
+    const checkdate = moment(datetime.date).format("YYYY-MM-DD") == moment(new Date()).format("YYYY-MM-DD") ? true : false
+    const errordate = moment(datetime.date).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD") ? true : false
     return (
         <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
             <View style={styles.itemTime}>
                 <Text style={styles.txttitledate}>Date</Text>
-                <Field name={`${name}.date`} component={DateField} />
-                {datetime.date == checkdate.toString() && <Text style={styles.txttitledate}>Today</Text>}
+                <Field name={`${name}.date`} component={DateField} mode='date' />
+                {checkdate && <Text style={styles.txttitledate}>Today</Text>}
+                {errordate && <Text wraning>Date is can't be less than date now</Text>}
             </View>
             <View style={styles.border} />
             <Field name={name} member={name} component={StartEndField} />
