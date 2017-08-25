@@ -1,3 +1,4 @@
+import moment from 'moment'
 export const validate = values => {
 
     const errors = {}
@@ -46,7 +47,7 @@ export const validate = values => {
     }
     if (values.datetime) {
         let datetimeErrors = {};
-        if (new Date(values.datetime.date).toLocaleDateString() < new Date().toLocaleDateString()) {
+        if (moment(values.datetime.date).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD")) {
             datetimeErrors.date = "Date is can't be less than date now";
         }
         if (new Date(values.datetime.timeStart).toTimeString() < new Date().toTimeString()) {

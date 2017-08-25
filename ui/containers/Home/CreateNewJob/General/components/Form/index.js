@@ -165,13 +165,13 @@ const selector = formValueSelector('CustomerInfo')
 export const DateTimeField = connect((state) => ({
     datetime: selector(state, 'datetime'),
 }))(({ name, datetime }) => {
-    const checkdate = new Date()
+    const checkdate = moment(new Date()).format("YYYY-MM-DD")
     return (
         <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
             <View style={styles.itemTime}>
                 <Text style={styles.txttitledate}>Date</Text>
                 <Field name={`${name}.date`} component={DateField} />
-                {datetime.date.toString() == checkdate.toString() && <Text style={styles.txttitledate}>Today</Text>}
+                {datetime.date == checkdate.toString() && <Text style={styles.txttitledate}>Today</Text>}
             </View>
             <View style={styles.border} />
             <Field name={name} member={name} component={StartEndField} />

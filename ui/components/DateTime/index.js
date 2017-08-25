@@ -18,7 +18,7 @@ export default class extends Component {
     }
 
     handleSelect(date) {
-        const time = moment(date).format("YYYY-MM-DD HH:mm")
+        const time = moment(date).format("YYYY-MM-DD")
         this.props.onChange && this.props.onChange(time)
         this.setState({ visible: false })
     }
