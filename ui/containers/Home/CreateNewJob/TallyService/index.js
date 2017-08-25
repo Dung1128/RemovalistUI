@@ -105,7 +105,7 @@ export default class extends Component {
                 this.setState({
                     loading: false
                 })
-                Alert.alert('Notify', 'Error');
+                Alert.alert('Notify', 'Error, please check your network.!');
             }
         })
     }
@@ -195,7 +195,7 @@ export default class extends Component {
 
     sumPrice() {
         const { servicetime, traveltime, fuel, material } = this.props;
-        if (servicetime && traveltime && fuel && material && material[0] && material[0].NumberOfMaterial) {
+        if (servicetime) {
             let materialvalue = material.map(input => (input.status && input.status.CategoryId ? (input.status.PricePerUnit * input.NumberOfMaterial) : 0))
                 .reduce((a, b) => a + b);
             let price = ((servicetime.NumberOfMaterial || 0) * (servicetime.status.PricePerUnit || 0))

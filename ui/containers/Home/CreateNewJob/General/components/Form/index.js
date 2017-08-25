@@ -134,7 +134,7 @@ const DateField = ({ input, label, meta: { touched, error, warning, submitFailed
             {...input}
             mode={mode}
         />
-        {!mode && (submitFailed || touched) && error && <Text wraning>{error}</Text>}
+        {mode != 'time' && touched && error && <Text wraning>{error}</Text>}
     </View>
 )
 
