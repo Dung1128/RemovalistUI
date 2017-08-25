@@ -47,17 +47,13 @@ export const validate = values => {
     }
     if (values.datetime) {
         let datetimeErrors = {};
-        console.log(values.datetime.date, moment(values.datetime.date).format("YYYY-MM-DD"), moment(new Date()).format("YYYY-MM-DD"))
-        if (moment(values.datetime.date).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD")) {
-            datetimeErrors.date = "Date is can't be less than date now";
-        }
         if (new Date(values.datetime.timeStart).toTimeString() < new Date().toTimeString()) {
-            datetimeErrors.timeEnd = "Time is can't be less than time now";
+            datetimeErrors.timeEnd = "It's not allowed to choose time in the past";
         }
         if (!values.datetime.timeEnd) {
             datetimeErrors.timeEnd = 'Required';
         }
-        if (values.datetime.timeStart > values.datetime.timeEnd) {
+        if (values.datetime.timeStart >= values.datetime.timeEnd) {
             datetimeErrors.timeEnd = 'Start time is required to be less than end time'
         }
         if (datetimeErrors && datetimeErrors.timeEnd) {

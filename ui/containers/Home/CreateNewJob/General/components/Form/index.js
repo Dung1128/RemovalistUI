@@ -134,13 +134,13 @@ const DateField = ({ input, label, meta: { touched, error, warning, submitFailed
             {...input}
             mode={mode}
         />
-
     </View>
 )
 
 
-const StartEndField = ({ input, label, meta: { touched, error, warning }, member }) => {
+const StartEndField = ({ input, label, meta: { dirty, touched, error, warning }, member }) => {
     const checktimeStart = input.value.timeStart ? input.value.timeStart : moment(new Date()).format("YYYY-MM-DD HH:mm")
+    const checkTimeNow = input.value.timeStart < moment(new Date()).format("YYYY-MM-DD HH:mm") ? true : false
     let hour = input.value.timeEnd ? moment(input.value.timeEnd).diff(checktimeStart, 'hour') : 0;
     let minutes = input.value.timeEnd ? moment(input.value.timeEnd).diff(checktimeStart, 'minutes') : 0;
     let checkMinutes = minutes % 60;
@@ -154,7 +154,7 @@ const StartEndField = ({ input, label, meta: { touched, error, warning }, member
                 <Field name={`${member}.timeEnd`} component={DateField} mode='time' />
             </View>
             <Text style={styles.txttitledate}>Duration: {duration}</Text>
-            {touched && error && <Text wraning>{error.timeEnd}</Text>}
+            {dirty && error && <Text wraning>{error.timeEnd}</Text>}
         </View>
     )
 }
@@ -166,14 +166,12 @@ export const DateTimeField = connect((state) => ({
     datetime: selector(state, 'datetime'),
 }))(({ name, datetime }) => {
     const checkdate = moment(datetime.date).format("YYYY-MM-DD") == moment(new Date()).format("YYYY-MM-DD") ? true : false
-    const errordate = moment(datetime.date).format("YYYY-MM-DD") < moment(new Date()).format("YYYY-MM-DD") ? true : false
     return (
         <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
             <View style={styles.itemTime}>
                 <Text style={styles.txttitledate}>Date</Text>
-                <Field name={`${name}.date`} component={DateField} mode='date' />
+                <Field name={`${name}.date`} component={DateField} />
                 {checkdate && <Text style={styles.txttitledate}>Today</Text>}
-                {errordate && <Text wraning>Date is can't be less than date now</Text>}
             </View>
             <View style={styles.border} />
             <Field name={name} member={name} component={StartEndField} />
