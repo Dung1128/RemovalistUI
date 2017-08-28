@@ -1,23 +1,5 @@
 import moment from 'moment'
-import { store } from '~/store/config'
-import { formValueSelector } from 'redux-form';
 
-const formCustomerSelectors = formValueSelector('CustomerInfo')
-
-export const initialValues = {
-    pickup: [{
-        Time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
-        AddressLine1: '',
-        AddressLine2: '',
-        Notes: ''
-    }],
-    dropoff: [{
-        Time: moment(new Date()).format("YYYY-MM-DD HH:mm"),
-        AddressLine1: '',
-        AddressLine2: '',
-        Notes: ''
-    }],
-}
 export const validate = (values, { navigation }) => {
     const errors = {}
     // prev props

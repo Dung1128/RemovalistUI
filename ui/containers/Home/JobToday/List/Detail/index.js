@@ -53,7 +53,7 @@ export default class extends Component {
                     JobDetails: data.JobDetails,
                     ready: true
                 })
-                this.props.getDeliveryJob(this.state.id, accessToken, (error, data) => {
+                this.props.getDeliveryJob(this.state.data.JobDetailsId, accessToken, (error, data) => {
                     this.setState({
                         Delivery: data.Delivery
                     })

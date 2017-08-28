@@ -65,9 +65,11 @@ export default class extends Component {
             if (data) {
                 this.setState({
                     dataSource: data.JobListItemObjects,
-                    isRefreshing: false
                 })
             }
+            this.setState({
+                isRefreshing: false
+            })
         })
     }
 
