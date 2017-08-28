@@ -47,7 +47,8 @@ export const validate = values => {
     }
     if (values.datetime) {
         let datetimeErrors = {};
-        if (moment(values.datetime.timeStart).format('HH:mm') < moment(new Date()).format('HH:mm')) {
+        if (moment(values.datetime.timeStart).format('HH:mm') < moment(new Date()).format('HH:mm')
+            && moment(values.datetime.date).format('YYYY-MM-DD') == moment(new Date()).format('YYYY-MM-DD')) {
             datetimeErrors.timeEnd = "It's not allowed to choose time in the past";
         }
         if (!values.datetime.timeEnd) {
