@@ -86,9 +86,14 @@ android {
     compileSdkVersion 23
     buildToolsVersion '25.0.0'
 
+    dexOptions {
+        javaMaxHeapSize "2048M"
+    }
+
     defaultConfig {
         applicationId "com.removalist"
-        minSdkVersion 16
+        minSdkVersion 19
+        multiDexEnabled true
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
@@ -137,6 +142,7 @@ android {
 }
 
 dependencies {
+    compile project(':RCTTwilioChat')
     compile project(':react-native-vector-icons')
     compile project(':react-native-auth0')
     compile fileTree(dir: "libs", include: ["*.jar"])
