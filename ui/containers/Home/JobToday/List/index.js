@@ -6,7 +6,9 @@ import {
     TouchableOpacity,
     Alert,
     InteractionManager,
-    RefreshControl
+    RefreshControl,
+    ListView,
+    SectionList
 } from 'react-native';
 import { connect } from 'react-redux'
 import TabBar from '~/ui/components/TabBar';
@@ -18,7 +20,6 @@ import { List, ListItem, Spinner, Button, Icon, Text, View } from 'native-base';
 import styles from './styles';
 import material from '~/theme/variables/material'
 import TitleItem from '~/ui/components/TitleItem';
-import ListView from './components/ListView';
 import Calendar from '~/ui/components/Calendar';
 import moment from 'moment'
 import * as jobActions from '~/store/actions/job'
@@ -33,11 +34,11 @@ import Loading from '~/ui/components/Loading'
 export default class extends Component {
     constructor(props) {
         super(props);
-
+        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             ready: false,
             basic: true,
-            dataSource: [],
+            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
             isRefreshing: false,
             loading: false,
         };
@@ -53,7 +54,7 @@ export default class extends Component {
     componentWillReceiveProps({ listJobByDate }) {
         if (listJobByDate != this.props.listJobByDate) {
             this.setState({
-                dataSource: listJobByDate
+                dataSource: this.state.dataSource.cloneWithRows(listJobByDate)
             })
         }
     }
@@ -64,7 +65,8 @@ export default class extends Component {
         this.props.getJobByDate(this.renderDate(this.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => {
             if (data) {
                 this.setState({
-                    dataSource: data.JobListItemObjects,
+                    dataSource: this.state.dataSource.cloneWithRows(data.JobListItemObjects),
+                    isRefreshing: false
                 })
             }
             this.setState({
@@ -77,7 +79,7 @@ export default class extends Component {
         const check = this.renderDate(this.checkday) != this.renderDate(data.TimeStart)
         this.checkday = data.TimeStart
         return (
-            <View style={{ flex: 1 }}>
+            <View white style={{ flex: 1 }}>
                 {
                     check || rowID == 0
                         ? (this.renderDate(data.TimeStart) == this.renderDate(new Date())
@@ -128,24 +130,34 @@ export default class extends Component {
                         </View>
                         : null
                 }
-                {
-                    <List
-                        refreshControl={
-                            <RefreshControl
-                                colors={['#039BE5']}
-                                tintColor={material.redColor}
-                                refreshing={this.state.isRefreshing}
-                                onRefresh={this.refreshList.bind(this)}
-                            />
-                        }
-                        enableEmptySections
-                        removeClippedSubviews={false}
-                        style={{ flex: 1 }}
-                        dataArray={this.state.dataSource}
-                        renderRow={this.renderRow.bind(this)}
-                    />
 
-                }
+                <List
+                    refreshControl={
+                        <RefreshControl
+                            colors={['#039BE5']}
+                            tintColor={material.redColor}
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this.refreshList.bind(this)}
+                        />
+                    }
+                    enableEmptySections
+                    removeClippedSubviews={false}
+                    style={{ flex: 1 }}
+                    dataSource={this.state.dataSource}
+                    renderRow={this.renderRow.bind(this)}
+                    renderLeftHiddenRow={data =>
+                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-start' }} onPress={() => alert(data)}>
+                            <IconFontAwesome  style={{ marginLeft: 30, fontSize: 20 }}  name="remove" />
+                        </TouchableOpacity>}
+                    renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-end' }} onPress={() => alert(data)}>
+                            <IconFontAwesome style={{ marginRight: 30, fontSize: 20 }} name="remove" />
+                        </TouchableOpacity>}
+                    leftOpenValue={75}
+                    rightOpenValue={-75}
+                />
+
+
 
             </View>
 
