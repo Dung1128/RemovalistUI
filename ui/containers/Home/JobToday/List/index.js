@@ -145,16 +145,7 @@ export default class extends Component {
                     style={{ flex: 1 }}
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
-                    renderLeftHiddenRow={data =>
-                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-start' }} onPress={() => alert(data)}>
-                            <IconFontAwesome  style={{ marginLeft: 30, fontSize: 20 }}  name="remove" />
-                        </TouchableOpacity>}
-                    renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-end' }} onPress={() => alert(data)}>
-                            <IconFontAwesome style={{ marginRight: 30, fontSize: 20 }} name="remove" />
-                        </TouchableOpacity>}
-                    leftOpenValue={75}
-                    rightOpenValue={-75}
+                    
                 />
 
 
@@ -164,3 +155,14 @@ export default class extends Component {
         );
     }
 }
+
+/*renderLeftHiddenRow={data =>
+                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-start' }} onPress={() => alert(data)}>
+                            <IconFontAwesome  style={{ marginLeft: 30, fontSize: 20 }}  name="remove" />
+                        </TouchableOpacity>}
+                    renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-end' }} onPress={() => alert(data)}>
+                            <IconFontAwesome style={{ marginRight: 30, fontSize: 20 }} name="remove" />
+                        </TouchableOpacity>}
+                    leftOpenValue={75}
+                    rightOpenValue={-75}*/
