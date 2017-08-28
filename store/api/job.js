@@ -40,16 +40,16 @@ export default {
         return apiGetNoKey(`/api/jobdetails/getDeliveryByJobId/`, data, accessToken)
     },
     postDeliveryUpdate(data, accessToken) {
-        return apiPost(`/api/JobDetails/updateDelivery`, data, accessToken)
+        return apiPost(`/api/JobDetails/updateDelivery/`, data, accessToken)
     },
 
     postDeliveryCreate(data, accessToken) {
-        return apiPost(`/api/JobDetails/createDelivery`, data, accessToken)
+        return apiPost(`/api/JobDetails/createDelivery/`, data, accessToken)
     },
     updateStatusJob(data, accessToken) {
-        return apiPost(`/api/JobDetails/UpdateJobDetailsStatus`, data, accessToken)
+        return apiPost(`/api/JobDetails/UpdateJobDetailsStatus/`, data, accessToken)
     },
     getSendInvoice(id, type, accessToken) {
-        return apiGetNoKey('api/invoice/'+`${id}/${type}`, accessToken)
+        return apiGetNoData('/api/invoice/send/'+`${id}/${type}`, accessToken)
     },
 }
