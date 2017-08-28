@@ -56,11 +56,11 @@ export default class extends Component {
             JobDetailsId: '',
             Task: [],
         }
-        this.arrayPickup =[]
-        this.arrayDropOff =[]
+        this.arrayPickup = []
+        this.arrayDropOff = []
 
         for (const i = 0; i < this.props.navigation.state.params.JobDetails.JobLocations.length; i++) {
-            if(this.props.navigation.state.params.JobDetails.JobLocations[i].IsPickUp == true) {
+            if (this.props.navigation.state.params.JobDetails.JobLocations[i].IsPickUp == true) {
                 this.arrayPickup.push(this.props.navigation.state.params.JobDetails.JobLocations[i])
             }
             else {
@@ -87,10 +87,6 @@ export default class extends Component {
                 finish: (new Date(this.state.Delivery.FinishTime).getHours() - 14) + ':' + new Date(this.state.Delivery.FinishTime).getMinutes(),
             })
         }
-
-        console.log(this.arrayPickup)
-        console.log('hihi')
-        console.log(this.arrayDropOff)
     }
 
     duration() {
@@ -195,8 +191,8 @@ export default class extends Component {
     }
     renderJobLocation(item, index) {
         return (
-            <View white style={{ paddingHorizontal: 5 }}>             
-                <RowItem icon='map' title={item.AddressLine2} />                 
+            <View white style={{ paddingHorizontal: 5 }}>
+                <RowItem icon='map' title={item.AddressLine2} />
             </View>
         )
     }
@@ -212,7 +208,7 @@ export default class extends Component {
                         <View style={styles.itemTime}>
                             <Text style={styles.txttitledate}>Date</Text>
                             <Text style={styles.date}>{moment(date).format("ddd, MMM DD")}</Text>
-                 
+
                         </View>
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
                         <View style={styles.itemTime}>
@@ -246,20 +242,20 @@ export default class extends Component {
                     <TitleItem title='Your tasks' />
                     <Tasks />
                     <TitleItem title='Pick Up' />
-                        {
-                            this.arrayPickup.map((item, index) => this.renderJobLocation(item, index))
-                        }
+                    {
+                        this.arrayPickup.map((item, index) => this.renderJobLocation(item, index))
+                    }
                     <TitleItem title='Drop Off' />
-                        {
-                            this.arrayDropOff.map((item, index) => this.renderJobLocation(item, index))
-                        }
+                    {
+                        this.arrayDropOff.map((item, index) => this.renderJobLocation(item, index))
+                    }
                 </Content>
                 {
                     this.state.JobDetails.StatusId > 2 ?
                         <Button
                             text={!done ? 'START' : 'COMPLETE'}
                             style={{ width: '100%', height: 60 }}
-                            color={ !done ? material.redColor : material.greenColor}
+                            color={!done ? material.redColor : material.greenColor}
                             onPress={() => this.onPress()}
                         />
                         :
