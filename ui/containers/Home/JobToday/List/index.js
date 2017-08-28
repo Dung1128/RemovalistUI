@@ -34,11 +34,10 @@ import Loading from '~/ui/components/Loading'
 export default class extends Component {
     constructor(props) {
         super(props);
-        this.ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
         this.state = {
             ready: false,
             basic: true,
-            dataSource: new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 }),
+            dataSource: [],
             isRefreshing: false,
             loading: false,
         };
@@ -54,7 +53,7 @@ export default class extends Component {
     componentWillReceiveProps({ listJobByDate }) {
         if (listJobByDate != this.props.listJobByDate) {
             this.setState({
-                dataSource: this.state.dataSource.cloneWithRows(listJobByDate)
+                dataSource: listJobByDate
             })
         }
     }
@@ -65,7 +64,7 @@ export default class extends Component {
         this.props.getJobByDate(this.renderDate(this.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => {
             if (data) {
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(data.JobListItemObjects),
+                    dataSource: data.JobListItemObjects,
                     isRefreshing: false
                 })
             }
@@ -143,18 +142,8 @@ export default class extends Component {
                     enableEmptySections
                     removeClippedSubviews={false}
                     style={{ flex: 1 }}
-                    dataSource={this.state.dataSource}
+                    dataArray={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
-                    renderLeftHiddenRow={data =>
-                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-start' }} onPress={() => alert(data)}>
-                            <IconFontAwesome  style={{ marginLeft: 30, fontSize: 20 }}  name="remove" />
-                        </TouchableOpacity>}
-                    renderRightHiddenRow={(data, secId, rowId, rowMap) =>
-                        <TouchableOpacity style={{ width: '100%', height: '100%', backgroundColor: material.grayColor, justifyContent: 'center', alignItems: 'flex-end' }} onPress={() => alert(data)}>
-                            <IconFontAwesome style={{ marginRight: 30, fontSize: 20 }} name="remove" />
-                        </TouchableOpacity>}
-                    leftOpenValue={75}
-                    rightOpenValue={-75}
                 />
 
 
