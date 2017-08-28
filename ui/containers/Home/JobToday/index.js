@@ -36,7 +36,7 @@ import * as filterSelectors from '~/store/selectors/filter';
   state => ({
     dayFilterSelected: filterSelectors.getDayFilterSelected(state),
   }),
-  { ...jobActions }
+  { ...jobActions, }
 )
 export default class extends Component {
   constructor(props) {
@@ -70,13 +70,15 @@ export default class extends Component {
   }
 
   componentDidMount() {
-    this.props.getStatusJobList(accessToken, (error, data) => { })
-    this.props.getMaterialList(accessToken, (error, data) => { })
-    this.props.getMaterialCategoryList(accessToken, (error, data) => { })
-    this.props.getTruckList(accessToken, (error, data) => { })
-    this.props.getReferenceContactList(accessToken, (error, data) => { })
-    this.props.getJobByDate(this.renderDate(this.state.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { console.log(data) })
     this.navigateTab(this.selectedRoute)
+    if (this.props.navigation.state.params && this.props.navigation.state.params.defaultRoute != 'list') {
+      this.props.getStatusJobList(accessToken, (error, data) => { })
+      this.props.getMaterialList(accessToken, (error, data) => { })
+      this.props.getMaterialCategoryList(accessToken, (error, data) => { })
+      this.props.getTruckList(accessToken, (error, data) => { })
+      this.props.getReferenceContactList(accessToken, (error, data) => { })
+    }
+    this.props.getJobByDate(this.renderDate(this.state.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { })
   }
 
 
@@ -169,7 +171,9 @@ export default class extends Component {
         </View>
         <Button
           onPress={() => {
+
             this.props.navigation.navigate('general_screen')
+
           }}
           style={{ backgroundColor: material.redColor, position: 'absolute', bottom: 20, right: 20, borderRadius: 50 / 2, width: 50, height: 50 }}>
           <Icon name="add" color='#fff' size={20} />

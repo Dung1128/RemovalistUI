@@ -73,6 +73,11 @@ export default class extends Component {
                 })
                 if (data.Status == 1) {
 
+                    // const backAction = NavigationActions.back({
+                    //     key: this.props.keyToGoBack,
+                    //     params: { defaultRoute: 'list' }
+                    // })
+                    // this.props.navigation.dispatch(backAction)
                     const resetAction = NavigationActions.reset({
                         index: 0,
                         actions: [
@@ -120,12 +125,10 @@ export default class extends Component {
         const timeStart = moment(delivery.general.datetime.timeStart).format("HH:mm");
         const timeEnd = moment(delivery.general.datetime.timeEnd).format("HH:mm");
         const obj = {
-            "Notes": '',
             "TimeStart": `${date} ${timeStart}`,
             "TimeEnd": `${date} ${timeEnd}`,
             "TotalCost": this.sumPrice(),
-            "TruckId": (delivery.general.truck.TruckId || ''),
-            "AdjustmentMatrix": 0,
+            "TruckId": (delivery.general.truck.TruckId || null),
             "StatusId": delivery.general.status.JobStatusId,
             "JobLocations": delivery.delivery,
             "Contact": delivery.general.Contact,
@@ -191,20 +194,6 @@ export default class extends Component {
         }
 
         return material && material[0].NumberOfMaterial ? [...arr, ...material] : arr
-
-
-        // if (servicetime.NumberOfMaterial && traveltime.NumberOfMaterial
-        //     && fuel.NumberOfMaterial && material[0].NumberOfMaterial) {
-        //     return [
-        //         servicetime,
-        //         traveltime,
-        //         fuel,
-        //         ...material
-        //     ]
-        // } else {
-        //     return ""
-        // }
-
 
     }
 

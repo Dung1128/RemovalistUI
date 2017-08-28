@@ -23,21 +23,24 @@ import material from '~/theme/variables/material';
 
 const InputTime = ({ input, meta: { touched, error, warning }, ...custom }) => {
     return (
-        <View style={{
-            ...styles.wrapContent,
-            borderBottomColor: touched && error ? material.redColor : '#e9edf0',
-            paddingRight: 20,
-        }}
-            collapsable={false}>
-            <View row>
-                <Icon name='time' size={20} style={{ color: material.grayIconColor, paddingRight: 10 }} />
-                <DateTime
-                    {...input}
-                    {...custom}
-                    mode='time'
-                />
+        <View white>
+            <View style={{
+                ...styles.wrapContent,
+                borderBottomColor: touched && error ? material.redColor : '#e9edf0',
+                paddingRight: 20,
+            }}
+                collapsable={false}>
+                <View row>
+                    <Icon name='time' size={20} style={{ color: material.grayIconColor, paddingRight: 10 }} />
+                    <DateTime
+                        {...input}
+                        {...custom}
+                        mode='time'
+                    />
+                </View>
+                {touched && error && <Icon size={16} color={material.grayIconColor} name='info' />}
             </View>
-            {touched && error && <Icon size={16} color={material.grayIconColor} name='info' />}
+            {touched && error && <Text style={{ marginLeft: 20 }} wraning>{error}</Text>}
         </View>
     )
 }
