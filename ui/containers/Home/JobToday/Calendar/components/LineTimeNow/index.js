@@ -9,16 +9,21 @@ export default class extends Component {
         this.state = {
             top: 20
         };
+        this.setIntervalGetTop = '';
     }
 
     componentWillMount() {
-        setInterval(() => this.getTop())
+        this.setIntervalGetTop = setInterval(() => this.getTop())
     }
 
     getHoursMinutes() {
         const hours = new Date().getHours()
         const minutes = new Date().getMinutes()
         return { hours, minutes }
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.setIntervalGetTop)
     }
 
     getTop() {

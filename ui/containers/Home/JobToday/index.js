@@ -71,7 +71,7 @@ export default class extends Component {
 
   componentDidMount() {
     this.navigateTab(this.selectedRoute)
-    if (this.props.navigation.state.params && this.props.navigation.state.params.defaultRoute != 'list') {
+    if (!this.props.navigation.state.params) {
       this.props.getStatusJobList(accessToken, (error, data) => { })
       this.props.getMaterialList(accessToken, (error, data) => { })
       this.props.getMaterialCategoryList(accessToken, (error, data) => { })

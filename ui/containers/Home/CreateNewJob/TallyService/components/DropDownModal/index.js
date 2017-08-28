@@ -55,20 +55,16 @@ export default class extends Component {
                             width: 300,
                             backgroundColor: 'white',
                         }}>
-
                             <List dataArray={listItems}
                                 renderRow={(item) =>
-                                    <ListItem>
-                                        <TouchableOpacity onPress={() => { this.setModalVisible(), onChange(item) }}>
-                                            <Text>{item ? item.Name : 'Empty'}</Text>
-                                        </TouchableOpacity>
+                                    <ListItem onPress={() => { this.setModalVisible(), onChange(item) }}>
+                                        <Text>{item ? item.Name : 'Empty'}</Text>
                                     </ListItem>
                                 }>
                             </List>
                         </TouchableOpacity>
                     </TouchableOpacity>
                 </Modal>
-
             </View>
         );
     }
