@@ -69,6 +69,9 @@ export default class extends Component {
                     isRefreshing: false
                 })
             }
+            this.setState({
+                isRefreshing: false
+            })
         })
     }
 

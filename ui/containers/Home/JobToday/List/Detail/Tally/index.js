@@ -12,7 +12,7 @@ import Icon from '~/ui/components/Icon';
 import { TouchableOpacity, Alert } from 'react-native'
 import Communications from 'react-native-communications';
 import { connect } from 'react-redux'
-
+import { accessToken } from '~/store/constants/api'
 import * as materialActions from '~/store/actions/material'
 import * as jobSelectors from '~/store/selectors/job'
 import * as jobActions from '~/store/actions/job'
@@ -202,9 +202,15 @@ export default class extends Component {
                 {
                     text: 'OK', onPress: () => {
                         console.log('send invoice' + type)
-                        // this.props.getSendInvoice(this.state.JobDetails.JobDetailsId, type, accessToken, (error, data) => {
-                            Alert.alert('Notify', 'Send invoice susscess!')
-                        // })
+                        console.log(this.state.JobDetails.JobDetailsId)
+                        this.props.getSendInvoice(this.state.JobDetails.JobDetailsId, type, accessToken, (error, data) => {
+                            if(data.Status == 1) {
+                                Alert.alert('Notify', 'Send invoice susscess!')
+                            }
+                            else {
+                                Alert.alert('Notify', data.Message)
+                            }
+                        })
                         this.setModalVisible()
                     }
                 },
