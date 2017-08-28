@@ -31,8 +31,8 @@ app.get('/configuration', function(req, res) {
 
 app.get('/token', function(req, res) {
   if (req.query.identity) {
-    const endpointId = 'Removalist' + ':' + req.query.identity + ':' + req.query.deviceId;
-    res.send(TokenProvider.getToken(req.query.identity, endpointId));
+    const endpointId = 'Removalist' + ':' + req.query.identity + ':' + req.query.device;
+    res.send({token:TokenProvider.getToken(req.query.identity, endpointId)});
   } else {
     throw new Error('no `identity` query parameter is provided');
   }

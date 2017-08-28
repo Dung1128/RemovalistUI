@@ -5,9 +5,9 @@
     }
   },
   "tokenGenerator": {
-    "accountSid": "AC62b553b789c60d129c92982750969f74",
-    "signingKeySid": "SK199b76b25026df9136d966fea08558dc",
-    "signingKeySecret": "fIUcQRaUEw8NCmyvlgShZl6yBZV8lO0G",
-    "serviceSid": "IS4f743b055a37456b8fb5e59e34a85721"
+    "accountSid": "ACc0b524923d9df2c6c20d5eab8aebb34f",
+    "signingKeySid": "SKf71cf2d984d670fe2863fcddd90d2804",
+    "signingKeySecret": "QNFH4qDn76FiHSF71jTZ8MK5mmSRv1RC",
+    "serviceSid": "IS3afe62242c2b46f9b9412517e44c9143"
   }
 }
