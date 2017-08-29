@@ -40,6 +40,7 @@ export default class extends Component {
             dataSource: [],
             isRefreshing: false,
             loading: false,
+            dataSourceSection: []
         };
         this.date = new Date();
         this.checkday = '';
@@ -55,14 +56,36 @@ export default class extends Component {
             this.setState({
                 dataSource: listJobByDate
             })
+            this.setDataSourceSection(listJobByDate)
         }
+    }
+
+    setDataSourceSection(data) {
+        // for (const i = 0; i < data.length; i++) {
+        //         data[i].TimeStart = moment(data[i].TimeStart).format("YYYY-MM-DD");
+        // }
+        const data_ = data.map((item, index) => {
+            return {...item, title: moment(item.TimeStart).format('YYYY-MM-DD')};
+        });
+
+        let result = _.chain(data_).groupBy("title").toPairs().map((currentItem, index) => {
+                return {..._.zipObject(["title", "data"], currentItem), key: index};
+            }).value();
+
+            this.setState({
+                dataSourceSection: result
+            })
+
+            console.log(result)
+
     }
 
 
     refreshList() {
-        this.setState({ isRefreshing: true });
+        // this.setState({ isRefreshing: true });
         this.props.getJobByDate(this.renderDate(this.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => {
             if (data) {
+                this.setDataSourceSection(data.JobListItemObjects)
                 this.setState({
                     dataSource: data.JobListItemObjects,
                     isRefreshing: false
@@ -74,40 +97,6 @@ export default class extends Component {
         })
     }
 
-    renderRow(data, sectionID, rowID, highlightRow) {
-        const check = this.renderDate(this.checkday) != this.renderDate(data.TimeStart)
-        this.checkday = data.TimeStart
-        return (
-            <View white style={{ flex: 1 }}>
-                {
-                    check || rowID == 0
-                        ? (this.renderDate(data.TimeStart) == this.renderDate(new Date())
-                            ? <TitleItem title='Today' />
-                            : <TitleItem title={this.renderDateTit(data.TimeStart)} />)
-                        : null
-
-                }
-                <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', data)}>
-                    <View style={{
-                        width: 5,
-                        backgroundColor: `#${data.StatusColor}`,
-                        borderRadius: 5
-                    }} />
-                    <View style={styles.itemsJob}>
-                        <Text bold style={styles.address}>{data.Address}</Text>
-                        <View style={styles.bottom}>
-                            <Text style={styles.textbottom}>{data.Name}</Text>
-                            <Text style={styles.textbottom}>{data.Phone}</Text>
-                        </View>
-                    </View>
-
-                </TouchableOpacity>
-                <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-            </View>
-        );
-
-    }
-
     renderDate(day) {
         return moment(day).format("YYYYMMDD")
     }
@@ -116,38 +105,78 @@ export default class extends Component {
         return moment(day).format("YYYY-MM-DD")
     }
 
+    renderItem = ({item, index}) => {
+        console.log('renderItem', item);
+        return(
+            <View key={index} white style={{ flex: 1 }}>
+                <TouchableOpacity style={styles.itemList} onPress={() => this.props.navigation.navigate('detail_screen', item)}>
+                    <View style={{
+                        width: 5,
+                        backgroundColor: `#${item.StatusColor}`,
+                        borderRadius: 5
+                    }} />
+                    <View style={styles.itemsJob}>
+                        <Text bold style={styles.address}>{item.Address}</Text>
+                        <View style={styles.bottom}>
+                            <Text style={styles.textbottom}>{item.Name}</Text>
+                            <Text style={styles.textbottom}>{item.Phone}</Text>
+                        </View>
+                    </View>
+
+                </TouchableOpacity>
+                <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
+            </View>
+        );
+    }
+    renderHeader = ({section}) => {
+        const check = section.title !== this.renderDateTit(new Date())
+        return(
+            <TitleItem title={ check ? section.title : 'Today'} />
+        );
+    }
+
+
     render() {
-        const { dataSource } = this.state;
+        const { dataSource, dataSourceSection  } = this.state;
+        console.log(this.state.dataSourceSection)
         return (
 
             <View style={{ flex: 1 }}>
                 <Loading />
                 {
-                    dataSource.length == 0 ?
+                    dataSourceSection.length === 0 ?
                         <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', paddingVertical: 50 }}>
                             <Text>Data not found</Text>
                         </View>
                         : null
                 }
-
-                <List
+                <SectionList 
                     refreshControl={
-                        <RefreshControl
-                            colors={['#039BE5']}
-                            tintColor={material.redColor}
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this.refreshList.bind(this)}
-                        />
-                    }
-                    enableEmptySections
-                    removeClippedSubviews={false}
-                    style={{ flex: 1 }}
-                    dataArray={this.state.dataSource}
-                    renderRow={this.renderRow.bind(this)}
+                            <RefreshControl
+                                colors={['#039BE5']}
+                                tintColor={material.redColor}
+                                refreshing={this.state.isRefreshing}
+                                onRefresh={this.refreshList.bind(this)}
+                            />
+                        }
+                        enableEmptySections
+                        removeClippedSubviews={false}
+                        style={{ flex: 1 }}
+                    renderItem={this.renderItem}
+                    renderSectionHeader={this.renderHeader}
+                    sections={dataSourceSection}
+                    keyExtractor={(item ,index) => index}
+                    renderLeftHiddenRow={data =>
+                    <Button full onPress={() => alert(data)}>
+                        <Icon active name="information-circle" />
+                    </Button>}
+                    renderRightHiddenRow={(data, secId, rowId, rowMap) =>
+                    <Button full danger onPress={_ => this.deleteRow(secId, rowId, rowMap)}>
+                        <Icon active name="trash" />
+                    </Button>}
+                    leftOpenValue={75}
+                    rightOpenValue={-75}
                 />
-
-
-
             </View>
 
         );

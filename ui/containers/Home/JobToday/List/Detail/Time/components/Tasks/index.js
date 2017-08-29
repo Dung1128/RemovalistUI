@@ -17,6 +17,7 @@ export default class extends Component {
         super(props);
         this.state = ({
             listTask: rowTask,
+            arrValueTask: []
         });
 
     }
@@ -54,6 +55,11 @@ export default class extends Component {
         })
     }
 
+    addValue(index,val) {
+        this.state.arrValueTask.push(val)
+        console.log(this.state.arrValueTask)
+    }
+
     renderRow(item,index) {
         return (
             <View key={index}>
@@ -62,7 +68,8 @@ export default class extends Component {
                     nameIcon='note'
                     add='true'
                     addIcon={index == 0 ? 'add' : 'delete'}
-                    onPress={() => index == 0 ? this.addTask() : this.deleteTask()}
+                    onPress={() => index == 0 ? this.addTask(index) : this.deleteTask(index)}
+                    onChangeText={(val)=> this.addValue(index,val)}
                 />
             </View>
         )
