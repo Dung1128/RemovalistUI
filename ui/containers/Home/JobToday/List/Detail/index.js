@@ -45,8 +45,6 @@ export default class extends Component {
 
 
     componentDidMount() {
-        const obj = this.state.data
-        this.renderTime(obj.TimeStart, obj.TimeEnd);
         this.props.getJobById(this.state.data.JobDetailsId, accessToken, (error, data) => {
             if (data) {
                 this.setState({
@@ -105,26 +103,19 @@ export default class extends Component {
     }
 
     renderTime(start, end) {
-        const day = new Date(start).toLocaleDateString()
         // duration
-
         let hour = end && start ? moment(end).diff(start, 'hour') : 0;
         let minutes = end && start ? moment(end).diff(start, 'minutes') : 0;
         let checkMinutes = minutes % 60;
         let duration = `${hour}h ${checkMinutes != 0 ? checkMinutes : ''}`;
-
-        this.setState({
-            date: day,
-            time: `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}`,
-            duration: 'Duration: ' + duration
-        })
+        return 'Duration: ' + duration
     }
 
     render() {
-        const { JobDetails, date, time, duration, data, Delivery } = this.state;
+        const { JobDetails, data, Delivery } = this.state;
         const { CompanyName, Phone, Email } = JobDetails && JobDetails.Contact[0] ? JobDetails.Contact[0] : {};
-
-
+        const time = `${moment(data.TimeStart).format('HH:mm')} - ${moment(data.TimeEnd).format('HH:mm')}`;
+        const duration = this.renderTime(data.TimeStart, data.TimeEnd)
         return (
 
             <Container>
@@ -166,7 +157,7 @@ export default class extends Component {
                     <View collapsable={false} style={{ backgroundColor: '#fff', flexDirection: 'row' }}>
                         <View style={styles.itemTime}>
                             <Text style={styles.txttitledate}>Date</Text>
-                            <Text style={styles.date}>{moment(date).format("ddd, MMM DD")}</Text>
+                            <Text style={styles.date}>{moment(data.TimeStart).format("ddd, MMM DD")}</Text>
                         </View>
 
                         <View style={styles.itemTime}>
