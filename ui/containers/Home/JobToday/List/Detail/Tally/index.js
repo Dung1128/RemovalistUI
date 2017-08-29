@@ -411,12 +411,12 @@ export default class extends Component {
 
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
                         <TouchableOpacity style={styles.itemAction}
-                            onPress={() => this.sendInvoice(3, 'to Postcode')}>
+                            onPress={() => this.sendInvoice(3, 'to Post Office')}>
                             <TouchableOpacity style={styles.buttonAction}
-                                onPress={() => this.sendInvoice(3, 'to Postcode')}>
+                                onPress={() => this.sendInvoice(3, 'to Post Office')}>
                                 <Icon name='send-invoice' size={22} color={material.whiteColor}/>
                             </TouchableOpacity>
-                            <Text style={styles.txtAction}>Postcode</Text>
+                            <Text style={styles.txtAction}>Post Office</Text>
                         </TouchableOpacity>
                     </View>
                     </TouchableOpacity>

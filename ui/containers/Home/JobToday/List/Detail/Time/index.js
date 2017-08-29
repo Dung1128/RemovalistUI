@@ -76,7 +76,7 @@ export default class extends Component {
         if (this.state.Delivery) {
             this.setState({
                 done: true,
-                starttime: (new Date(this.state.Delivery.StartTime).getHours() - 14) + ':' + new Date(this.state.Delivery.StartTime).getMinutes(),
+                starttime: moment(this.state.Delivery.StartTime).format('HH:mm'),
                 start: new Date(this.state.Delivery.StartTime),
             })
         }
@@ -84,7 +84,7 @@ export default class extends Component {
         if (this.state.Delivery && this.state.Delivery.FinishTime) {
             this.setState({
                 disable: true,
-                finish: (new Date(this.state.Delivery.FinishTime).getHours() - 14) + ':' + new Date(this.state.Delivery.FinishTime).getMinutes(),
+                finish: moment(this.state.Delivery.FinishTime).format('HH:mm'),
             })
         }
     }
@@ -119,7 +119,7 @@ export default class extends Component {
 
         this.props.postDeliveryUpdate(this.dataDeliveryUpdate, accessToken, (error, data) => {
             this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) => {
-                this.props.navigation.navigate('jobtoday_screen')
+                Alert.alert('Notify', 'Haizzz!')
             })
 
         })
@@ -191,7 +191,7 @@ export default class extends Component {
     }
     renderJobLocation(item, index) {
         return (
-            <View white style={{ paddingHorizontal: 5 }}>
+            <View key={index}  white style={{ paddingHorizontal: 5 }}>
                 <RowItem icon='map' title={item.AddressLine2} />
             </View>
         )
