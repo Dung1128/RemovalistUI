@@ -2,8 +2,6 @@ import material from '~/theme/variables/material';
 
 export default {
     containers: {
-        paddingTop: 10,
-        backgroundColor: material.grayTitle,
         marginBottom: 10,
         width: '100%'
     },
@@ -11,11 +9,12 @@ export default {
         borderBottomWidth: 0.5,
         borderBottomColor: material.grayColor,
         backgroundColor: '#fff',
-        padding: 10
+        paddingHorizontal: 20,
+        paddingVertical: 10
     },
     bottom: {
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         paddingTop: 10
     },
     textbottom: {

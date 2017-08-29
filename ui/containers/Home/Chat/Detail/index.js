@@ -10,7 +10,7 @@ import {
 import { Container } from 'native-base';
 import Header from '~/ui/components/Header';
 import GiftedMessenger from './GiftedMessenger';
-
+import { logo } from '~/assets'
 import {
   Client,
   Constants,
@@ -40,7 +40,7 @@ class GiftedMessengerContainer extends Component {
     return fetch('http://localhost:3000/token?device=' + Platform.OS + '&identity=' + identity, {
       method: 'get',
     })
-    .then(res => res.json());
+      .then(res => res.json());
   }
 
   parseMessage(message) {
@@ -50,106 +50,107 @@ class GiftedMessengerContainer extends Component {
       name: message.author,
       position: message.author === this.state.client.userInfo.identity ? 'right' : 'left',
       date: message.timestamp,
+      image: logo
     };
   }
 
   initializeMessenging(identity) {
     console.log('starting init');
     this.getToken(identity)
-    .then(({ token }) => {
-      // initaite new Access Manager
-      const accessManager = new AccessManager(token);
-      console.log(token)
-      accessManager.onTokenWillExpire = () => {
-        this.getToken(identity)
-        .then(newToken => accessManager.updateToken(newToken.token));
-      };
+      .then(({ token }) => {
+        // initaite new Access Manager
+        const accessManager = new AccessManager(token);
+        console.log(token)
+        accessManager.onTokenWillExpire = () => {
+          this.getToken(identity)
+            .then(newToken => accessManager.updateToken(newToken.token));
+        };
 
-      accessManager.onTokenInvalid = () => {
-        console.log('Token is invalid');
-      };
+        accessManager.onTokenInvalid = () => {
+          console.log('Token is invalid');
+        };
 
-      accessManager.onTokenExpired = () => {
-        console.log('Token is expired');
-      };
+        accessManager.onTokenExpired = () => {
+          console.log('Token is expired');
+        };
 
-      // initiate the client with the token, not accessManager
-      const client = new Client(token);
+        // initiate the client with the token, not accessManager
+        const client = new Client(token);
 
-      client.onError = ({ error, userInfo }) => {
-        console.log(error);
-        console.log(userInfo);
-      };
+        client.onError = ({ error, userInfo }) => {
+          console.log(error);
+          console.log(userInfo);
+        };
 
-      client.onSynchronizationStatusChanged = (status) => {
-        console.log(status);
-      };
+        client.onSynchronizationStatusChanged = (status) => {
+          console.log(status);
+        };
 
-      client.onClientConnectionStateChanged = (state) => {
-        // console.log(state);
-      };
+        client.onClientConnectionStateChanged = (state) => {
+          // console.log(state);
+        };
 
-      client.onClientSynchronized = () => {
-        console.log('client synced');
-        client.getPublicChannels()
-        .then(res => {
-          const firstChannel = res.items[0]
-          // console.log(firstChannel.sid)
+        client.onClientSynchronized = () => {
+          console.log('client synced');
+          client.getPublicChannels()
+            .then(res => {
+              const firstChannel = res.items[0]
+              // console.log(firstChannel.sid)
 
-          client.getChannel(firstChannel.sid)
-          .then((channel) => {
-            channel.initialize()
-            .then(() => {
-              console.log(channel);
-              if (channel.status !== Constants.TCHChannelStatus.Joined) {
-                channel.join();
-              }
+              client.getChannel(firstChannel.sid)
+                .then((channel) => {
+                  channel.initialize()
+                    .then(() => {
+                      console.log(channel);
+                      if (channel.status !== Constants.TCHChannelStatus.Joined) {
+                        channel.join();
+                      }
 
-              channel.getMessages(20)
-              .then((messages) => {
-                // array of message instances
-                // console.log(messages)
-                const parsedMessages = messages.map(message => this.parseMessage(message))
-                // console.log(parsedMessages)
-                this.setMessages(parsedMessages);
-              })
+                      channel.getMessages(20)
+                        .then((messages) => {
+                          // array of message instances
+                          // console.log(messages)
+                          const parsedMessages = messages.map(message => this.parseMessage(message))
+                          // console.log(parsedMessages)
+                          this.setMessages(parsedMessages);
+                        })
 
-            })
-            .catch((error) => {
-              console.log(error);
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+
+                  channel.onTypingStarted = (member) => {
+                    this.setState({ typingMessage: member.userInfo.identity + ' is typing...' });
+                  };
+
+                  channel.onTypingEnded = () => {
+                    this.setState({ typingMessage: '' });
+                  };
+
+                  channel.onMessageAdded = message => this.handleReceive(this.parseMessage(message));
+
+
+                  this.setState({ client, channel, accessManager });
+
+
+
+                });
+
+
             });
 
-            channel.onTypingStarted = (member) => {
-              this.setState({ typingMessage: member.userInfo.identity + ' is typing...' });
-            };
 
-            channel.onTypingEnded = () => {
-              this.setState({ typingMessage: '' });
-            };
+        };
 
-            channel.onMessageAdded = message => this.handleReceive(this.parseMessage(message));
-
-            
-            this.setState({ client, channel, accessManager });
-
-
-            
+        client.initialize()
+          .then(() => {
+            console.log(client);
+            console.log('client initilized');
+            // register the client with the accessManager
+            accessManager.registerClient();
           });
-
-
-        });
-
-        
-      };
-
-      client.initialize()
-      .then(() => {
-        console.log(client);
-        console.log('client initilized');
-        // register the client with the accessManager
-        accessManager.registerClient();
       });
-    });
   }
 
 
@@ -200,7 +201,7 @@ class GiftedMessengerContainer extends Component {
   handleSend(message = {}) {
     if (this.state.client) {
       this.state.channel.sendMessage(message.text)
-      .catch(error => console.error(error));
+        .catch(error => console.error(error));
     } else {
       // this.initializeMessenging(message.text);
       // message.uniqueId = Math.round(Math.random() * 10000); // simulating server-side unique id generation
@@ -231,9 +232,9 @@ class GiftedMessengerContainer extends Component {
 
       <Container>
         <Header
-            title='Chat Detail'
-            iconLeft='back'
-            onPress={() => this.props.navigation.goBack()}
+          title='Chat Detail'
+          iconLeft='back'
+          onPress={() => this.props.navigation.goBack()}
         />
 
         <GiftedMessenger

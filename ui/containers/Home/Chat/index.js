@@ -5,7 +5,8 @@ import {
     ListView,
     RefreshControl,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform
 } from 'react-native';
 
 import material from '~/theme/variables/material'
@@ -16,12 +17,20 @@ import {
     List,
     Item,
     Input,
-    Content
+    Content,
+    Spinner
 } from 'native-base';
 import styles from './styles';
 import SearchBar from '~/ui/components/SearchBar';
 import Icon from '~/ui/components/Icon';
 import Header from '~/ui/components/Header';
+import moment from 'moment'
+import {
+    Client,
+    Constants,
+    AccessManager,
+} from 'react-native-twilio-chat';
+
 
 const dataNoti = [
     {
@@ -75,32 +84,128 @@ export default class extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataSource: dataNoti,
+            dataSource: [],
             isRefreshing: false,
+            loading: false
         };
     }
+
+    getToken(identity) {
+        return fetch('http://192.168.1.132:3000/token?device=' + Platform.OS + '&identity=' + identity, {
+            method: 'get',
+        })
+            .then(res => res.json());
+    }
+
+    initializeMessenging(identity) {
+        this.setState({
+            loading: true
+        })
+        console.log('starting init');
+        this.getToken(identity)
+            .then(({ token }) => {
+                // initaite new Access Manager
+                const accessManager = new AccessManager(token);
+                console.log(token)
+                accessManager.onTokenWillExpire = () => {
+                    this.getToken(identity)
+                        .then(newToken => accessManager.updateToken(newToken.token));
+                };
+
+                accessManager.onTokenInvalid = () => {
+                    console.log('Token is invalid');
+                };
+
+                accessManager.onTokenExpired = () => {
+                    console.log('Token is expired');
+                };
+
+                // initiate the client with the token, not accessManager
+                const client = new Client(token);
+
+                client.onError = ({ error, userInfo }) => {
+                    console.log(error);
+                    console.log(userInfo);
+                };
+
+                client.onSynchronizationStatusChanged = (status) => {
+                    console.log(status);
+                };
+
+                client.onClientConnectionStateChanged = (state) => {
+                    // console.log(state);
+                };
+
+                client.onClientSynchronized = () => {
+                    client.getUserChannels().then(res => {
+                        // get list user by chanel
+                        this.setState({
+                            dataSource: res.items,
+                            loading: false
+                        })
+                    })
+                    console.log('client synced');
+
+                };
+
+                client.initialize()
+                    .then(() => {
+                        console.log(client);
+                        console.log('client initilized');
+                        // register the client with the accessManager
+                        accessManager.registerClient();
+                    });
+                this.setState({ client, accessManager });
+            });
+
+    }
+
+    componentDidMount() {
+        this.initializeMessenging('tupt');
+    }
+
+    componentWillUnmount() {
+        this.state.client && this.state.client.shutdown()
+    }
+
 
     chatWithUser(username) {
         this.props.navigation.navigate('detail_chat_screen', { username })
     }
 
+    renderTime(time) {
+        let diff = moment.duration(moment(new Date()).diff(moment(time)));
+        let days = parseInt(diff.asDays()); //84
+
+        let hours = parseInt(diff.asHours()); //2039 hours, but it gives total hours in given miliseconds which is not expacted.
+
+        hours = hours - days * 24;  // 23 hours
+
+        let minutes = parseInt(diff.asMinutes()); //122360 minutes,but it gives total minutes in given miliseconds which is not expacted.
+
+        minutes = minutes - (days * 24 * 60 + hours * 60); //20 minutes.
+
+        return days < 2 ? `${days} days, ${hours} hours, ${minutes} minutes,` : moment(time).format('YYYY-MM-DD HH:mm')
+    }
+
     renderRow(data) {
+        let timeDuration = this.renderTime(data.dateUpdated)
         return (
             <TouchableOpacity style={styles.itemList} onPress={e => this.chatWithUser('tupt')}>
-                <Text>{data.content}</Text>
+                <Text>{data.createdBy}</Text>
                 <View style={styles.bottom}>
-                    <Text style={styles.textbottom}>{data.status}</Text>
-                    <Text style={styles.textbottom}>{data.time}</Text>
+                    <Text style={styles.textbottom}>{data.friendlyName}</Text>
+                    <Text style={styles.textbottom}>{timeDuration}</Text>
                 </View>
             </TouchableOpacity>
         );
     }
 
     render() {
-        const { dataSource } = this.state;
+        const { dataSource, loading } = this.state;
         console.log(dataSource, 'data')
         return (
-            <Container>
+            <Container style={{ backgroundColor: material.grayBackgroundColor }}>
                 <Header
                     title='Chat'
                     iconLeft='back'
@@ -111,12 +216,15 @@ export default class extends Component {
                     onChange={(value) => this.setState({ dataSource: value })}
                     searchByName='content'
                 />
+                {
+                    loading && <Spinner color={material.redColor} />
+                }
                 <List
                     style={styles.containers}
                     refreshControl={
                         <RefreshControl
                             colors={['#039BE5']}
-                            tintColor='#fff'
+                            tintColor={material.redColor}
                             refreshing={this.state.isRefreshing}
                         />
                     }
@@ -125,8 +233,6 @@ export default class extends Component {
                     dataArray={dataSource}
                     renderRow={this.renderRow.bind(this)}
                 />
-
-
 
             </Container>
         );

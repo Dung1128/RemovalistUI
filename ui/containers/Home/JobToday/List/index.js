@@ -120,7 +120,7 @@ export default class extends Component {
         const { dataSource } = this.state;
         return (
 
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: material.grayBackgroundColor }}>
                 <Loading />
                 {
                     dataSource.length == 0 ?
