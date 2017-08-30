@@ -179,7 +179,7 @@ export default class extends Component {
 
                 <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen',
-                        { JobDetails, time, date: new Date(date).toDateString(), durationStart: duration, Delivery: this.state.Delivery })}
+                        { JobDetails, time, date: data.TimeStart, durationStart: duration, Delivery: this.state.Delivery })}
                     >
                         <Icon name='time' size={22} color={material.grayIconColor} />
                     </TouchableOpacity>
