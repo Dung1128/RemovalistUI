@@ -62,6 +62,15 @@ export const getSendInvoice = (...args) => ({
     args
 })
 
+export const getGST = (...args) => ({
+    type: 'job/getGST',
+    args
+})
+export const getPaymentMethods = (...args) => ({
+    type: 'job/getPaymentMethods',
+    args
+})
+
 
 // actions called by sagas
 
@@ -92,5 +101,15 @@ export const saveReferenceContactList = (data) => ({
 
 export const saveJobByDate = (data) => ({
     type: 'job/saveJobByDate',
+    payload: data,
+})
+
+export const saveGST = (data) => ({
+    type: 'job/saveGST',
+    payload: data,
+})
+
+export const savePaymentMethods = (data) => ({
+    type: 'job/savePaymentMethods',
     payload: data,
 })

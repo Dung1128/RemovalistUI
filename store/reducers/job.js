@@ -11,6 +11,9 @@ export const initialState = {
     listTruck: [],
     listReferenceContact: [],
     listJobByDate: [],
+    paymentMethods: [],
+    GST: {}
+
 }
 export const job = (state = initialState, { type, payload }) => {
     switch (type) {
@@ -26,6 +29,10 @@ export const job = (state = initialState, { type, payload }) => {
             return { ...state, listReferenceContact: payload };
         case 'job/saveJobByDate':
             return { ...state, listJobByDate: payload };
+        case 'job/saveGST':
+            return { ...state, GST: payload };
+        case 'job/savePaymentMethods':
+            return { ...state, paymentMethods: payload };
         default:
             return state;
     }

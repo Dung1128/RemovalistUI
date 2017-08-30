@@ -36,7 +36,7 @@ export default class extends Component {
             date: this.props.navigation.state.params.date,
             starttime: '--:--',
             finish: '--:--',
-            duration: '00:00',
+            duration: '00:00:00',
             durationStart: this.props.navigation.state.params.durationStart,
             Delivery: this.props.navigation.state.params.Delivery
         }
@@ -93,7 +93,7 @@ export default class extends Component {
         let hour = this.state.end && this.state.start ? moment(this.state.end).diff(this.state.start, 'hour') : 0;
         let minutes = this.state.end && this.state.start ? moment(this.state.end).diff(this.state.start, 'minutes') : 0;
         let checkMinutes = minutes % 60;
-        let duration = `${hour < 9 ? '0'+ hour : hour}:${checkMinutes < 9 ? '0'+ checkMinutes : checkMinutes}`;
+        let duration = `${hour < 9 ? '0'+ hour : hour}:${checkMinutes < 9 ? '0'+ checkMinutes : checkMinutes}`+':00';
 
         this.setState({
             duration: duration

@@ -52,4 +52,10 @@ export default {
     getSendInvoice(id, type, accessToken) {
         return apiGetNoData('/api/invoice/send/'+`${id}/${type}`, accessToken)
     },
+    getGST(accessToken) {
+        return apiGetNoData(`/api/jobdetails/getgst`, accessToken)
+    },
+    getPaymentMethods(accessToken) {
+        return apiGetNoData(`/api/jobdetails/PaymentMethodList`, accessToken)
+    },
 }

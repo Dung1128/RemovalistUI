@@ -20,7 +20,8 @@ import * as jobActions from '~/store/actions/job'
 @connect(
     state => ({
         listMaterial: jobSelectors.getMaterialList(state),
-        MaterialCategories: jobSelectors.getMaterialCategoryList(state)
+        MaterialCategories: jobSelectors.getMaterialCategoryList(state),
+        GST: jobSelectors.getGST(state)
     }), { ...materialActions, ...jobActions })
 export default class extends Component {
     constructor(props) {
@@ -33,6 +34,7 @@ export default class extends Component {
            credit: 0,
            modalVisible: false,
         }
+        console.log('day la GST', this.props.GST)
     
     }
 
@@ -322,7 +324,7 @@ export default class extends Component {
 
                         <View style={{...styles.Title, paddingRight: 50}}>
                             <Text style={styles.txtBold}>GST</Text>
-                            <Text style={styles.txtBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
+                            <Text style={styles.txtBold}>$ {Math.round(this.props.GST.GST * this.state.JobDetails.TotalCost)}</Text>
                         </View>
 
                         {/*<View style={{...styles.Title, paddingRight: 50}}>

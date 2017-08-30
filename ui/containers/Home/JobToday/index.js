@@ -77,6 +77,8 @@ export default class extends Component {
       this.props.getMaterialCategoryList(accessToken, (error, data) => { })
       this.props.getTruckList(accessToken, (error, data) => { })
       this.props.getReferenceContactList(accessToken, (error, data) => { })
+      this.props.getGST(accessToken, (error, data) => { })
+      this.props.getPaymentMethods(accessToken, (error, data) => { })
     }
     this.props.getJobByDate(this.renderDate(this.state.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { })
   }
