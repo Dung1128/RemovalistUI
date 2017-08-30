@@ -5,13 +5,14 @@ const config = require('./configuration.json');
 const TokenProvider = require('./js/token-provider');
 const bodyParser = require('body-parser');
 const ngrok = require('ngrok');
-
+const cors = require('cors');
 
 const app = express();
 
 app.set('json spaces', 2);
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(cors())
 
 app.get('/chat-client-configuration.json', function(req, res) {
   if (config.chatClient) {

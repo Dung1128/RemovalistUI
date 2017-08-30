@@ -161,8 +161,12 @@ class GiftedMessengerContainer extends Component {
 
   componentWillUnmount() {
     this._isMounted = false;
-    this.state.client && this.state.client.shutdown()
-    this.state.channel && this.state.channel.close()
+    try{
+      this.state.client && this.state.client.shutdown()
+      this.state.channel && this.state.channel.close()
+    } catch(e){
+      console.log(e)
+    }
   }
 
   getInitialMessages() {

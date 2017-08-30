@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": "private",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon app.js",
     "test": "NODE_ENV=test TWILIO_ACCOUNT_SID=your_account_sid TWILIO_AUTH_TOKEN=your_twilio_auth_token TWILIO_API_KEY=your_twilio_api_key TWILIO_API_SECRET=your_twilio_api_secret TWILIO_IPM_SERVICE_SID=your_twilio_ipm_service_sid node_modules/.bin/mocha test; node_modules/.bin/karma start"
   },
   "description": "Node.js|Express implementation of Twilio Chat",
@@ -28,6 +28,7 @@
   "dependencies": {
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "debug": "~2.3.2",
     "dotenv-safe": "^3.0.0",
     "express": "~4.14.0",
