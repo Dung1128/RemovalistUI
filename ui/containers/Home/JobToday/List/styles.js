@@ -48,5 +48,16 @@ export default {
     },
     textbottom: {
         fontSize: 14,
+    },
+    rightSwipe: {
+        flex: 1,
+        justifyContent: 'center',
+        paddingLeft: 20, backgroundColor: material.grayColor,
+    },
+    leftSwipe: {
+        flex: 1,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+        paddingRight: 20,
     }
 }
