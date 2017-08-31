@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Container, Spinner } from 'native-base';
 import Header from '~/ui/components/Header';
-import GiftedMessenger from './GiftedMessenger';
+import GiftedMessenger from '~/ui/components/GiftedMessenger';
 import { logo } from '~/assets'
 import {
   Client,
@@ -232,7 +232,7 @@ class GiftedMessengerContainer extends Component {
     // console.log(this.state.messages)
     return (
 
-      <Container>
+      <Container style={{ backgroundColor: '#E9EDEF' }}>
         <Header
           title='Chat Detail'
           iconLeft='back'

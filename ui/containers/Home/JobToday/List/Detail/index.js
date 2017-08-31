@@ -177,7 +177,7 @@ export default class extends Component {
                     }
                 </Content>
 
-                <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 0.5, borderColor: material.grayBackgroundColor }} >
+                <View full row style={{ backgroundColor: '#fff', height: 50, justifyContent: 'space-around', borderTopWidth: 1, borderColor: material.grayBackgroundColor }} >
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('time_screen',
                         { JobDetails, time, date: data.TimeStart, durationStart: duration, Delivery: this.state.Delivery })}
                     >
