@@ -17,6 +17,8 @@ import {
     getMaterialCategoryList,
     getTruckList,
     getReferenceContactList,
+    saveGST,
+    savePaymentMethods
 } from '~/store/actions/job';
 
 const requestGetStatusJobList = createRequestSaga({
@@ -136,6 +138,24 @@ const requestgetSendInvoice = createRequestSaga({
     failure: [(error) => setToast('Couldn\'t send invoice', 'error')]
 });
 
+const requestGetGST = createRequestSaga({
+    request: api.job.getGST,
+    key: 'getGST',
+    success: [
+        data => saveGST(data)
+    ],
+    failure: [(error) => setToast('Couldn\'t get GST', 'error')]
+});
+
+const requestGetPaymentMethods = createRequestSaga({
+    request: api.job.getPaymentMethods,
+    key: 'getPaymentMethods',
+    success: [
+        data => savePaymentMethods(data)
+    ],
+    failure: [(error) => setToast('Couldn\'t get payment methods', 'error')]
+});
+
 // root saga reducer
 export default [
     // like case return, this is take => call
@@ -157,6 +177,8 @@ export default [
             takeLatest('job/updateStatusJob', requestUpdateStatusJob),
             takeLatest('job/postNewJob', requestPostNewJob),
             takeLatest('job/getSendInvoice', requestgetSendInvoice),
+            takeLatest('job/getGST', requestGetGST),
+            takeLatest('job/getPaymentMethods', requestGetPaymentMethods),
         ]);
     }
 ];

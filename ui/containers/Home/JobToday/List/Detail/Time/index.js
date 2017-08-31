@@ -36,7 +36,7 @@ export default class extends Component {
             date: this.props.navigation.state.params.date,
             starttime: '--:--',
             finish: '--:--',
-            duration: '00:00',
+            duration: '00:00:00',
             durationStart: this.props.navigation.state.params.durationStart,
             Delivery: this.props.navigation.state.params.Delivery
         }
@@ -77,7 +77,7 @@ export default class extends Component {
             this.setState({
                 done: true,
                 starttime: moment(this.state.Delivery.StartTime).format('HH:mm'),
-                start: new Date(this.state.Delivery.StartTime),
+                start: this.state.Delivery.StartTime,
             })
         }
 
@@ -90,18 +90,13 @@ export default class extends Component {
     }
 
     duration() {
-        let minutesStart = (new Date(this.state.start).getHours() - 7) * 60 + new Date(this.state.start).getMinutes();
-        let minutesEnd = (new Date(this.state.end).getHours() - 7) * 60 + new Date(this.state.end).getMinutes();
+        let hour = this.state.end && this.state.start ? moment(this.state.end).diff(this.state.start, 'hour') : 0;
+        let minutes = this.state.end && this.state.start ? moment(this.state.end).diff(this.state.start, 'minutes') : 0;
+        let checkMinutes = minutes % 60;
+        let duration = `${hour < 9 ? '0'+ hour : hour}:${checkMinutes < 9 ? '0'+ checkMinutes : checkMinutes}`+':00';
 
-        let sub = minutesEnd - minutesStart;
-        let hour = Math.floor(sub / 60);
-
-        let minutes = sub - hour * 60;
-
-        let showHours = hour > 10 ? hour : '0' + hour;
-        let showMinutes = minutes > 10 ? minutes : '0' + minutes;
         this.setState({
-            duration: showHours + ':' + showMinutes
+            duration: duration
         })
 
         this.dataDeliveryUpdate = {
@@ -153,8 +148,8 @@ export default class extends Component {
                         }
 
                         this.props.postDeliveryCreate(this.dataDeliveryCreate, accessToken, (error, data) => {
-                            this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) => {
-                            })
+                            // this.props.updateStatusJob(this.updateStaus, accessToken, (error, data) => {
+                            // })
 
                         })
                     }

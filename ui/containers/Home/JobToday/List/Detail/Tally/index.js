@@ -20,51 +20,50 @@ import * as jobActions from '~/store/actions/job'
 @connect(
     state => ({
         listMaterial: jobSelectors.getMaterialList(state),
-        MaterialCategories: jobSelectors.getMaterialCategoryList(state)
+        listMaterialUpdated: jobSelectors.getMaterialListUpdated(state),
+        MaterialCategories: jobSelectors.getMaterialCategoryList(state),
+        GST: jobSelectors.getGST(state),
     }), { ...materialActions, ...jobActions })
 export default class extends Component {
     constructor(props) {
         super(props);
         this.state = {
-           colorStatus: 'pink',
-           JobDetails: this.props.navigation.state.params.JobDetails,
-           cash: 0,
-           eftpos: 0,
-           credit: 0,
-           modalVisible: false,
+            colorStatus: 'pink',
+            JobDetails: this.props.navigation.state.params.JobDetails,
+            cash: 0,
+            eftpos: 0,
+            credit: 0,
+            modalVisible: false,
+            GST: this.props.GST ? this.props.GST.GST : 0,
+            listMaterial: props.listMaterial,
         }
-    
+
     }
 
     componentDidMount() {
-        const listServiceTime = [];
-        const listTravelTime = [];
-        const listFuel = [];
-        const listMaterial = [];
+        if (!this.props.GST) {
+            this.props.getGST(accessToken, (error, data) => {
+                if (data)
+                    GST: data
+            })
+        }
+        if (this.props.listMaterial && this.props.listMaterial.length < 1 || (Date.now() - this.props.listMaterialUpdated) > 86400000) {
+            this.props.getMaterialList(accessToken, (error, data) => {
+                if (data) {
+                    this.renderMaterialList(data.Material)
+                }
+            })
+        } else {
+            this.renderMaterialList(this.state.listMaterial)
+        }
+
+        // this.props.getPaymentMethods(accessToken, (error, data) => { })
+        const { JobDetails } = this.state;
         const dataServiceTime = []
         const dataTravelTime = []
         const dataFuel = []
         const dataMaterial = []
-        const data = this.props.listMaterial
-        const dataJobDetailMaterial = this.props.navigation.state.params.JobDetails.JobDetailsMaterials
-        for (const i = 0; i < data.length; i++) {
-            switch (data[i].CategoryId) {
-                case 1:
-                    listServiceTime.push(data[i])
-                    break;
-                case 2:
-                    listTravelTime.push(data[i])
-                    break;
-                case 3:
-                    listFuel.push(data[i])
-                    break;
-                case 4:
-                    listMaterial.push(data[i])
-                    break;
-                default:
-                    break;
-            }
-        }
+        const dataJobDetailMaterial = JobDetails.JobDetailsMaterials
 
         for (const i = 0; i < dataJobDetailMaterial.length; i++) {
             switch (this.renderCategotyId(dataJobDetailMaterial[i].MaterialId)) {
@@ -86,30 +85,57 @@ export default class extends Component {
         }
 
         this.setState({
-            listServiceTime,
-            listTravelTime,
-            listFuel,
-            listMaterial,
             dataServiceTime,
             dataTravelTime,
             dataFuel,
             dataMaterial
-        }, ()=> console.log(this.state.dataMaterial));
+        });
+    }
+
+    renderMaterialList(data) {
+        const listServiceTime = [];
+        const listTravelTime = [];
+        const listFuel = [];
+        const listMaterial = [];
+        for (const i = 0; i < data.length; i++) {
+            switch (data[i].CategoryId) {
+                case 1:
+                    listServiceTime.push(data[i])
+                    break;
+                case 2:
+                    listTravelTime.push(data[i])
+                    break;
+                case 3:
+                    listFuel.push(data[i])
+                    break;
+                case 4:
+                    listMaterial.push(data[i])
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.setState({
+            listServiceTime,
+            listTravelTime,
+            listFuel,
+            listMaterial
+        });
     }
 
     renderName(id) {
         const data = this.props.listMaterial
         for (const i = 0; i < data.length; i++) {
-            if(id == data[i].MaterialId) {
+            if (id == data[i].MaterialId) {
                 return data[i].Name
             }
         }
     }
 
     renderTitle(id) {
-        const data= this.props.MaterialCategories
+        const data = this.props.MaterialCategories
         for (const i = 0; i < data.length; i++) {
-            if(id == data[i].MaterialCategoryId) {
+            if (id == data[i].MaterialCategoryId) {
                 return data[i].CategoryName
             }
         }
@@ -117,7 +143,7 @@ export default class extends Component {
     renderCategotyId(id) {
         const data = this.props.listMaterial
         for (const i = 0; i < data.length; i++) {
-            if(id == data[i].MaterialId) {
+            if (id == data[i].MaterialId) {
                 return data[i].CategoryId
             }
         }
@@ -126,7 +152,7 @@ export default class extends Component {
     renderPrice(id) {
         const data = this.props.listMaterial
         for (const i = 0; i < data.length; i++) {
-            if(id == data[i].MaterialId) {
+            if (id == data[i].MaterialId) {
                 return data[i].PricePerUnit
             }
         }
@@ -134,10 +160,10 @@ export default class extends Component {
     renderUnit(id, number) {
         const data = this.props.listMaterial
         for (const i = 0; i < data.length; i++) {
-            if(id == data[i].MaterialId) {
-                if(number > 1 && data[i].UnitIndicator !== '')
+            if (id == data[i].MaterialId) {
+                if (number > 1 && data[i].UnitIndicator !== '')
                     return data[i].UnitIndicator + 's'
-                else 
+                else
                     return data[i].UnitIndicator
             }
         }
@@ -160,8 +186,8 @@ export default class extends Component {
 
 
     renderMaterial(item, index) {
-        return (<InfoTally 
-            key={index} 
+        return (<InfoTally
+            key={index}
             NumberOfMaterial={item.NumberOfMaterial}
             Type={this.renderName(item.MaterialId)}
             Title={this.renderTitle(this.renderCategotyId(item.MaterialId))}
@@ -172,8 +198,8 @@ export default class extends Component {
     }
 
     renderDataMaterial(item, index) {
-        return (<InfoTally 
-            key={index} 
+        return (<InfoTally
+            key={index}
             NumberOfMaterial={item.NumberOfMaterial}
             Type={this.renderName(item.MaterialId)}
             description={false}
@@ -184,19 +210,19 @@ export default class extends Component {
     }
 
     setModalVisible() {
-        if(this.state.modalVisible){
-            this.setState({modalVisible: false});
-        }else{
-            this.setState({modalVisible: true});
+        if (this.state.modalVisible) {
+            this.setState({ modalVisible: false });
+        } else {
+            this.setState({ modalVisible: true });
         }
     }
-        
+
     showAction() {
         this.setModalVisible();
     }
 
     sendInvoice(type, text) {
-        Alert.alert('Notify', 'Are you sure to send invoice '+text + ' ?',
+        Alert.alert('Notify', 'Are you sure to send invoice ' + text + ' ?',
             [
                 { text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
                 {
@@ -204,7 +230,7 @@ export default class extends Component {
                         console.log('send invoice' + type)
                         console.log(this.state.JobDetails.JobDetailsId)
                         this.props.getSendInvoice(this.state.JobDetails.JobDetailsId, type, accessToken, (error, data) => {
-                            if(data.Status == 1) {
+                            if (data.Status == 1) {
                                 Alert.alert('Notify', 'Send invoice susscess!')
                             }
                             else {
@@ -220,18 +246,16 @@ export default class extends Component {
     }
 
     render() {
-        console.log(this.state.JobDetails.JobDetailsMaterials)
-        console.log(this.props.MaterialCategories)
-        console.log(this.state.dataFuel)
+        const { GST } = this.state;
         return (
             <Container>
                 <Header title='Tally Service' textright='EDIT' size={20} iconLeft='close' onPress={() => this.props.navigation.goBack()} />
-                    <Content style={{ backgroundColor :material.grayTitle}}>
-                        <View style={{...styles.status, backgroundColor: this.state.colorStatus }}>
-                            <Text>Status</Text>
-                            <Text>Unpaid</Text>
-                        </View>
-                        {/*
+                <Content style={{ backgroundColor: material.grayTitle }}>
+                    <View style={{ ...styles.status, backgroundColor: this.state.colorStatus }}>
+                        <Text>Status</Text>
+                        <Text>Unpaid</Text>
+                    </View>
+                    {/*
                         <TitleItem title='Payment Method' />
                         <InputRow hint='Cash' nameIcon='cash' onChangeText={(val) =>{   
                             this.setState({
@@ -281,60 +305,60 @@ export default class extends Component {
                                 }
                             }) 
                         }}/>*/}
-                        {/*<View style={styles.Title}>
+                    {/*<View style={styles.Title}>
                             <Text style={styles.txtBold}>Payment Method</Text>                      
                         </View>*/}
-                        <View style={styles.Title}>
-                            <Text style={styles.txtBold}>Service Time</Text>
-                            {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
-                        </View>
-                        {
-                            this.state.dataServiceTime && this.state.dataServiceTime.map((item, index) => this.renderDataMaterial(item, index))
-                        }
+                    <View style={styles.Title}>
+                        <Text style={styles.txtBold}>Service Time</Text>
+                        {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                    </View>
+                    {
+                        this.state.dataServiceTime && this.state.dataServiceTime.map((item, index) => this.renderDataMaterial(item, index))
+                    }
 
-                        <View style={styles.Title}>
-                            <Text style={styles.txtBold}>Travel Time</Text>
-                            {/*<Text style={styles.txtBold}>$ {this.} </Text>*/}
-                        </View>
-                        {
-                            this.state.dataTravelTime && this.state.dataTravelTime.map((item, index) => this.renderDataMaterial(item, index))
-                        }
+                    <View style={styles.Title}>
+                        <Text style={styles.txtBold}>Travel Time</Text>
+                        {/*<Text style={styles.txtBold}>$ {this.} </Text>*/}
+                    </View>
+                    {
+                        this.state.dataTravelTime && this.state.dataTravelTime.map((item, index) => this.renderDataMaterial(item, index))
+                    }
 
-                        <View style={styles.Title}>
-                            <Text style={styles.txtBold}>Fuel/RUCS</Text>
-                            {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
-                        </View>
-                        {
-                            this.state.dataFuel && this.state.dataFuel.map((item, index) => this.renderDataMaterial(item, index))
-                        }
+                    <View style={styles.Title}>
+                        <Text style={styles.txtBold}>Fuel/RUCS</Text>
+                        {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                    </View>
+                    {
+                        this.state.dataFuel && this.state.dataFuel.map((item, index) => this.renderDataMaterial(item, index))
+                    }
 
-                        <View style={styles.Title}>
-                            <Text style={styles.txtBold}>Materials</Text>
-                            {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
-                        </View>
-                        {
-                            this.state.dataMaterial && this.state.dataMaterial.map((item, index) => this.renderDataMaterial(item, index))
-                        }
-                        
-                        {/*{
+                    <View style={styles.Title}>
+                        <Text style={styles.txtBold}>Materials</Text>
+                        {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                    </View>
+                    {
+                        this.state.dataMaterial && this.state.dataMaterial.map((item, index) => this.renderDataMaterial(item, index))
+                    }
+
+                    {/*{
                             this.state.JobDetails.JobDetailsMaterials.map((item, index) => this.renderMaterial(item, index))
                         }*/}
 
-                        <View style={{...styles.Title, paddingRight: 50}}>
-                            <Text style={styles.txtBold}>GST</Text>
-                            <Text style={styles.txtBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
-                        </View>
+                    <View style={{ ...styles.Title, paddingRight: 50 }}>
+                        <Text style={styles.txtBold}>GST</Text>
+                        <Text style={styles.txtBold}>$ {Math.round(GST * this.state.JobDetails.TotalCost)}</Text>
+                    </View>
 
-                        {/*<View style={{...styles.Title, paddingRight: 50}}>
+                    {/*<View style={{...styles.Title, paddingRight: 50}}>
                             <Text style={styles.txtBold}>Surcharge</Text>
                             <Text style={styles.txtBold}>$ {this.state.JobDetails.AdjustmentMatrix}</Text>
                         </View>*/}
-                      
-                        <View style={{...styles.Title, backgroundColor: '#fff'}}>
-                            <Text style={styles.total}>Total</Text>
-                            <Text style={{...styles.total, fontWeight: 'bold', color:'#ed502b' }}>$ {this.state.JobDetails.TotalCost}</Text>
-                        </View>
-                        <View style={{...styles.Title, backgroundColor: '#e9edf0', height: 10}} />
+
+                    <View style={{ ...styles.Title, backgroundColor: '#fff' }}>
+                        <Text style={styles.total}>Total</Text>
+                        <Text style={{ ...styles.total, fontWeight: 'bold', color: '#ed502b' }}>$ {this.state.JobDetails.TotalCost}</Text>
+                    </View>
+                    <View style={{ ...styles.Title, backgroundColor: '#e9edf0', height: 10 }} />
                 </Content>
                 {/*<View style={styles.bottomAction}>
                     <TouchableOpacity
@@ -373,62 +397,62 @@ export default class extends Component {
                     animationType="fade"
                     transparent={true}
                     visible={this.state.modalVisible}
-                    onRequestClose={()=>this.setModalVisible()}
+                    onRequestClose={() => this.setModalVisible()}
                 >
                     <TouchableOpacity activeOpacity={1}
                         onPress={() => {
-                                this.setModalVisible()
-                            }}
-                        style={{backgroundColor: 'rgba(0,0,0,0.3)',flex:1,alignItems:'center',justifyContent:'flex-end',}} >
-                    <View
-                        style={{
-                        overflow: 'hidden',
-                        padding:10,
-                        width:material.deviceWidth,
-                        backgroundColor:'white',
-                        }}>
-                        <Text style={{ fontSize: 14, color: material.grayColor}}>Select Invoice method for client</Text>
-                        <Text style={styles.txtBold}>{this.state.JobDetails.Contact[0].CompanyName}</Text>
-                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
-                        <TouchableOpacity style={styles.itemAction}
-                            onPress={() => this.sendInvoice(1,'to SMS')}>
-                            <TouchableOpacity style={styles.buttonAction}
+                            this.setModalVisible()
+                        }}
+                        style={{ backgroundColor: 'rgba(0,0,0,0.3)', flex: 1, alignItems: 'center', justifyContent: 'flex-end', }} >
+                        <View
+                            style={{
+                                overflow: 'hidden',
+                                padding: 10,
+                                width: material.deviceWidth,
+                                backgroundColor: 'white',
+                            }}>
+                            <Text style={{ fontSize: 14, color: material.grayColor }}>Select Invoice method for client</Text>
+                            <Text style={styles.txtBold}>{this.state.JobDetails.Contact[0].CompanyName}</Text>
+                            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
+                            <TouchableOpacity style={styles.itemAction}
                                 onPress={() => this.sendInvoice(1, 'to SMS')}>
-                                <Icon name='sms' size={22} color={material.whiteColor}/>
+                                <TouchableOpacity style={styles.buttonAction}
+                                    onPress={() => this.sendInvoice(1, 'to SMS')}>
+                                    <Icon name='sms' size={22} color={material.whiteColor} />
+                                </TouchableOpacity>
+                                <Text style={styles.txtAction}>SMS</Text>
                             </TouchableOpacity>
-                            <Text style={styles.txtAction}>SMS</Text>
-                        </TouchableOpacity>
 
-                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
-                        <TouchableOpacity style={styles.itemAction}
-                            onPress={() => this.sendInvoice(2, 'to Email')}>
-                            <TouchableOpacity style={styles.buttonAction}
+                            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
+                            <TouchableOpacity style={styles.itemAction}
                                 onPress={() => this.sendInvoice(2, 'to Email')}>
-                                <Icon name='send-email' size={22} color={material.whiteColor}/>
+                                <TouchableOpacity style={styles.buttonAction}
+                                    onPress={() => this.sendInvoice(2, 'to Email')}>
+                                    <Icon name='send-email' size={22} color={material.whiteColor} />
+                                </TouchableOpacity>
+                                <Text style={styles.txtAction}>Email</Text>
                             </TouchableOpacity>
-                            <Text style={styles.txtAction}>Email</Text>
-                        </TouchableOpacity>
 
-                        <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
-                        <TouchableOpacity style={styles.itemAction}
-                            onPress={() => this.sendInvoice(3, 'to Post Office')}>
-                            <TouchableOpacity style={styles.buttonAction}
+                            <View style={{ borderWidth: 0.5, borderColor: material.grayTitle, marginVertical: 10 }} />
+                            <TouchableOpacity style={styles.itemAction}
                                 onPress={() => this.sendInvoice(3, 'to Post Office')}>
-                                <Icon name='send-invoice' size={22} color={material.whiteColor}/>
+                                <TouchableOpacity style={styles.buttonAction}
+                                    onPress={() => this.sendInvoice(3, 'to Post Office')}>
+                                    <Icon name='send-invoice' size={22} color={material.whiteColor} />
+                                </TouchableOpacity>
+                                <Text style={styles.txtAction}>Post Office</Text>
                             </TouchableOpacity>
-                            <Text style={styles.txtAction}>Post Office</Text>
-                        </TouchableOpacity>
-                    </View>
+                        </View>
                     </TouchableOpacity>
 
-                    </Modal>
+                </Modal>
 
                 <Button
                     onPress={() => this.showAction()}
                     full
                     text='SEND INVOICE TO CLIENT'
                     color={material.greenColor}
-                    />
+                />
             </Container>
         )
     }
