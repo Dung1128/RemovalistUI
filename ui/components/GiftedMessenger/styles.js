@@ -17,7 +17,7 @@ export default {
         backgroundColor: '#fbfbfb'
     },
     textInputContent: {
-        flexDirection: 'row', flex: 1, alignItems: 'center', borderWidth: 0.5,
+        flexDirection: 'row', flex: 1, alignItems: 'center', borderWidth: 1,
         borderColor: '#b5b5b5',
         paddingVertical: 2,
         paddingHorizontal: 5,
