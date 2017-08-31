@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Container, Spinner, Text, View, Content, List, ListItem  } from 'native-base'
+import { Container, Spinner, Text, View, Content, List, ListItem } from 'native-base'
 import material from '~/theme/variables/material'
 import styles from './styles'
 import { connect } from 'react-redux'
@@ -10,40 +10,42 @@ import ButtonIcon from '~/ui/components/ButtonIcon';
 import * as jobActions from '~/store/actions/job'
 import Communications from 'react-native-communications'
 import { accessToken } from '~/store/constants/api'
+import * as jobSelectors from '~/store/selectors/job';
 @connect(
-  state => ({
-  }), { ...jobActions }
+    state => ({
+        dataReference: jobSelectors.getReferenceContactList(state)
+    }), { ...jobActions }
 )
 
 export default class extends Component {
-        constructor(props) {
+    constructor(props) {
         super(props);
         this.state = {
-            dataReference: [],
+            dataReference: props.dataReference,
             JobDetails: this.props.navigation.state.params.dataCall
         };
     }
 
     componentDidMount() {
-        this.props.getReferenceContactList(accessToken, (error, data) => {
-            console.log(error)
-            console.log(data.ReferContacts[0].Mobile)
-            if(data)
-            this.setState({
-                dataReference: data.ReferContacts
+        if (this.props.dataReference && this.props.dataReference.length < 1) {
+            this.props.getReferenceContactList(accessToken, (error, data) => {
+                if (data)
+                    this.setState({
+                        dataReference: data.ReferContacts
+                    })
             })
-        })
+        }
     }
     renderPhone(item, index) {
         return (<RowItem key={index} title={item}
             right={
                 <View row style={{ justifyContent: 'space-between', width: '20%' }}>
-                    <ButtonIcon icon='sms' size={18} color='#fff' 
+                    <ButtonIcon icon='sms' size={18} color='#fff'
                         onPress={() => Communications.text(item, 'hello, im dung')}
                     />
-                    <ButtonIcon icon='call' size={18} color='#fff' 
-                    onPress={() => Communications.phonecall(item, true)}
-                        />
+                    <ButtonIcon icon='call' size={18} color='#fff'
+                        onPress={() => Communications.phonecall(item, true)}
+                    />
                 </View>
             }
         />)
@@ -58,23 +60,23 @@ export default class extends Component {
                 {/*<Text style={{ color: material.redColor }}>Building</Text>*/}
                 <Content style={{ backgroundColor: material.grayBackgroundColor }}>
                     <TitleItem title='Customer Info' />
-                        <View white style={{ paddingHorizontal: 5 }}>
-                            <RowItem icon='user' title={JobDetails.Contact[0].CompanyName} />
-                            {
-                                JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
-                            }
-         
-                            </View>
-                 
-                    <TitleItem title='Self Storage' />
+                    <View white >
+                        <RowItem icon='user' title={JobDetails.Contact[0].CompanyName} />
                         {
-                            this.state.dataReference.length !== 0 && this.state.dataReference[0].Phone.map((item, index) => this.renderPhone(item, index))
+                            JobDetails.Contact[0].Phone.map((item, index) => this.renderPhone(item, index))
                         }
-                            
-                    <View white style={{ paddingHorizontal: 5 }}>
+
+                    </View>
+
+                    <TitleItem title='Self Storage' />
+                    {
+                        this.state.dataReference.length !== 0 && this.state.dataReference[0].Phone.map((item, index) => this.renderPhone(item, index))
+                    }
+
+                    <View white>
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
                         <View style={{ borderWidth: 0.5, borderColor: material.grayTitle }} />
-                            
+
                     </View>
                     <TitleItem title='Home Base' />
                     <View white style={{ paddingHorizontal: 5 }}>

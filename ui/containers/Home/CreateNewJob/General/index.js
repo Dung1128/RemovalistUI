@@ -40,6 +40,7 @@ import {
 import { validate } from './utils'
 import * as jobSelectors from '~/store/selectors/job';
 import { accessToken } from '~/store/constants/api'
+import * as jobActions from '~/store/actions/job'
 
 const pad = num =>
     num ? (num > 9 ? '' : '0') + num : ''
@@ -50,7 +51,8 @@ const formatHM = ({ hours: h, minutes: m }) =>
 @connect(
     state => ({
         listStatus: jobSelectors.getStatusJobList(state),
-    }), null, (stateProps, dispatch, ownProps) => ({
+        listStatusUpdated: jobSelectors.getStatusJobListUpdated(state),
+    }), jobActions, (stateProps, dispatch, ownProps) => ({
         initialValues: {
             Contact: [{
                 CompanyName: '',
@@ -65,16 +67,18 @@ const formatHM = ({ hours: h, minutes: m }) =>
                 TruckId: 0,
                 TruckName: 'Select Truck'
             },
-            status: stateProps.listStatus[0],
+            status: stateProps.listStatus ? stateProps.listStatus[0] : [],
             datetime: {
                 date: new Date(),
                 timeStart: ownProps.navigation.state.params ? formatHM(ownProps.navigation.state.params) : moment(new Date()).format('YYYY-MM-DD HH:mm'),
                 timeEnd: ''
             }
         },
+        ...stateProps,
+        ...dispatch,
         ...ownProps
     }))
-@reduxForm({ form: 'CustomerInfo', validate, destroyOnUnmount: !__DEV__ })
+@reduxForm({ form: 'CustomerInfo', validate, destroyOnUnmount: !__DEV__, enableReinitialize: true })
 export default class extends Component {
 
     constructor(props) {
@@ -86,6 +90,12 @@ export default class extends Component {
 
     submitForm(values) {
         this.props.navigation.navigate('delivery_screen', values)
+    }
+
+    componentWillMount() {
+        if (this.props.listStatus && this.props.listStatus.length < 1 || (Date.now() - this.props.listStatusUpdated) > 86400000) {
+            this.props.getStatusJobList(accessToken, (error, data) => { })
+        }
     }
 
     render() {

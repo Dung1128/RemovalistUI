@@ -137,7 +137,7 @@ export default class extends Component {
                 };
 
                 client.onClientSynchronized = () => {
-                    client.getUserChannels().then(res => {
+                    client.getPublicChannels().then(res => {
                         // get list user by chanel
                         this.setState({
                             dataSource: res.items,
@@ -161,7 +161,7 @@ export default class extends Component {
     }
 
     componentDidMount() {
-        this.initializeMessenging('tupt');
+        this.initializeMessenging('minhchien');
     }
 
     componentWillUnmount() {

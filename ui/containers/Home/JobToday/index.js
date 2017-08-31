@@ -71,13 +71,6 @@ export default class extends Component {
 
   componentDidMount() {
     this.navigateTab(this.selectedRoute)
-    if (!this.props.navigation.state.params) {
-      this.props.getStatusJobList(accessToken, (error, data) => { })
-      this.props.getMaterialList(accessToken, (error, data) => { })
-      this.props.getMaterialCategoryList(accessToken, (error, data) => { })
-      this.props.getTruckList(accessToken, (error, data) => { })
-      this.props.getReferenceContactList(accessToken, (error, data) => { })
-    }
     this.props.getJobByDate(this.renderDate(this.state.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { })
   }
 

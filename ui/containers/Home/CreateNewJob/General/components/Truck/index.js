@@ -21,15 +21,16 @@ import Header from '~/ui/components/Header';
 import TitleItem from '~/ui/components/TitleItem';
 import SearchBar from '~/ui/components/SearchBar';
 import IconIonicons from 'react-native-vector-icons/dist/Ionicons';
-
+import { accessToken } from '~/store/constants/api'
 import { connect } from 'react-redux'
 import * as jobSelectors from '~/store/selectors/job';
-
+import * as jobActions from '~/store/actions/job'
 
 @connect(
     state => ({
-        listTruck: jobSelectors.getTruckList(state)
-    }), )
+        listTruck: jobSelectors.getTruckList(state),
+        listTruckUpdated: jobSelectors.getTruckListUpdated(state),
+    }), jobActions)
 export default class extends Component {
 
     constructor(props) {
@@ -43,6 +44,17 @@ export default class extends Component {
             arrSearch: [{ TruckId: 0, TruckName: 'Select Truck' }, ...props.listTruck]
         });
 
+    }
+
+    componentWillMount() {
+        if (this.props.listTruck && this.props.listTruck.length < 1 || (Date.now() - this.props.listTruckUpdated) > 86400000) {
+            this.props.getTruckList(accessToken, (error, data) => {
+                if (data)
+                    this.setState({
+                        arrSearch: [{ TruckId: 0, TruckName: 'Select Truck' }, ...data.Trucks]
+                    })
+            })
+        }
     }
 
     setModalVisible() {

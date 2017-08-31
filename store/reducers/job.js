@@ -15,15 +15,15 @@ export const initialState = {
 export const job = (state = initialState, { type, payload }) => {
     switch (type) {
         case 'job/saveListStatus':
-            return { ...state, listStatus: payload };
+            return { ...state, listStatus: payload, listStatusUpdated: Date.now() };
         case 'job/saveListMaterial':
-            return { ...state, listMaterial: payload };
+            return { ...state, listMaterial: payload, listMaterialUpdated: Date.now() };
         case 'job/saveMaterialCategoryList':
-            return { ...state, listMaterialCategory: payload };
+            return { ...state, listMaterialCategory: payload, listMaterialCategoryUpdated: Date.now() };
         case 'job/saveTruckList':
-            return { ...state, listTruck: payload };
+            return { ...state, listTruck: payload, listTruckUpdated: Date.now() };
         case 'job/saveReferenceContactList':
-            return { ...state, listReferenceContact: payload };
+            return { ...state, listReferenceContact: payload, listReferenceContactUpdated: Date.now() };
         case 'job/saveJobByDate':
             return { ...state, listJobByDate: payload };
         default:

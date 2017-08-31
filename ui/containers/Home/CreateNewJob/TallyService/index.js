@@ -41,6 +41,7 @@ const selector = formValueSelector('TallyService')
     state => ({
         initialValues: initialValues,
         listMaterial: jobSelectors.getMaterialList(state),
+        listMaterialUpdated: jobSelectors.getMaterialListUpdated(state),
         servicetime: selector(state, 'servicetime'),
         traveltime: selector(state, 'traveltime'),
         fuel: selector(state, 'fuel'),
@@ -56,7 +57,7 @@ export default class extends Component {
             listServiceTime: '',
             listTravelTime: '',
             listFuel: '',
-            listMaterial: '',
+            listMaterial: props.listMaterial,
             delivery: this.props.navigation.state.params,
             loading: false,
             showToast: false
@@ -72,12 +73,6 @@ export default class extends Component {
                     loading: false
                 })
                 if (data.Status == 1) {
-
-                    // const backAction = NavigationActions.back({
-                    //     key: this.props.keyToGoBack,
-                    //     params: { defaultRoute: 'list' }
-                    // })
-                    // this.props.navigation.dispatch(backAction)
                     const resetAction = NavigationActions.reset({
                         index: 0,
                         actions: [
@@ -139,11 +134,22 @@ export default class extends Component {
     }
 
     componentDidMount() {
+        if (this.props.listMaterial && this.props.listMaterial.length < 1 || (Date.now() - this.props.listMaterialUpdated) > 86400000) {
+            this.props.getMaterialList(accessToken, (error, data) => {
+                if (data) {
+                    this.renderMaterialList(data.Material)
+                }
+            })
+        } else {
+            this.renderMaterialList(this.state.listMaterial)
+        }
+    }
+
+    renderMaterialList(data) {
         const listServiceTime = [];
         const listTravelTime = [];
         const listFuel = [];
         const listMaterial = [];
-        const data = this.props.listMaterial
         for (const i = 0; i < data.length; i++) {
             switch (data[i].CategoryId) {
                 case 1:
