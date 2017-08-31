@@ -34,19 +34,18 @@ export default class extends Component {
             eftpos: 0,
             credit: 0,
             modalVisible: false,
-            GST: this.props.GST ? this.props.GST.GST : 0,
             listMaterial: props.listMaterial,
+            GST: 0
         }
 
     }
 
     componentDidMount() {
-        if (!this.props.GST) {
-            this.props.getGST(accessToken, (error, data) => {
-                if (data)
-                    GST: data
-            })
-        }
+        this.props.getGST(accessToken, (error, data) => {
+            if (data)
+                this.setState({GST: data.GST})
+        })
+        
         if (this.props.listMaterial && this.props.listMaterial.length < 1 || (Date.now() - this.props.listMaterialUpdated) > 86400000) {
             this.props.getMaterialList(accessToken, (error, data) => {
                 if (data) {
