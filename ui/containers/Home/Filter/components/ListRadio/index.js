@@ -38,12 +38,12 @@ export default class extends Component {
             },
             {
                 id: 2,
-                name: 'This week',
+                name: 'Week',
                 key: 7
             },
             {
                 id: 3,
-                name: 'This month',
+                name: 'Month',
                 key: 30
             },
         ]

@@ -48,9 +48,9 @@ export default class extends Component {
           onPress={() => this.props.navigation.goBack()}
         />
         <Content>
-          <TitleItem title='By the number of days' />
+          <TitleItem title='By date range' />
           <ListRadio onChange={(item) => this.onDaySelected(item)} />
-          <TitleItem title='By truck team' />
+          <TitleItem title='By truck' />
           <ListRadio onChange={(item) => this.onTruckSelected(item)} truck />
         </Content>
       </Container>
