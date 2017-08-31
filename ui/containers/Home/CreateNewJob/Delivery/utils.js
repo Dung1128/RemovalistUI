@@ -12,6 +12,10 @@ export const validate = (values, { navigation }) => {
                 pickupErrors.Time = 'Time must be more than ' + moment(params.datetime.timeStart).format('HH:mm')
                 pickupArrayErrors[pickupIndex] = pickupErrors
             }
+            if (moment(pickup.Time).format('HH:mm') > moment(params.datetime.timeEnd).format('HH:mm')) {
+                pickupErrors.Time = 'Time must be less than ' + moment(params.datetime.timeEnd).format('HH:mm')
+                pickupArrayErrors[pickupIndex] = pickupErrors
+            }
             if (params.status.JobStatusId != 1) {
                 if (!pickup || !pickup.AddressLine1) {
                     pickupErrors.AddressLine1 = 'Required'
@@ -39,6 +43,10 @@ export const validate = (values, { navigation }) => {
             }
             if (moment(dropoff.Time).format('HH:mm') > moment(params.datetime.timeEnd).format('HH:mm')) {
                 dropoffErrors.Time = 'Time must be less than ' + moment(params.datetime.timeEnd).format('HH:mm')
+                dropoffArrayErrors[dropoffIndex] = dropoffErrors
+            }
+            if (moment(dropoff.Time).format('HH:mm') < moment(params.datetime.timeStart).format('HH:mm')) {
+                dropoffErrors.Time = 'Time must be more than ' + moment(params.datetime.timeStart).format('HH:mm')
                 dropoffArrayErrors[dropoffIndex] = dropoffErrors
             }
             if (params.status.JobStatusId != 1) {

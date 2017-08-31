@@ -84,11 +84,11 @@ class GiftedMessengerContainer extends Component {
         };
 
         client.onSynchronizationStatusChanged = (status) => {
-          console.log(status);
+          console.log('status',status);
         };
 
         client.onClientConnectionStateChanged = (state) => {
-          // console.log(state);
+          console.log(state);
         };
 
         client.onClientSynchronized = () => {
