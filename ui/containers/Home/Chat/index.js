@@ -29,6 +29,7 @@ import {
     Client,
     Constants,
     AccessManager,
+    Channel
 } from 'react-native-twilio-chat';
 
 
@@ -136,21 +137,32 @@ export default class extends Component {
                     // console.log(state);
                 };
 
+
+                // channel = new Channel()
+                // channel.add(identity);
+
                 client.onClientSynchronized = () => {
-                    client.getPublicChannels().then(res => {
+                    client.getUserChannels().then(res => {
                         // get list user by chanel
                         this.setState({
                             dataSource: res.items,
                             loading: false
                         })
                     })
-                    console.log('client synced');
+                    console.log('client synced', client);
+
+                    /// add new chanel
+                    // client.createChannel({
+                    //     friendlyName: 'Channel Minh Chien',
+                    //     uniqueName: 'minhchien' + Date.now(),
+                    //     type: Constants.TCHChannelType.Private
+                    // })
+                    //     .then((channel) => console.log(channel));
 
                 };
 
                 client.initialize()
                     .then(() => {
-                        console.log(client);
                         console.log('client initilized');
                         // register the client with the accessManager
                         accessManager.registerClient();
@@ -161,7 +173,7 @@ export default class extends Component {
     }
 
     componentDidMount() {
-        this.initializeMessenging('minhchien');
+        this.initializeMessenging('tupt');
     }
 
     componentWillUnmount() {
@@ -169,8 +181,8 @@ export default class extends Component {
     }
 
 
-    chatWithUser(username) {
-        this.props.navigation.navigate('detail_chat_screen', { username })
+    chatWithUser(username, sid) {
+        this.props.navigation.navigate('detail_chat_screen', { username, sid })
     }
 
     renderTime(time) {
@@ -191,7 +203,7 @@ export default class extends Component {
     renderRow(data) {
         let timeDuration = this.renderTime(data.dateUpdated)
         return (
-            <TouchableOpacity style={styles.itemList} onPress={e => this.chatWithUser('tupt')}>
+            <TouchableOpacity style={styles.itemList} onPress={e => this.chatWithUser('tupt', data.sid)}>
                 <Text>{data.createdBy}</Text>
                 <View style={styles.bottom}>
                     <Text style={styles.textbottom}>{data.friendlyName}</Text>
@@ -203,7 +215,6 @@ export default class extends Component {
 
     render() {
         const { dataSource, loading } = this.state;
-        console.log(dataSource, 'data')
         return (
             <Container style={{ backgroundColor: material.grayBackgroundColor }}>
                 <Header
