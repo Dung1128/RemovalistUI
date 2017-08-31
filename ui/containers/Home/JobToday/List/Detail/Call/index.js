@@ -21,20 +21,18 @@ export default class extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataReference: props.dataReference,
             JobDetails: this.props.navigation.state.params.dataCall
         };
     }
 
     componentDidMount() {
-        if (this.props.dataReference && this.props.dataReference.length < 1) {
             this.props.getReferenceContactList(accessToken, (error, data) => {
                 if (data)
                     this.setState({
                         dataReference: data.ReferContacts
                     })
             })
-        }
+        
     }
     renderPhone(item, index) {
         return (<RowItem key={index} title={item}
@@ -70,7 +68,7 @@ export default class extends Component {
 
                     <TitleItem title='Self Storage' />
                     {
-                        this.state.dataReference.length !== 0 && this.state.dataReference[0].Phone.map((item, index) => this.renderPhone(item, index))
+                        this.state.dataReference && this.state.dataReference.length !== 0 && this.state.dataReference[0].Phone.map((item, index) => this.renderPhone(item, index))
                     }
 
                     <View white>
@@ -81,7 +79,7 @@ export default class extends Component {
                     <TitleItem title='Home Base' />
                     <View white style={{ paddingHorizontal: 5 }}>
                         {
-                            this.state.dataReference.length === 2 && this.state.dataReference[1].Phone.map((item, index) => this.renderPhone(item, index))
+                            this.state.dataReference && this.state.dataReference.length === 2 && this.state.dataReference[1].Phone.map((item, index) => this.renderPhone(item, index))
                         }
                     </View>
                 </Content>
