@@ -141,5 +141,16 @@ export default {
     spacer: {
         width: 10,
     },
+    timeLeft: { 
+        marginTop: 5,
+        fontSize: 11, 
+        color: material.grayColor  
+    },
+    timeRight: { 
+        marginTop: 5,
+        fontSize: 11, 
+        color: 'white',
+        alignSelf: 'flex-end',
+    }
 
 }

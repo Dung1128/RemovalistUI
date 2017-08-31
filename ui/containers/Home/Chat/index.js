@@ -102,35 +102,33 @@ export default class extends Component {
         this.setState({
             loading: true
         })
-        console.log('starting init');
         this.getToken(identity)
             .then(({ token }) => {
                 // initaite new Access Manager
                 const accessManager = new AccessManager(token);
-                console.log(token)
                 accessManager.onTokenWillExpire = () => {
                     this.getToken(identity)
                         .then(newToken => accessManager.updateToken(newToken.token));
                 };
 
                 accessManager.onTokenInvalid = () => {
-                    console.log('Token is invalid');
+                    // console.log('Token is invalid');
                 };
 
                 accessManager.onTokenExpired = () => {
-                    console.log('Token is expired');
+                    // console.log('Token is expired');
                 };
 
                 // initiate the client with the token, not accessManager
                 const client = new Client(token);
 
                 client.onError = ({ error, userInfo }) => {
-                    console.log(error);
-                    console.log(userInfo);
+                    // console.log(error);
+                    // console.log(userInfo);
                 };
 
                 client.onSynchronizationStatusChanged = (status) => {
-                    console.log(status);
+                    // console.log('status',status);
                 };
 
                 client.onClientConnectionStateChanged = (state) => {
@@ -149,7 +147,6 @@ export default class extends Component {
                             loading: false
                         })
                     })
-                    console.log('client synced', client);
 
                     /// add new chanel
                     // client.createChannel({
@@ -163,7 +160,6 @@ export default class extends Component {
 
                 client.initialize()
                     .then(() => {
-                        console.log('client initilized');
                         // register the client with the accessManager
                         accessManager.registerClient();
                     });
@@ -188,16 +184,16 @@ export default class extends Component {
     renderTime(time) {
         let diff = moment.duration(moment(new Date()).diff(moment(time)));
         let days = parseInt(diff.asDays()); //84
-
+        let checkDays = days != 0 ? `${days} days,` : ''
         let hours = parseInt(diff.asHours()); //2039 hours, but it gives total hours in given miliseconds which is not expacted.
 
         hours = hours - days * 24;  // 23 hours
-
+        let checkHours = hours != 0 ? ` ${hours} hours,` : ''
         let minutes = parseInt(diff.asMinutes()); //122360 minutes,but it gives total minutes in given miliseconds which is not expacted.
 
         minutes = minutes - (days * 24 * 60 + hours * 60); //20 minutes.
 
-        return days < 2 ? `${days} days, ${hours} hours, ${minutes} minutes,` : moment(time).format('YYYY-MM-DD HH:mm')
+        return days < 2 ?   checkDays + checkHours + ` ${minutes} minutes` : moment(time).format('YYYY-MM-DD HH:mm')
     }
 
     renderRow(data) {

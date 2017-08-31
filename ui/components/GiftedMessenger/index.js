@@ -263,23 +263,6 @@ export default class GiftedMessenger extends Component {
   }
 
   renderText(rowData = {}, rowID = null) {
-    /*
-    if (this.props.parseText === true && Platform.OS !== 'android') {
-      let parse = [
-        {type: 'url', style: [styles.link, (rowData.position === 'left' ? styles.linkLeft : styles.linkRight)], onPress: this.props.handleUrlPress},
-        {type: 'phone', style: [styles.link, (rowData.position === 'left' ? styles.linkLeft : styles.linkRight)], onPress: this.props.handlePhonePress},
-        {type: 'email', style: [styles.link, (rowData.position === 'left' ? styles.linkLeft : styles.linkRight)], onPress: this.props.handleEmailPress},
-      ];
-      return (
-        <ParsedText
-          style={[styles.text, (rowData.position === 'left' ? styles.textLeft : styles.textRight)]}
-          parse={parse}
-        >
-          {rowData.text}
-        </ParsedText>
-      );
-    }
-    */
     return (
       <Text
         style={[styles.text, (rowData.position === 'left' ? styles.textLeft : styles.textRight)]}
@@ -288,6 +271,7 @@ export default class GiftedMessenger extends Component {
       </Text>
     );
   }
+
 
   renderRow(rowData = {}, sectionID = null, rowID = null) {
     return (
@@ -299,6 +283,7 @@ export default class GiftedMessenger extends Component {
           {rowData.position === 'right' ? this.renderErrorButton(rowData, rowID) : null}
           <View style={[styles.bubble, (rowData.position === 'left' ? styles.bubbleLeft : styles.bubbleRight), (rowData.status === 'ErrorButton' ? styles.bubbleError : null)]}>
             {this.renderText(rowData, rowID)}
+            <Text style={rowData.position === 'left' ? styles.timeLeft : styles.timeRight}>{moment(rowData.date).format("HH:mm")}</Text>
           </View>
           {rowData.position === 'right' ? this.renderImage(rowData, rowID) : null}
         </View>
