@@ -47,5 +47,8 @@ export default {
     },
     txtAction: {
         paddingLeft: 20
+    },
+    totalCost: {
+        paddingRight: 48
     }
 }

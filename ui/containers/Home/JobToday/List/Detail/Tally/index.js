@@ -34,19 +34,18 @@ export default class extends Component {
             eftpos: 0,
             credit: 0,
             modalVisible: false,
-            GST: this.props.GST ? this.props.GST.GST : 0,
             listMaterial: props.listMaterial,
+            GST: 0
         }
 
     }
 
     componentDidMount() {
-        if (!this.props.GST) {
-            this.props.getGST(accessToken, (error, data) => {
-                if (data)
-                    GST: data
-            })
-        }
+        this.props.getGST(accessToken, (error, data) => {
+            if (data)
+                this.setState({GST: data.GST})
+        })
+        
         if (this.props.listMaterial && this.props.listMaterial.length < 1 || (Date.now() - this.props.listMaterialUpdated) > 86400000) {
             this.props.getMaterialList(accessToken, (error, data) => {
                 if (data) {
@@ -310,7 +309,10 @@ export default class extends Component {
                         </View>*/}
                     <View style={styles.Title}>
                         <Text style={styles.txtBold}>Service Time</Text>
-                        {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                        {
+                            this.state.dataServiceTime && this.state.dataServiceTime.length === 0  && 
+                            <Text style={styles.totalCost}>$ 0 </Text>
+                        }
                     </View>
                     {
                         this.state.dataServiceTime && this.state.dataServiceTime.map((item, index) => this.renderDataMaterial(item, index))
@@ -318,7 +320,10 @@ export default class extends Component {
 
                     <View style={styles.Title}>
                         <Text style={styles.txtBold}>Travel Time</Text>
-                        {/*<Text style={styles.txtBold}>$ {this.} </Text>*/}
+                        {
+                            this.state.dataTravelTime && this.state.dataTravelTime.length === 0 && 
+                            <Text style={styles.totalCost}>$ 0 </Text>
+                        }
                     </View>
                     {
                         this.state.dataTravelTime && this.state.dataTravelTime.map((item, index) => this.renderDataMaterial(item, index))
@@ -326,7 +331,10 @@ export default class extends Component {
 
                     <View style={styles.Title}>
                         <Text style={styles.txtBold}>Fuel/RUCS</Text>
-                        {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                        {
+                            this.state.dataFuel && this.state.dataFuel.length === 0 &&
+                            <Text style={styles.totalCost}>$ 0 </Text>
+                        }
                     </View>
                     {
                         this.state.dataFuel && this.state.dataFuel.map((item, index) => this.renderDataMaterial(item, index))
@@ -334,7 +342,10 @@ export default class extends Component {
 
                     <View style={styles.Title}>
                         <Text style={styles.txtBold}>Materials</Text>
-                        {/*<Text style={styles.txtBold}>$ 100 </Text>*/}
+                        {
+                            this.state.dataMaterial && this.state.dataMaterial.length === 0 && 
+                            <Text style={styles.totalCost}>$ 0 </Text>
+                        }
                     </View>
                     {
                         this.state.dataMaterial && this.state.dataMaterial.map((item, index) => this.renderDataMaterial(item, index))
@@ -344,7 +355,7 @@ export default class extends Component {
                             this.state.JobDetails.JobDetailsMaterials.map((item, index) => this.renderMaterial(item, index))
                         }*/}
 
-                    <View style={{ ...styles.Title, paddingRight: 50 }}>
+                    <View style={{ ...styles.Title, ...styles.totalCost }}>
                         <Text style={styles.txtBold}>GST</Text>
                         <Text style={styles.txtBold}>$ {Math.round(GST * this.state.JobDetails.TotalCost)}</Text>
                     </View>
