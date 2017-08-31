@@ -38,7 +38,7 @@ class GiftedMessengerContainer extends Component {
   }
 
   getToken(identity) {
-    return fetch('http://localhost:3000/token?device=' + Platform.OS + '&identity=' + identity, {
+    return fetch('http://192.168.0.111:3000:3000/token?device=' + Platform.OS + '&identity=' + identity, {
       method: 'get',
     })
       .then(res => res.json());
