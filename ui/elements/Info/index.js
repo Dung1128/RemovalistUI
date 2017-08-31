@@ -36,7 +36,7 @@ export default class extends Component {
                         <Text style={{ color: material.redColor }}>DIRECTION</Text>
                     </View>
                 } />
-                <View white style={{ paddingHorizontal: 5 }}>
+                <View white>
                     <RowItem icon='time' title={time} />               
                     <RowItem icon='building' title={address1} />             
                     <RowItem icon='map' title={address2} />                 

@@ -131,7 +131,7 @@ export default class extends Component {
                         </View>
                     </View>
                     <TitleItem title='Customer Info' />
-                    <View white style={{ paddingHorizontal: 5 }}>
+                    <View white>
                         <RowItem icon='user' title={CompanyName} />
 
                         {
@@ -169,7 +169,7 @@ export default class extends Component {
                         </View>
                     </View>
                     <TitleItem title='Truck' />
-                    <View white style={{ paddingHorizontal: 5 }}>
+                    <View white>
                         <RowItem icon='truck' title={data.TruckName} />
                     </View>
                     {
