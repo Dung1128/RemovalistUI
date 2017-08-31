@@ -7,7 +7,7 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import { Container } from 'native-base';
+import { Container, Spinner } from 'native-base';
 import Header from '~/ui/components/Header';
 import GiftedMessenger from './GiftedMessenger';
 import { logo } from '~/assets'
@@ -33,11 +33,12 @@ class GiftedMessengerContainer extends Component {
       isLoadingEarlierMessages: false,
       typingMessage: '',
       allLoaded: false,
+      loading: true
     };
   }
 
   getToken(identity) {
-    return fetch('http://192.168.1.132:3000/token?device=' + Platform.OS + '&identity=' + identity, {
+    return fetch('http://localhost:3000/token?device=' + Platform.OS + '&identity=' + identity, {
       method: 'get',
     })
       .then(res => res.json());
@@ -92,7 +93,7 @@ class GiftedMessengerContainer extends Component {
 
         client.onClientSynchronized = () => {
           console.log('client synced');
-          client.getPublicChannels()
+          client.getUserChannels()
             .then(res => {
               const firstChannel = res.items[0]
               // console.log(firstChannel.sid)
@@ -101,6 +102,16 @@ class GiftedMessengerContainer extends Component {
                 .then((channel) => {
                   channel.initialize()
                     .then(() => {
+
+
+                      channel.getMembers().then((res) => {
+                        console.log('members', res)
+                      })
+
+                      if (identity != 'tupt') {
+                        channel.add('tupt')
+                      }
+
                       console.log(channel);
                       if (channel.status !== Constants.TCHChannelStatus.Joined) {
                         channel.join();
@@ -110,6 +121,9 @@ class GiftedMessengerContainer extends Component {
                         .then((messages) => {
                           // array of message instances
                           // console.log(messages)
+                          this.setState({
+                            loading: false
+                          })
                           const parsedMessages = messages.map(message => this.parseMessage(message))
                           // console.log(parsedMessages)
                           this.setMessages(parsedMessages);
@@ -155,13 +169,18 @@ class GiftedMessengerContainer extends Component {
 
 
   componentDidMount() {
+
     this.initializeMessenging('minhchien');
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-    this.state.client && this.state.client.shutdown()
-    this.state.channel && this.state.channel.close()
+    try {
+      this.state.client && this.state.client.shutdown()
+      this.state.channel && this.state.channel.close()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   getInitialMessages() {
@@ -226,7 +245,7 @@ class GiftedMessengerContainer extends Component {
 
   render() {
 
-    // console.log(this.state.messages)
+    const { loading } = this.state;
     return (
 
       <Container>
@@ -235,7 +254,9 @@ class GiftedMessengerContainer extends Component {
           iconLeft='back'
           onPress={() => this.props.navigation.goBack()}
         />
-
+        {
+          loading && <Spinner color={material.redColor} />
+        }
         <GiftedMessenger
           ref={c => this._GiftedMessenger = c}
 

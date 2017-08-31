@@ -7,7 +7,7 @@ import {
   Platform,
   Dimensions,
 } from 'react-native';
-import { Container } from 'native-base';
+import { Container, Spinner } from 'native-base';
 import Header from '~/ui/components/Header';
 import GiftedMessenger from './GiftedMessenger';
 import { logo } from '~/assets'
@@ -33,6 +33,7 @@ class GiftedMessengerContainer extends Component {
       isLoadingEarlierMessages: false,
       typingMessage: '',
       allLoaded: false,
+      loading: true
     };
   }
 
@@ -54,13 +55,11 @@ class GiftedMessengerContainer extends Component {
     };
   }
 
-  initializeMessenging(identity) {
-    console.log('starting init');
+  initializeMessenging(identity, sid) {
     this.getToken(identity)
       .then(({ token }) => {
         // initaite new Access Manager
         const accessManager = new AccessManager(token);
-        console.log(token)
         accessManager.onTokenWillExpire = () => {
           this.getToken(identity)
             .then(newToken => accessManager.updateToken(newToken.token));
@@ -92,50 +91,49 @@ class GiftedMessengerContainer extends Component {
 
         client.onClientSynchronized = () => {
           console.log('client synced');
-          client.getPublicChannels()
-            .then(res => {
-              const firstChannel = res.items[0]
-              // console.log(firstChannel.sid)
 
-              client.getChannel(firstChannel.sid)
-                .then((channel) => {
-                  channel.initialize()
-                    .then(() => {
-                      console.log(channel);
-                      if (channel.status !== Constants.TCHChannelStatus.Joined) {
-                        channel.join();
-                      }
+          client.getChannel(sid)
+            .then((channel) => {
+              channel.initialize()
+                .then(() => {
 
-                      channel.getMessages(20)
-                        .then((messages) => {
-                          // array of message instances
-                          // console.log(messages)
-                          const parsedMessages = messages.map(message => this.parseMessage(message))
-                          // console.log(parsedMessages)
-                          this.setMessages(parsedMessages);
-                        })
+                  if (identity != 'tupt') {
+                    channel.add('tupt')
+                  }
+                  if (channel.status !== Constants.TCHChannelStatus.Joined) {
+                    channel.join();
+                  }
 
+                  channel.getMessages(20)
+                    .then((messages) => {
+                      // array of message instances
+                      // console.log(messages)
+                      this.setState({
+                        loading: false
+                      })
+                      const parsedMessages = messages.map(message => this.parseMessage(message))
+                      // console.log(parsedMessages)
+                      this.setMessages(parsedMessages);
                     })
-                    .catch((error) => {
-                      console.log(error);
-                    });
 
-                  channel.onTypingStarted = (member) => {
-                    this.setState({ typingMessage: member.userInfo.identity + ' is typing...' });
-                  };
-
-                  channel.onTypingEnded = () => {
-                    this.setState({ typingMessage: '' });
-                  };
-
-                  channel.onMessageAdded = message => this.handleReceive(this.parseMessage(message));
-
-
-                  this.setState({ client, channel, accessManager });
-
-
-
+                })
+                .catch((error) => {
+                  console.log(error);
                 });
+
+              channel.onTypingStarted = (member) => {
+                this.setState({ typingMessage: member.userInfo.identity + ' is typing...' });
+              };
+
+              channel.onTypingEnded = () => {
+                this.setState({ typingMessage: '' });
+              };
+
+              channel.onMessageAdded = message => this.handleReceive(this.parseMessage(message));
+
+
+              this.setState({ client, channel, accessManager });
+
 
 
             });
@@ -155,16 +153,16 @@ class GiftedMessengerContainer extends Component {
 
 
   componentDidMount() {
-
-    this.initializeMessenging(this.props.navigation.state.params.username);
+    const { username, sid } = this.props.navigation.state.params;
+    this.initializeMessenging(username, sid);
   }
 
   componentWillUnmount() {
     this._isMounted = false;
-    try{
+    try {
       this.state.client && this.state.client.shutdown()
       this.state.channel && this.state.channel.close()
-    } catch(e){
+    } catch (e) {
       console.log(e)
     }
   }
@@ -230,7 +228,7 @@ class GiftedMessengerContainer extends Component {
   }
 
   render() {
-
+    const { loading } = this.state;
     // console.log(this.state.messages)
     return (
 
@@ -240,7 +238,9 @@ class GiftedMessengerContainer extends Component {
           iconLeft='back'
           onPress={() => this.props.navigation.goBack()}
         />
-
+        {
+          loading && <Spinner color={material.redColor} />
+        }
         <GiftedMessenger
           ref={c => this._GiftedMessenger = c}
 
