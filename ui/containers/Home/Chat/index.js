@@ -131,6 +131,7 @@ export default class extends Component {
 
     componentWillUnmount() {
         this.state.client && this.state.client.shutdown()
+        this.state.accessManager && this.state.accessManager.removeListeners()
     }
 
 

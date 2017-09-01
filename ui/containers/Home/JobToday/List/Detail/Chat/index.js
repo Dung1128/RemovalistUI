@@ -189,6 +189,7 @@ export default class extends Component {
     try {
       this.state.client && this.state.client.shutdown()
       this.state.channel && this.state.channel.close()
+      this.state.accessManager && this.state.accessManager.removeListeners()
     } catch (e) {
       console.log(e)
     }
