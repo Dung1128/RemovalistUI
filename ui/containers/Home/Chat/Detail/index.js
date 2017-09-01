@@ -40,7 +40,6 @@ export default class extends Component {
       typingMessage: '',
       allLoaded: false,
       loading: true,
-      token: props.token
     };
   }
 
@@ -56,6 +55,7 @@ export default class extends Component {
   }
 
   initializeMessenging(identity, sid, token) {
+    console.log(token)
     // initaite new Access Manager
     const accessManager = new AccessManager(token);
     accessManager.onTokenWillExpire = () => {

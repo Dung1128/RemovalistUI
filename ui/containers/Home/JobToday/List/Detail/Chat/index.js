@@ -116,7 +116,16 @@ export default class extends Component {
                     console.log('members', res)
                   })
 
-                  channel.add('admin;admin@gmail.com')
+                  let checkAdmin = false
+                  for (const i = 0; i < res.items.length; ++i) {
+                    if (res.items[i].userInfo && res.items[i].userInfo.identity == 'admin;admin@gmail.com') {
+                      checkAdmin = true
+                    }
+                  }
+
+                  if (checkAdmin) {
+                    channel.add('admin;admin@gmail.com')
+                  }
 
                   console.log(channel);
                   if (channel.status !== Constants.TCHChannelStatus.Joined) {
@@ -167,13 +176,9 @@ export default class extends Component {
   }
 
   initializeMessenging(identity) {
-    if (this.state.token == '') {
-      this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
-        this.getChannelWithMessage(data.token)
-      })
-    } else {
-      this.getChannelWithMessage(this.state.token)
-    }
+    this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
+      this.getChannelWithMessage(data.token)
+    })
   }
 
 
