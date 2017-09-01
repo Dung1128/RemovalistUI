@@ -311,7 +311,7 @@ export default class extends Component {
                         <Text style={styles.txtBold}>Service Time</Text>
                         {
                             this.state.dataServiceTime && this.state.dataServiceTime.length === 0  && 
-                            <Text style={styles.totalCost}>$ 0 </Text>
+                            <Text style={styles.totalCost}>$ 0.00 </Text>
                         }
                     </View>
                     {
@@ -322,7 +322,7 @@ export default class extends Component {
                         <Text style={styles.txtBold}>Travel Time</Text>
                         {
                             this.state.dataTravelTime && this.state.dataTravelTime.length === 0 && 
-                            <Text style={styles.totalCost}>$ 0 </Text>
+                            <Text style={styles.totalCost}>$ 0.00 </Text>
                         }
                     </View>
                     {
@@ -333,7 +333,7 @@ export default class extends Component {
                         <Text style={styles.txtBold}>Fuel/RUCS</Text>
                         {
                             this.state.dataFuel && this.state.dataFuel.length === 0 &&
-                            <Text style={styles.totalCost}>$ 0 </Text>
+                            <Text style={styles.totalCost}>$ 0.00 </Text>
                         }
                     </View>
                     {
@@ -344,7 +344,7 @@ export default class extends Component {
                         <Text style={styles.txtBold}>Materials</Text>
                         {
                             this.state.dataMaterial && this.state.dataMaterial.length === 0 && 
-                            <Text style={styles.totalCost}>$ 0 </Text>
+                            <Text style={styles.totalCost}>$ 0.00 </Text>
                         }
                     </View>
                     {
@@ -355,9 +355,9 @@ export default class extends Component {
                             this.state.JobDetails.JobDetailsMaterials.map((item, index) => this.renderMaterial(item, index))
                         }*/}
 
-                    <View style={{ ...styles.Title, ...styles.totalCost }}>
+                    <View style={{ ...styles.Title }}>
                         <Text style={styles.txtBold}>GST</Text>
-                        <Text style={styles.txtBold}>$ {Math.round(GST * this.state.JobDetails.TotalCost)}</Text>
+                        <Text style={styles.totalCost}>$ 0.00</Text>
                     </View>
 
                     {/*<View style={{...styles.Title, paddingRight: 50}}>
@@ -367,7 +367,7 @@ export default class extends Component {
 
                     <View style={{ ...styles.Title, backgroundColor: '#fff' }}>
                         <Text style={styles.total}>Total</Text>
-                        <Text style={{ ...styles.total, fontWeight: 'bold', color: '#ed502b' }}>$ {this.state.JobDetails.TotalCost}</Text>
+                        <Text style={{ ...styles.total, fontWeight: 'bold', color: '#ed502b', ...styles.totalCost}}>$ {this.state.JobDetails.TotalCost}</Text>
                     </View>
                     <View style={{ ...styles.Title, backgroundColor: '#e9edf0', height: 10 }} />
                 </Content>
