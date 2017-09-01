@@ -46,6 +46,7 @@ const selector = formValueSelector('TallyService')
         traveltime: selector(state, 'traveltime'),
         fuel: selector(state, 'fuel'),
         material: selector(state, 'material'),
+        GST: jobSelectors.getGST(state)
 
     }), { ...materialActions, ...jobActions })
 @reduxForm({ form: 'TallyService', validate, destroyOnUnmount: !__DEV__ })
@@ -255,13 +256,13 @@ export default class extends Component {
                     <TitleItem title='GST'
                         right={
                             <View row style={styles.money}>
-                                <Text style={styles.titPrice}>$0</Text>
+                                <Text style={styles.titPrice}>$ {Math.round(this.props.GST.GST * this.sumPrice())}</Text>
                             </View>
                         }
                     />
                     <View style={styles.totalPrice}>
                         <Text style={styles.txtTotal}>Total</Text>
-                        <Text style={styles.txtPriceTotal}>${this.sumPrice()}</Text>
+                        <Text style={styles.txtPriceTotal}>${this.sumPrice() + Math.round(this.props.GST.GST * this.sumPrice())}</Text>
                     </View>
                     <TitleItem style={{ padding: 0 }} />
                 </KeyboardAwareScrollView>

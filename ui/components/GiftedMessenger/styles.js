@@ -6,7 +6,8 @@ export default {
         backgroundColor: '#E9EDEF',
     },
     listView: {
-        height: material.deviceHeight - 30
+        height: material.deviceHeight - 60,
+        marginBottom: 40
     },
     textInputContainer: {
         position: 'absolute',
@@ -14,7 +15,7 @@ export default {
         flexDirection: 'row',
         height: 50,
         alignItems: 'center',
-        padding: 10,
+        padding: 5,
         paddingVertical: 10,
         backgroundColor: '#fbfbfb',
         width: '100%'
