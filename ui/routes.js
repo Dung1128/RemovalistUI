@@ -26,6 +26,7 @@ import Notifications from './containers/Home/Notification';
 import ChatAdmin from './containers/Home/Chat';
 import ChatAdminDetail from './containers/Home/Chat/Detail';
 import Filter from './containers/Home/Filter';
+import Search from './containers/Home/SearchApp';
 
 export const initialRouteName = 'jobtoday'
 
@@ -78,6 +79,9 @@ const JobStackNavigator = StackNavigator(
         },
         filter_screen: {
             screen: Filter
+        },
+        search_screen: {
+            screen: Search
         },
     },
     {

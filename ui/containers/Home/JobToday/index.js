@@ -135,7 +135,7 @@ export default class extends Component {
               <TouchableOpacity onPress={() => this.props.navigation.navigate('filter_screen')}>
                 <Icon name='filter' color='#fff' size={22} />
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('search_screen')}>
                 <Icon name='search' color='#fff' size={22} />
               </TouchableOpacity>
             </View>
