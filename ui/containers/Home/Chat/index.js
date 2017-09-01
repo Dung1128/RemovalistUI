@@ -46,7 +46,7 @@ export default class extends Component {
             dataSource: [],
             isRefreshing: false,
             loading: true,
-            token: props.token || ''
+            token: ''
         };
     }
 
@@ -116,6 +116,9 @@ export default class extends Component {
     initializeMessenging(identity) {
         this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
             this.getChannel(data.token)
+            this.setState({
+                token: data.token
+            })
         })
 
     }
@@ -129,8 +132,8 @@ export default class extends Component {
     }
 
 
-    chatWithUser(username, sid) {
-        this.props.navigation.navigate('detail_chat_screen', { username, sid, token: this.state.token })
+    chatWithUser(username, data) {
+        this.props.navigation.navigate('detail_chat_screen', { username, data, token: this.state.token })
     }
 
     renderTime(time) {
@@ -153,7 +156,7 @@ export default class extends Component {
         let index = data.createdBy.indexOf(';')
         let name = data.createdBy.slice(0, index)
         return (
-            <TouchableOpacity style={styles.itemList} onPress={e => this.chatWithUser('tupt', data.sid)}>
+            <TouchableOpacity style={styles.itemList} onPress={e => this.chatWithUser('tupt', data)}>
                 <Text>{data.friendlyName}</Text>
                 <View style={styles.bottom}>
                     <Text style={styles.textbottom}>{name}</Text>

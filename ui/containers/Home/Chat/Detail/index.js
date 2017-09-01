@@ -40,6 +40,7 @@ export default class extends Component {
       typingMessage: '',
       allLoaded: false,
       loading: true,
+      data: this.props.navigation.state.params.data
     };
   }
 
@@ -138,8 +139,8 @@ export default class extends Component {
 
 
   componentDidMount() {
-    const { username, sid, token } = this.props.navigation.state.params;
-    this.initializeMessenging(username, sid, token);
+    const { username, data, token } = this.props.navigation.state.params;
+    this.initializeMessenging(username, data.sid, token);
   }
 
   componentWillUnmount() {
@@ -213,13 +214,13 @@ export default class extends Component {
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, data } = this.state;
     // console.log(this.state.messages)
     return (
 
       <Container style={{ backgroundColor: '#E9EDEF' }}>
         <Header
-          title='Chat Detail'
+          title={data.friendlyName}
           iconLeft='back'
           onPress={() => this.props.navigation.goBack()}
         />
