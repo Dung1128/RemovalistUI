@@ -97,7 +97,6 @@ export default class extends Component {
         .then(res => {
 
           if (res && res.items.length == 0) {
-            console.log('add')
             client.createChannel({
               friendlyName: 'Channel' + identity,
               uniqueName: identity + Date.now(),
@@ -126,8 +125,6 @@ export default class extends Component {
                   if (checkAdmin) {
                     channel.add('admin;admin@gmail.com')
                   }
-
-                  console.log(channel);
                   if (channel.status !== Constants.TCHChannelStatus.Joined) {
                     channel.join();
                   }
@@ -135,7 +132,6 @@ export default class extends Component {
                   channel.getMessages(20)
                     .then((messages) => {
                       // array of message instances
-                      console.log(messages)
                       this.setState({
                         loading: false
                       })

@@ -55,7 +55,6 @@ export default class extends Component {
   }
 
   initializeMessenging(identity, sid, token) {
-    console.log(token)
     // initaite new Access Manager
     const accessManager = new AccessManager(token);
     accessManager.onTokenWillExpire = () => {

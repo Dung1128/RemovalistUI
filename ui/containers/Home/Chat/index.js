@@ -114,13 +114,9 @@ export default class extends Component {
     }
 
     initializeMessenging(identity) {
-        if (this.state.token == '') {
-            this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
-                this.getChannel(data.token)
-            })
-        } else {
-            this.getChannel(this.state.token)
-        }
+        this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
+            this.getChannel(data.token)
+        })
 
     }
 
