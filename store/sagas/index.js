@@ -2,6 +2,7 @@ import { fork, all } from 'redux-saga/effects'
 import auth from './auth'
 import job from './job'
 import material from './material';
+import chat from './chat';
 
 // saga must be a function like generator of other functions
 export default function* () {
@@ -9,5 +10,6 @@ export default function* () {
     ...auth.map(watcher => fork(watcher)),
     ...job.map(watcher => fork(watcher)),
     ...material.map(watcher => fork(watcher)),
+    ...chat.map(watcher => fork(watcher)),
   ])
 }
