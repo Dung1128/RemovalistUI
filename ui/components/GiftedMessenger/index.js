@@ -560,7 +560,7 @@ export default class GiftedMessenger extends Component {
           </View>
           <View style={styles.textInputContent}>
             <Input
-              style={{ height: 30, alignItems: 'flex-start', lineHeight: 25 }}
+              style={{ height: 40, alignItems: 'flex-start', lineHeight: 25, width: '100%' }}
               placeholder={this.props.placeholder}
               ref='textInput'
               onChangeText={this.onChangeText}

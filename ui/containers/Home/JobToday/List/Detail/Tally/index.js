@@ -41,10 +41,6 @@ export default class extends Component {
     }
 
     componentDidMount() {
-        this.props.getGST(accessToken, (error, data) => {
-            if (data)
-                this.setState({GST: data.GST})
-        })
         
         if (this.props.listMaterial && this.props.listMaterial.length < 1 || (Date.now() - this.props.listMaterialUpdated) > 86400000) {
             this.props.getMaterialList(accessToken, (error, data) => {
@@ -357,7 +353,7 @@ export default class extends Component {
 
                     <View style={{ ...styles.Title }}>
                         <Text style={styles.txtBold}>GST</Text>
-                        <Text style={styles.totalCost}>$ 0.00</Text>
+                        <Text style={styles.totalCost}>$ {Math.round(this.props.GST.GST * this.state.JobDetails.TotalCost)}</Text>
                     </View>
 
                     {/*<View style={{...styles.Title, paddingRight: 50}}>
@@ -367,7 +363,7 @@ export default class extends Component {
 
                     <View style={{ ...styles.Title, backgroundColor: '#fff' }}>
                         <Text style={styles.total}>Total</Text>
-                        <Text style={{ ...styles.total, fontWeight: 'bold', color: '#ed502b', ...styles.totalCost}}>$ {this.state.JobDetails.TotalCost}</Text>
+                        <Text style={{ ...styles.total, fontWeight: 'bold', color: '#ed502b', ...styles.totalCost}}>$ {this.state.JobDetails.TotalCost + Math.round(this.props.GST.GST * this.state.JobDetails.TotalCost)}</Text>
                     </View>
                     <View style={{ ...styles.Title, backgroundColor: '#e9edf0', height: 10 }} />
                 </Content>

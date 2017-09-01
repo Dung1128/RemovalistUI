@@ -72,6 +72,7 @@ export default class extends Component {
   componentDidMount() {
     this.navigateTab(this.selectedRoute)
     this.props.getJobByDate(this.renderDate(this.state.date) + `/${this.keyDayFilter}`, accessToken, (error, data) => { })
+    this.props.getGST(accessToken, (error, data) => {})
   }
 
 
