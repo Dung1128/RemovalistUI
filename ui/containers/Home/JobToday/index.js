@@ -127,7 +127,7 @@ export default class extends Component {
           onPress={() => this.props.navigation.navigate('DrawerOpen')}
           right={
             <View style={{ justifyContent: 'space-between', width: '60%', flexDirection: 'row' }}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('listchat_screen')}>
+              <TouchableOpacity>
                 <Icon name='chat' color='#fff' size={22} />
               </TouchableOpacity>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('notification_screen')}>

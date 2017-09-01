@@ -186,7 +186,7 @@ export default class extends Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('call_screen', { dataCall: JobDetails })}>
                         <Icon name='call' size={22} color={material.grayIconColor} />
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('chat_screen')}>
+                    <TouchableOpacity>
                         <Icon name='chat' size={22} color={material.grayIconColor} />
                         <View style={{ backgroundColor: 'red', width: 4, height: 4, borderRadius: 4 / 2, position: 'absolute', top: -5, right: -8 }} />
                     </TouchableOpacity>
