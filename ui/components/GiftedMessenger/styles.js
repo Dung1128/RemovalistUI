@@ -6,15 +6,18 @@ export default {
         backgroundColor: '#E9EDEF',
     },
     listView: {
-        flex: 1,
+        height: material.deviceHeight - 30
     },
     textInputContainer: {
+        position: 'absolute',
+        bottom: 0,
         flexDirection: 'row',
         height: 50,
         alignItems: 'center',
         padding: 10,
         paddingVertical: 10,
-        backgroundColor: '#fbfbfb'
+        backgroundColor: '#fbfbfb',
+        width: '100%'
     },
     textInputContent: {
         flexDirection: 'row', flex: 1, alignItems: 'center', borderWidth: 1,
@@ -22,7 +25,6 @@ export default {
         paddingVertical: 2,
         paddingHorizontal: 5,
         margin: 5,
-        marginTop: -2
     },
     textInput: {
         alignSelf: 'center',
@@ -141,14 +143,14 @@ export default {
     spacer: {
         width: 10,
     },
-    timeLeft: { 
+    timeLeft: {
         marginTop: 5,
-        fontSize: 11, 
-        color: material.grayColor  
+        fontSize: 11,
+        color: material.grayColor
     },
-    timeRight: { 
+    timeRight: {
         marginTop: 5,
-        fontSize: 11, 
+        fontSize: 11,
         color: 'white',
         alignSelf: 'flex-end',
     }

@@ -88,11 +88,13 @@ export default class extends Component {
         client.onClientSynchronized = () => {
             client.getUserChannels().then(res => {
                 // get list user by chanel
-                // console.log(res)
+                console.log(res)
                 this.setState({
+                    loading: false,
                     dataSource: res.items,
-                    loading: false
                 })
+            }).catch((err) => {
+                console.log(err)
             })
 
             /// add new chanel
@@ -153,13 +155,13 @@ export default class extends Component {
 
     renderRow(data) {
         let timeDuration = this.renderTime(data.dateUpdated)
-        let index = data.createdBy.indexOf(';')
-        let name = data.createdBy.slice(0, index)
+        // let index = data.createdBy.indexOf(';')
+        // let name = data.createdBy.slice(0, index)
         return (
             <TouchableOpacity style={styles.itemList} onPress={e => this.chatWithUser('tupt', data)}>
                 <Text>{data.friendlyName}</Text>
                 <View style={styles.bottom}>
-                    <Text style={styles.textbottom}>{name}</Text>
+                    <Text style={styles.textbottom}>{data.createdBy}</Text>
                     <Text style={styles.textbottom}>{timeDuration}</Text>
                 </View>
             </TouchableOpacity>

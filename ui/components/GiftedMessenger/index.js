@@ -555,12 +555,12 @@ export default class GiftedMessenger extends Component {
     if (this.props.hideTextInput === false) {
       return (
         <View style={styles.textInputContainer}>
-          <View style={{ marginTop: -5 }} >
+          <View >
             <ButtonIcon icon='add' color='white' size={15} />
           </View>
           <View style={styles.textInputContent}>
             <Input
-              style={{ height: 30, alignItems: 'center' }}
+              style={{ height: 30, alignItems: 'flex-start', lineHeight: 25 }}
               placeholder={this.props.placeholder}
               ref='textInput'
               onChangeText={this.onChangeText}
