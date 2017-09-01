@@ -31,55 +31,13 @@ import {
     AccessManager,
     Channel
 } from 'react-native-twilio-chat';
+import { connect } from 'react-redux'
+import * as chatActions from '~/store/actions/chat'
+import * as chatSelectors from '~/store/selectors/chat'
 
-
-const dataNoti = [
-    {
-        content: 'New Plymouth',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'Wellington',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'North Shore, Auckland',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'Nelson',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'Queenstown Lakes',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'Selwyn, Canterbury',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'Hamilton',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'Dunedin',
-        status: 'content',
-        time: '3 mins ago'
-    },
-    {
-        content: 'Invercargill',
-        status: 'content',
-        time: '3 mins ago'
-    }
-]
+@connect(state => ({
+    token: chatSelectors.getToken(state)
+}), { ...chatActions })
 
 export default class extends Component {
     constructor(props) {
@@ -87,89 +45,90 @@ export default class extends Component {
         this.state = {
             dataSource: [],
             isRefreshing: false,
-            loading: false
+            loading: false,
+            token: props.token
         };
     }
 
-    getToken(identity) {
-        return fetch('http://localhost:3000/token?device=' + Platform.OS + '&identity=' + identity, {
-            method: 'get',
-        })
-            .then(res => res.json());
-    }
-
     initializeMessenging(identity) {
+
+        let token = this.state.token;
         this.setState({
             loading: true
         })
-        this.getToken(identity)
-            .then(({ token }) => {
-                // initaite new Access Manager
-                const accessManager = new AccessManager(token);
-                accessManager.onTokenWillExpire = () => {
-                    this.getToken(identity)
-                        .then(newToken => accessManager.updateToken(newToken.token));
-                };
+        if (!token) {
+            this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
+                this.setState({
+                    token: data.token
+                })
+            })
+        }
+        // initaite new Access Manager
+        const accessManager = new AccessManager(token);
+        accessManager.onTokenWillExpire = () => {
+            this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, newToken) => {
+                accessManager.updateToken(newToken.token);
+            })
+        };
 
-                accessManager.onTokenInvalid = () => {
-                    // console.log('Token is invalid');
-                };
+        accessManager.onTokenInvalid = () => {
+            console.log('Token is invalid');
+        };
 
-                accessManager.onTokenExpired = () => {
-                    // console.log('Token is expired');
-                };
+        accessManager.onTokenExpired = () => {
+            console.log('Token is expired');
+        };
 
-                // initiate the client with the token, not accessManager
-                const client = new Client(token);
+        // initiate the client with the token, not accessManager
+        const client = new Client(token);
+        client.onError = ({ error, userInfo }) => {
+            console.log(error);
+            console.log(userInfo);
+        };
 
-                client.onError = ({ error, userInfo }) => {
-                    // console.log(error);
-                    // console.log(userInfo);
-                };
+        client.onSynchronizationStatusChanged = (status) => {
+            // console.log('status',status);
+        };
 
-                client.onSynchronizationStatusChanged = (status) => {
-                    // console.log('status',status);
-                };
-
-                client.onClientConnectionStateChanged = (state) => {
-                    // console.log(state);
-                };
+        client.onClientConnectionStateChanged = (state) => {
+            // console.log(state);
+        };
 
 
-                // channel = new Channel()
-                // channel.add(identity);
+        // channel = new Channel()
+        // channel.add(identity);
 
-                client.onClientSynchronized = () => {
-                    client.getUserChannels().then(res => {
-                        // get list user by chanel
-                        this.setState({
-                            dataSource: res.items,
-                            loading: false
-                        })
-                    })
+        client.onClientSynchronized = () => {
+            client.getUserChannels().then(res => {
+                // get list user by chanel
+                // console.log(res)
+                this.setState({
+                    dataSource: res.items,
+                    loading: false
+                })
+            })
 
-                    /// add new chanel
-                    // client.createChannel({
-                    //     friendlyName: 'Channel Minh Chien',
-                    //     uniqueName: 'minhchien' + Date.now(),
-                    //     type: Constants.TCHChannelType.Private
-                    // })
-                    //     .then((channel) => console.log(channel));
+            /// add new chanel
+            // client.createChannel({
+            //     friendlyName: 'Channel Minh Chien',
+            //     uniqueName: 'minhchien' + Date.now(),
+            //     type: Constants.TCHChannelType.Private
+            // })
+            //     .then((channel) => console.log(channel));
 
-                };
+        };
 
-                client.initialize()
-                    .then(() => {
-                        // register the client with the accessManager
-                        accessManager.registerClient();
-                    });
-                this.setState({ client, accessManager });
+        client.initialize()
+            .then(() => {
+                // register the client with the accessManager
+                accessManager.registerClient();
             });
+        this.setState({ client, accessManager });
 
     }
 
     componentDidMount() {
-        this.initializeMessenging('tupt');
+        this.initializeMessenging('admin');
     }
 
     componentWillUnmount() {
@@ -178,7 +137,7 @@ export default class extends Component {
 
 
     chatWithUser(username, sid) {
-        this.props.navigation.navigate('detail_chat_screen', { username, sid })
+        this.props.navigation.navigate('detail_chat_screen', { username, sid, token: this.state.token })
     }
 
     renderTime(time) {
@@ -193,16 +152,18 @@ export default class extends Component {
 
         minutes = minutes - (days * 24 * 60 + hours * 60); //20 minutes.
 
-        return days < 2 ?   checkDays + checkHours + ` ${minutes} minutes` : moment(time).format('YYYY-MM-DD HH:mm')
+        return days < 2 ? checkDays + checkHours + ` ${minutes} minutes` : moment(time).format('YYYY-MM-DD HH:mm')
     }
 
     renderRow(data) {
         let timeDuration = this.renderTime(data.dateUpdated)
+        let index = data.createdBy.indexOf(';')
+        let name = data.createdBy.slice(0, index)
         return (
             <TouchableOpacity style={styles.itemList} onPress={e => this.chatWithUser('tupt', data.sid)}>
-                <Text>{data.createdBy}</Text>
+                <Text>{data.friendlyName}</Text>
                 <View style={styles.bottom}>
-                    <Text style={styles.textbottom}>{data.friendlyName}</Text>
+                    <Text style={styles.textbottom}>{name}</Text>
                     <Text style={styles.textbottom}>{timeDuration}</Text>
                 </View>
             </TouchableOpacity>
@@ -219,7 +180,7 @@ export default class extends Component {
                     onPress={() => this.props.navigation.goBack()}
                 />
                 <SearchBar
-                    dataArray={dataNoti}
+                    dataArray={[]}
                     onChange={(value) => this.setState({ dataSource: value })}
                     searchByName='content'
                 />
