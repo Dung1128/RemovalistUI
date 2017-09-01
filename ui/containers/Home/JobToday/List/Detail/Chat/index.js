@@ -56,15 +56,8 @@ export default class extends Component {
     };
   }
 
-  initializeMessenging(identity) {
-    let token = this.state.token;
-    if (!token) {
-      this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
-        this.setState({
-          token: data.token
-        })
-      })
-    }
+  getChannelWithMessage(token) {
+
     // initaite new Access Manager
     const accessManager = new AccessManager(token);
     accessManager.onTokenWillExpire = () => {
@@ -171,6 +164,16 @@ export default class extends Component {
         // register the client with the accessManager
         accessManager.registerClient();
       });
+  }
+
+  initializeMessenging(identity) {
+    if (this.state.token == '') {
+      this.props.getToken(Platform.OS, identity, 'admin@gmail.com', (error, data) => {
+        this.getChannelWithMessage(data.token)
+      })
+    } else {
+      this.getChannelWithMessage(this.state.token)
+    }
   }
 
 
